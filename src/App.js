@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import Nav from "./components/Nav";
+import { useState } from "react";
 
 function App() {
+  let [movie, setMovie] = useState(null);
+
+  const searchHandler = async () => {
+    await fetch(`http://www.omdbapi.com/?t=batman&apikey=f14ca85d
+  `)
+      .then((response) => response.json())
+      .then((data) => {
+        setMovie(data);
+        console.log(movie);
+      });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Nav search={searchHandler} value={(event) => event.target.value} />
+    </>
   );
 }
 
