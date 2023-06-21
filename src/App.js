@@ -3,9 +3,15 @@ import { useState } from "react";
 
 function App() {
   let [movie, setMovie] = useState(null);
+  let [name, setName] = useState("");
+
+  const valueHandler = (event) => {
+    setName(event.target.value);
+    console.log(name);
+  };
 
   const searchHandler = async () => {
-    await fetch(`http://www.omdbapi.com/?t=batman&apikey=f14ca85d
+    await fetch(`http://www.omdbapi.com/?t=${name}&apikey=f14ca85d
   `)
       .then((response) => response.json())
       .then((data) => {
@@ -16,7 +22,8 @@ function App() {
 
   return (
     <>
-      <Nav search={searchHandler} value={(event) => event.target.value} />
+      <Nav search={searchHandler} value={valueHandler} />
+      <h1>{movie.Title}</h1>
     </>
   );
 }

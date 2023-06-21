@@ -3,7 +3,7 @@ const Nav = (props) => {
   return (
     <div className="bg-red-600 flex justify-between py-4">
       <div className="mx-2">
-        <input placeholder="Find a Movie!" value={props.value} />
+        <input placeholder="Find a Movie!" onChange={props.value} />
         <button onClick={props.search}>Search</button>
       </div>
       <h1>MyMovieSpace</h1>
