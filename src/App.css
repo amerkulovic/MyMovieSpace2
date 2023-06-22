@@ -1,12 +1,21 @@
+@font-face {
+  font-family: art-deco;
+  src: url(./fonts/Showtime-R9Ke.ttf);
+}
+
 .App {
   text-align: center;
 }
 
+.header-font{
+  font-family: art-deco;
+}
 .background-image {
   background-image: url("./images/main-bg.jpg");
   background-size: cover;
   background-repeat: no-repeat;
 }
+
 
 .App-logo {
   height: 40vmin;
