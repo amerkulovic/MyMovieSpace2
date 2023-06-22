@@ -16,6 +16,51 @@
   background-repeat: no-repeat;
 }
 
+.movie-picture {
+  position: relative;
+  width: 425px;
+  height: 315px;
+  border: 3px solid #fefbec;
+  margin: 10px;
+}
+
+.movie-picture:hover {
+  filter: blur(2px) brightness(60%);
+  box-shadow: 0 0 16px #f97444;
+}
+
+.container:hover .picture-text {
+  opacity: 1;
+}
+.picture-text:hover ~ .movie-picture {
+  filter: blur(2px) brightness(60%);
+  box-shadow: 0 0 16px #f97444;
+}
+
+.container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+.container:hover .movie-picture {
+  filter: blur(2px) brightness(60%);
+  box-shadow: 0 0 16px #f97444;
+}
+
+.picture-text {
+  font-size: 25px;
+  font-weight: bold;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+.picture-text:hover {
+  opacity: 1;
+}
+
 
 .App-logo {
   height: 40vmin;
