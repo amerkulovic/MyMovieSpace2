@@ -1,6 +1,6 @@
 const Nav = (props) => {
   return (
-    <div className="bg-gradient-to-r from-black via-red-700 to-black flex justify-between py-4">
+    <div className="bg-gradient-to-r from-black via-red-700 to-black flex items-center justify-between py-4">
       <div className="mx-2">
         <input placeholder="Find a Movie!" onChange={props.value} />
         <button onClick={props.search}>Search</button>

@@ -16,15 +16,14 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         setMovies(data);
-        console.log(movies.Search);
       });
   };
 
   return (
-    <>
+    <div className="background-image">
       <Nav search={searchHandler} value={valueHandler} />
-      <container className="flex flex-wrap justify-center background-image">{movies && movies.Search.map((movie) => <MovieCard moviePoster={movie.Poster} movieTitle={movie.Title} />)}</container>
-    </>
+      <container className="flex flex-wrap justify-center">{movies && movies.Search.map((movie) => <MovieCard moviePoster={movie.Poster} movieTitle={movie.Title} />)}</container>
+    </div>
   );
 }
 
