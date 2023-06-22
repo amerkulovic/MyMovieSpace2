@@ -1,5 +1,7 @@
 import Nav from "./components/Nav";
+import "./App.css";
 import { useState } from "react";
+import MovieCard from "./components/MovieCard";
 
 function App() {
   let [movies, setMovies] = useState(null);
@@ -21,15 +23,7 @@ function App() {
   return (
     <>
       <Nav search={searchHandler} value={valueHandler} />
-      <container className="flex flex-wrap justify-around">
-        {movies &&
-          movies.Search.map((movie) => (
-            <div className="text-center mx-2">
-              <h1>{movie.Title}</h1>
-              <img src={movie.Poster} />
-            </div>
-          ))}
-      </container>
+      <container className="flex flex-wrap justify-center background-image">{movies && movies.Search.map((movie) => <MovieCard moviePoster={movie.Poster} movieTitle={movie.Title} />)}</container>
     </>
   );
 }
