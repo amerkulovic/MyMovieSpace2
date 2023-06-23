@@ -1,4 +1,6 @@
 import search from "./../svgs/search.svg";
+import bookmark from "./../svgs/bookmark.svg";
+import login from "./../svgs/right-to-bracket-solid.svg";
 
 const Nav = (props) => {
   return (
@@ -13,13 +15,14 @@ const Nav = (props) => {
       <section>
         <ul className="flex flex-row mr-2">
           <li className="mx-1">
-            <button>Bookmark</button>
+            <button>
+              <img className="h-10 w-10" src={bookmark} />
+            </button>
           </li>
           <li className="mx-1">
-            <button>Personal</button>
-          </li>
-          <li className="mx-1">
-            <button>Login</button>
+            <button>
+              <img className="h-10 w-10" src={login} />
+            </button>
           </li>
         </ul>
       </section>
