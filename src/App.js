@@ -1,7 +1,7 @@
 import Nav from "./components/Nav";
 import "./App.css";
 import { useState } from "react";
-import MovieCard from "./components/MovieCard";
+import Body from "./pages/Body";
 
 function App() {
   let [movies, setMovies] = useState(null);
@@ -20,10 +20,10 @@ function App() {
   };
 
   return (
-    <div className="background-image">
+    <>
       <Nav search={searchHandler} value={valueHandler} />
-      <container className="flex flex-wrap justify-center">{movies && movies.Search.map((movie) => <MovieCard moviePoster={movie.Poster} movieTitle={movie.Title} />)}</container>
-    </div>
+      <Body movies={movies} />
+    </>
   );
 }
 

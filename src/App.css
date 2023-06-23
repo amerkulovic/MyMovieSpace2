@@ -18,15 +18,15 @@
 
 .movie-picture {
   position: relative;
-  width: 425px;
-  height: 315px;
-  border: 3px solid #fefbec;
+  width: 440px;
+  height: 370px;
+  /* border: 3px solid #fefbec; */
   margin: 10px;
 }
 
 .movie-picture:hover {
   filter: blur(2px) brightness(60%);
-  box-shadow: 0 0 16px #f97444;
+  box-shadow: 0 0 16px #cc1d1d;
 }
 
 .container:hover .picture-text {
@@ -34,7 +34,7 @@
 }
 .picture-text:hover ~ .movie-picture {
   filter: blur(2px) brightness(60%);
-  box-shadow: 0 0 16px #f97444;
+  box-shadow: 0 0 16px #cc1d1d;
 }
 
 .container {
@@ -44,15 +44,15 @@
 }
 .container:hover .movie-picture {
   filter: blur(2px) brightness(60%);
-  box-shadow: 0 0 16px #f97444;
+  box-shadow: 0 0 16px #cc1d1d;
 }
 
 .picture-text {
-  font-size: 25px;
+  font-size: 18px;
   font-weight: bold;
   position: absolute;
-  top: 30%;
-  left: 50%;
+  top: 40%;
+  left: 52%;
   transform: translate(-50%, -50%);
   opacity: 0;
 }

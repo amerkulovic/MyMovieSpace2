@@ -1,7 +1,11 @@
-const Body = () => {
-    return (
-        <div></div>
-    )
-}
+import MovieCard from "../components/MovieCard";
 
-export default Body
+const Body = (props) => {
+  return (
+    <div className="background-image">
+      <container className="flex flex-wrap justify-center">{props.movies && props.movies.Search.map((movie) => <MovieCard moviePoster={movie.Poster} movieTitle={movie.Title} />)}</container>
+    </div>
+  );
+};
+
+export default Body;
