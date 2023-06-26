@@ -7,6 +7,17 @@ function App() {
   let [movies, setMovies] = useState(null);
   let [name, setName] = useState("");
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const movieID = urlParams.get("i") || "";
+
+  fetch(`http://www.omdbapi.com/?i=${movieID}&apikey=f14ca85d`)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+    });
+
   const valueHandler = (event) => {
     setName(event.target.value);
   };
@@ -16,6 +27,7 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         setMovies(data);
+        console.log(data);
       });
   };
 
