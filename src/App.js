@@ -8,7 +8,7 @@ import MovieCard from "./components/MovieCard";
 function App() {
   let [movies, setMovies] = useState(null);
   let [name, setName] = useState("");
-  let [movieInfo, setMovieInfo] = useState(null);
+  let [movieData, setMovieData] = useState(null);
   let [isMovieShown, setIsMovieShown] = useState(false);
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -20,8 +20,8 @@ function App() {
         return response.json();
       })
       .then(function (data) {
-        setMovieInfo(data);
-        console.warn(movieInfo);
+        setMovieData(data);
+        console.warn(movieData);
         setIsMovieShown(true);
       });
   };
@@ -42,12 +42,11 @@ function App() {
     <Router>
       <>
         <Nav search={searchHandler} value={valueHandler} />
-        <Routes>
-          <div className="background-image">
-            <div className="flex flex-wrap justify-center">{movies && movies.Search.map((movie) => <MovieCard moviePoster={movie.Poster} movieTitle={movie.Title} imdbID={movie.imdbID} clickHandler={showMovie} />)}</div>
-            {isMovieShown && <div>{movieInfo.Poster}</div>}
-          </div>
-        </Routes>
+        <div className="background-image">
+          <Routes>
+            <Route path="/" element={<div className="flex flex-wrap justify-center">{movies && movies.Search.map((movie) => <MovieCard moviePoster={movie.Poster} movieTitle={movie.Title} imdbID={movie.imdbID} clickHandler={showMovie} />)}</div>} />
+          </Routes>
+        </div>
       </>
     </Router>
   );
