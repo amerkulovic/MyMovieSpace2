@@ -3,8 +3,8 @@ import "./MovieCard.css";
 const MovieCard = (props) => {
   return (
     <div className="text-center pt-2 px-1 my-2 mx-1">
-      <a href={`index.html?i=${props.imdbID}`}>
-        <div className="flex flex-col justify-center w-64 container">
+      <a href={`index.html?i=${props.imdbID}`} onClick={props.clickHandler}>
+        <div className="flex flex-col justify-center w-64 container" onClick={props.clickHandler}>
           <img className="p-2 text-center movie-picture" src={props.moviePoster} />
           <h1 className="picture-text text-white movie-header">{props.movieTitle}</h1>
         </div>
