@@ -7,15 +7,14 @@ const Footer = () => {
   return (
     <>
       <ContactFooter />
-      <footer className="bg-[#2C2E43] flex flex-wrap justify-between max-sm:justify-center items-center pl-5 py-5">
+      <footer className="bg-gradient-to-r from-black via-red-700 to-black flex flex-wrap justify-between max-sm:justify-center items-center pl-5 py-5">
         <section className="flex flex-row max-md:flex-col">
-          <FooterSection header="Discover" item1="About" item1link="/about" item2="Trainers" item2link="/trainers" item3="Exercises" item3link="/exercises" item4="Shop" item4link="/shop" item5="Contact" item5link="/contact" />
-          <FooterSection header="Contact" item1="NextLVL@gmail.com" item2="123 Level Up Street, Chicago IL" item3="(555)-555-5555" />
+          <FooterSection header="Discover" item1="About" item2="Home" item3="My Profile" item4="Contact" />
+          <FooterSection header="Contact" item1="MyMovieSpace@gmail.com" item2="(555)-555-5555" />
         </section>
         <div className="flex flex-col items-center mr-10">
-          {/* <img src={Logo} className="h-20 w-90 border-2 border-black" /> */}
-          <h1 className="text-white text-xl mt-1" style={{ fontFamily: "Bruno Ace SC" }}>
-            Fitness
+          <h1 className="header-font text-white text-5xl mt-1">
+            MyMovieSpace
           </h1>
         </div>
       </footer>

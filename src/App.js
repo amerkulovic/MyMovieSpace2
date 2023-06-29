@@ -2,6 +2,7 @@ import Nav from "./components/Nav";
 import "./App.css";
 import { useState } from "react";
 import Body from "./pages/Body";
+import Footer from "./components/Footer/Footer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MovieCard from "./components/MovieCard";
 
@@ -45,8 +46,10 @@ function App() {
         <div className="background-image">
           <Routes>
             <Route path="/" element={<div className="flex flex-wrap justify-center">{movies && movies.Search.map((movie) => <MovieCard moviePoster={movie.Poster} movieTitle={movie.Title} imdbID={movie.imdbID} clickHandler={showMovie} />)}</div>} />
+            <Route path="/:id" element={<h1 className="text-lg">Hello</h1>} />
           </Routes>
         </div>
+        <Footer />
       </>
     </Router>
   );
