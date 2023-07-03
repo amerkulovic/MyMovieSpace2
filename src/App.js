@@ -7,6 +7,7 @@ import Footer from "./components/Footer/Footer";
 import MovieCard from "./components/MovieCard";
 import notFoundImg from "./images/notfoundimg.png";
 import MoviePage from "./components/MoviePage";
+import HomePage from "./components/HomePage";
 
 function App() {
   let [movies, setMovies] = useState(null);
@@ -48,8 +49,9 @@ function App() {
         <Nav search={searchHandler} value={valueHandler} />
         <div className="background-image">
           <Routes>
-            <Route path="/" element={<div className="flex flex-wrap justify-center">{movies && movies.Search.map((movie) => <MovieCard moviePoster={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} movieTitle={movie.Title} imdbID={movie.imdbID} clickHandler={showMovie} />)}</div>} />
-            <Route path="/:id" element={<MoviePage />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/search" element={<div className="flex flex-wrap justify-center">{movies && movies.Search.map((movie) => <MovieCard moviePoster={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} movieTitle={movie.Title} imdbID={movie.imdbID} clickHandler={showMovie} />)}</div>} />
+            <Route path="/search/:id" element={<MoviePage />} />
           </Routes>
         </div>
         <Footer />

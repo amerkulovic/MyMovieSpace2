@@ -8,7 +8,7 @@ const Nav = (props) => {
     <div className="bg-gradient-to-r from-black via-red-700 to-black flex items-center justify-between py-4">
       <div className="ml-4 flex items-center">
         <input className="h-14 px-4 rounded-tl-xl rounded-bl-xl" placeholder="Find a Movie!" onChange={props.value} />
-        <Link to="/">
+        <Link to="/search">
           <button className="bg-white p-4 h-14 rounded-tr-xl rounded-br-xl" onClick={props.search}>
             <img className="h-5 w-5" src={search} />
           </button>
