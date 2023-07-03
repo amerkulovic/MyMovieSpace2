@@ -8,7 +8,7 @@ const MoviePage = () => {
       </div>
       <div className="text-white mt-10">
         <section className="border-b-[0.5px] border-white mb-5">
-          <h1 className="movie-header text-4xl">Indiana Jones and the Dial of Destiny</h1>
+          <h1 className="movie-header text-5xl w-[800px]">Indiana Jones and the Dial of Destiny</h1>
           <p>2023 directed by James Mangold</p>
         </section>
         <p className="w-[480px] mt-4">Finding himself in a new era, approaching retirement, Indy wrestles with fitting into a world that seems to have outgrown him. But as the tentacles of an all-too-familiar evil return in the form of an old rival, Indy must don his hat and pick up his whip once more to make sure an ancient and powerful artifact doesn’t fall into the wrong hands.</p>
