@@ -1,4 +1,5 @@
 import notFoundImg from "./../images/notfoundimg.png";
+import ReviewCard from "./ReviewCard";
 
 const MoviePage = () => {
   return (
@@ -24,8 +25,11 @@ const MoviePage = () => {
           </section>
         </div>
       </div>
-      <section className="mb-5 flex justify-center">
-        <h1 className="flex justify-center movie-header text-4xl border-b-[0.5px] border-white w-[900px]">User Reviews</h1>
+      <section className="mb-10 flex flex-col items-center">
+        <h1 className="flex justify-center movie-header text-4xl border-b-[0.5px] border-white w-[900px] mb-4">User Reviews</h1>
+        <ReviewCard title="Amazing Movie" date="7/3/23" text="It was great to see Harrison Ford play the role of Indiana Jones one last time!It was great to see Harrison Ford play the role of Indiana Jones one last time!It was great to see Harrison Ford play the role of Indiana Jones one last time!It was great to see Harrison Ford play the role of Indiana Jones one last time!" username="Akulovic" />
+        <ReviewCard title="Amazing Movie" date="7/3/23" text="It was great to see Harrison Ford play the role of Indiana Jones one last time!" username="Akulovic" />
+        <ReviewCard title="Amazing Movie" date="7/3/23" text="It was great to see Harrison Ford play the role of Indiana Jones one last time!" username="Akulovic" />
       </section>
     </div>
   );

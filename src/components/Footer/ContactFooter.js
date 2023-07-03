@@ -13,7 +13,7 @@ const ContactFooter = () => {
       </section>
       <section className="flex flex-row mr-10 items-center max-sm:mt-5">
         <input placeholder="email" className="h-14 px-4 rounded-tl-xl rounded-bl-xl" />
-        <button className="bg-red-500 p-4 h-14 rounded-tr-xl rounded-br-xl font-bold text-white">
+        <button className="bg-red-600 p-4 h-14 rounded-tr-xl rounded-br-xl font-bold text-white">
           Sign Up
         </button>
       </section>
