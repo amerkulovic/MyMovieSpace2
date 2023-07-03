@@ -5,7 +5,8 @@ import Nav from "./components/Nav";
 import Body from "./pages/Body";
 import Footer from "./components/Footer/Footer";
 import MovieCard from "./components/MovieCard";
-import notFoundImg from "./images/notfoundimg.png"
+import notFoundImg from "./images/notfoundimg.png";
+import MoviePage from "./components/MoviePage";
 
 function App() {
   let [movies, setMovies] = useState(null);
@@ -23,6 +24,7 @@ function App() {
       })
       .then(function (data) {
         setMovieData(data);
+        localStorage.setItem("movies", JSON.stringify(movieData));
         console.warn(movieData);
         setIsMovieShown(true);
       });
@@ -47,7 +49,7 @@ function App() {
         <div className="background-image">
           <Routes>
             <Route path="/" element={<div className="flex flex-wrap justify-center">{movies && movies.Search.map((movie) => <MovieCard moviePoster={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} movieTitle={movie.Title} imdbID={movie.imdbID} clickHandler={showMovie} />)}</div>} />
-            <Route path="/:id" element={<h1 className="text-lg">Hello</h1>} />
+            <Route path="/:id" element={<MoviePage />} />
           </Routes>
         </div>
         <Footer />
