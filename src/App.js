@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useParams } from "react-router-dom";
 import "./App.css";
 import Nav from "./components/Nav";
 import Body from "./pages/Body";
@@ -13,23 +13,24 @@ function App() {
   let [movies, setMovies] = useState(null);
   let [name, setName] = useState("");
   let [movieData, setMovieData] = useState(null);
-  let [isMovieShown, setIsMovieShown] = useState(false);
 
   const urlParams = new URLSearchParams(window.location.search);
   const movieID = urlParams.get("i") || "";
 
-  const showMovie = async () => {
-    await fetch(`http://www.omdbapi.com/?i=${movieID}&apikey=f14ca85d`)
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        setMovieData(data);
-        localStorage.setItem("movies", JSON.stringify(movieData));
-        console.warn(movieData);
-        setIsMovieShown(true);
-      });
-  };
+  // let params = useParams();
+  // // console.log(params);
+
+  // const showMovie = async () => {
+  //   // console.log(params);
+  //   await fetch(`http://www.omdbapi.com/?i=${movieID}&apikey=f14ca85d`)
+  //     .then(function (response) {
+  //       return response.json();
+  //     })
+  //     .then(function (data) {
+  //       setMovieData(data);
+  //       localStorage.setItem("movies", JSON.stringify(movieData));
+  //     });
+  // };
 
   const valueHandler = (event) => {
     setName(event.target.value);
@@ -50,7 +51,7 @@ function App() {
         <div className="background-image">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/search" element={<div className="flex flex-wrap justify-center">{movies && movies.Search.map((movie) => <MovieCard moviePoster={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} movieTitle={movie.Title} imdbID={movie.imdbID} clickHandler={showMovie} />)}</div>} />
+            <Route path="/search" element={<div className="flex flex-wrap justify-center">{movies && movies.Search.map((movie) => <MovieCard moviePoster={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} movieTitle={movie.Title} imdbID={movie.imdbID} />)}</div>} />
             <Route path="/search/:id" element={<MoviePage />} />
           </Routes>
         </div>
