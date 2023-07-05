@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import notFoundImg from "./../images/notfoundimg.png";
 import ReviewCard from "./ReviewCard";
@@ -18,7 +18,9 @@ const MoviePage = () => {
       });
   };
 
-  showMovie();
+  useEffect(() => {
+    showMovie();
+  }, [movie]);
 
   return (
     movie && (
@@ -30,7 +32,9 @@ const MoviePage = () => {
           <div className="text-white mt-10">
             <section className="border-b-[0.5px] border-white mb-5">
               <h1 className="movie-header text-5xl w-[800px]">{movie.Title}</h1>
-              <p>{movie.Year} directed by {movie.Director}</p>
+              <p>
+                {movie.Year} directed by {movie.Director}
+              </p>
             </section>
             <p className="w-[480px] mt-4">{movie.Plot}</p>
             <section>
@@ -39,8 +43,11 @@ const MoviePage = () => {
             </section>
             <section>
               <h2 className="movie-header text-xl mt-5 mb-5 border-b-[0.5px] border-white">Reviews</h2>
-              <p>Rotten Tomatoes 93%</p>
-              <p>iMDB 8/10</p>
+              {movie.Ratings.map((rating) => (
+                <p>
+                  {rating.Source} {rating.Value}
+                </p>
+              ))}
             </section>
           </div>
         </div>

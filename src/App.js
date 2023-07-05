@@ -14,9 +14,6 @@ function App() {
   let [name, setName] = useState("");
   let [movieData, setMovieData] = useState(null);
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const movieID = urlParams.get("i") || "";
-
   // let params = useParams();
   // // console.log(params);
 
