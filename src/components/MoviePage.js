@@ -21,7 +21,8 @@ const MoviePage = () => {
 
   useEffect(() => {
     showMovie();
-  }, [movie]);
+    console.log(movie);
+  }, []);
 
   return (
     <>
@@ -39,15 +40,15 @@ const MoviePage = () => {
                   {movie.Year} directed by {movie.Director}
                 </p>
               </section>
-              <p className="w-[480px] mt-4">{movie.Plot}</p>
+              <p className="w-[750px] mt-4">{movie.Plot}</p>
               <section>
                 <h2 className="movie-header text-xl mt-5 mb-5 border-b-[0.5px] border-white">Notable Actors</h2>
                 <p>{movie.Actors}</p>
               </section>
               <section>
                 <h2 className="movie-header text-xl mt-5 mb-5 border-b-[0.5px] border-white">Reviews</h2>
-                {movie.Ratings.map((rating) => (
-                  <p>
+                {movie.Ratings.map((rating, i) => (
+                  <p key={i}>
                     {rating.Source} {rating.Value}
                   </p>
                 ))}

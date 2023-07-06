@@ -48,7 +48,7 @@ function App() {
         <div className="background-image">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/search" element={<div className="flex flex-wrap justify-center">{movies && movies.Search.map((movie) => <MovieCard moviePoster={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} movieTitle={movie.Title} imdbID={movie.imdbID} />)}</div>} />
+            <Route path="/search" element={<div className="flex flex-wrap justify-center">{movies && movies.Search.map((movie, i) => <MovieCard key={i} moviePoster={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} movieTitle={movie.Title} imdbID={movie.imdbID} />)}</div>} />
             <Route path="/search/:id" element={<MoviePage />} />
           </Routes>
         </div>
