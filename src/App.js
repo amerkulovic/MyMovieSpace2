@@ -12,22 +12,6 @@ import HomePage from "./components/HomePage";
 function App() {
   let [movies, setMovies] = useState(null);
   let [name, setName] = useState("");
-  let [movieData, setMovieData] = useState(null);
-
-  // let params = useParams();
-  // // console.log(params);
-
-  // const showMovie = async () => {
-  //   // console.log(params);
-  //   await fetch(`http://www.omdbapi.com/?i=${movieID}&apikey=f14ca85d`)
-  //     .then(function (response) {
-  //       return response.json();
-  //     })
-  //     .then(function (data) {
-  //       setMovieData(data);
-  //       localStorage.setItem("movies", JSON.stringify(movieData));
-  //     });
-  // };
 
   const valueHandler = (event) => {
     setName(event.target.value);
@@ -48,7 +32,7 @@ function App() {
         <div className="background-image">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/search" element={<div className="flex flex-wrap justify-center">{movies && movies.Search.map((movie, i) => <MovieCard key={i} moviePoster={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} movieTitle={movie.Title} imdbID={movie.imdbID} />)}</div>} />
+            <Route path="/search" element={<div className="flex flex-wrap justify-center">{movies && movies.Search.map((movie) => <MovieCard moviePoster={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} movieTitle={movie.Title} imdbID={movie.imdbID} />)}</div>} />
             <Route path="/search/:id" element={<MoviePage />} />
           </Routes>
         </div>
