@@ -9,6 +9,7 @@ import notFoundImg from "./images/notfoundimg.png";
 import MoviePage from "./components/MoviePage";
 import HomePage from "./components/HomePage";
 import CreateAccountPage from "./components/CreateAccountPage";
+import LoadingPage from "./components/LoadingPage";
 
 function App() {
   let [movies, setMovies] = useState(null);
@@ -33,7 +34,7 @@ function App() {
         <div className="background-image">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/search" element={<div className="flex flex-wrap justify-center">{movies && movies.Search.map((movie) => <MovieCard moviePoster={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} movieTitle={movie.Title} imdbID={movie.imdbID} />)}</div>} />
+            <Route path="/search" element={<div className="flex flex-wrap justify-center">{movies ? movies.Search.map((movie) => <MovieCard moviePoster={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} movieTitle={movie.Title} imdbID={movie.imdbID} />) : <LoadingPage />}</div>} />
             <Route path="/search/:id" element={<MoviePage />} />
             <Route path="/signup" element={<CreateAccountPage />} />
           </Routes>
