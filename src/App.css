@@ -30,7 +30,7 @@
   color: #fff;
   padding: 0.25rem;
   position: relative;
-  bottom: -10px;
+  bottom: -4px;
 }
 
 .valid {
@@ -39,7 +39,7 @@
 }
 
 .invalid {
-  color: red;
+  color: black;
   margin-left: 0.25rem;
 }
 .movie-header {
