@@ -11,8 +11,36 @@
   text-align: center;
 }
 
-.header-font{
+.errmsg {
+  background-color: lightpink;
+  color: firebrick;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.header-font {
   font-family: art-deco;
+}
+
+.instructions {
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+  background: #000;
+  color: #fff;
+  padding: 0.25rem;
+  position: relative;
+  bottom: -10px;
+}
+
+.valid {
+  color: limegreen;
+  margin-left: 0.25rem;
+}
+
+.invalid {
+  color: red;
+  margin-left: 0.25rem;
 }
 .movie-header {
   font-family: movie-header;
@@ -69,7 +97,6 @@
 .picture-text:hover {
   opacity: 1;
 }
-
 
 .App-logo {
   height: 40vmin;
