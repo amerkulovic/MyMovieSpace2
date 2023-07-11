@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -54,7 +55,9 @@ const SignUp = () => {
       <form className="flex flex-col">
         <div className="my-4">
           <div>
-            <label className="text-white" htmlFor="username">Username:</label>
+            <label className="text-white" htmlFor="username">
+              Username:
+            </label>
             <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hidden"} />
             <FontAwesomeIcon icon={faTimes} className={validName || !user ? "hidden" : "invalid"} />
           </div>
@@ -73,7 +76,9 @@ const SignUp = () => {
 
         <div className="my-4">
           <div>
-            <label className="text-white" htmlFor="password">Password:</label>
+            <label className="text-white" htmlFor="password">
+              Password:
+            </label>
             <FontAwesomeIcon icon={faCheck} className={validPwd ? "valid" : "hidden"} />
             <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? "hidden" : "invalid"} />
           </div>
@@ -90,7 +95,9 @@ const SignUp = () => {
         </div>
         <div className="my-4 pb-5">
           <div>
-            <label className="text-white" htmlFor="confirm_pwd">Confirm Password:</label>
+            <label className="text-white" htmlFor="confirm_pwd">
+              Confirm Password:
+            </label>
             <FontAwesomeIcon icon={faCheck} className={validMatch && matchPwd ? "valid" : "hidden"} />
             <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? "hidden" : "invalid"} />
           </div>
@@ -102,15 +109,18 @@ const SignUp = () => {
             Must match the first password input field.
           </p>
         </div>
-        <button className="bg-red-800 movie-header text-2xl py-3 rounded-lg mb-10" disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
+        <button className="bg-red-800 movie-header text-2xl py-3 rounded-lg mb-10" disabled={!validName || !validPwd || !validMatch ? true : false}>
+          Sign Up
+        </button>
       </form>
       <p className="font-light text-white">
         Already registered?
         <br />
-        <span className="line">
-          {/*put router link here*/}
-          <a href="#">Sign In</a>
-        </span>
+        <Link to="/signin">
+          <span>
+            <p className="underline">Sign In</p>
+          </span>
+        </Link>
       </p>
     </section>
   );
