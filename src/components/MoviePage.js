@@ -31,7 +31,7 @@ const MoviePage = () => {
         <div className="flex flex-col">
           <div className="flex flex-row justify-center">
             <div className="mr-5 my-10">
-              <img src={movie.Poster} className="h-[500px] w-96" />
+              <img src={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} className="h-[500px] w-96" />
             </div>
             <div className="text-white mt-10">
               <section className="border-b-[0.5px] border-white mb-5">
