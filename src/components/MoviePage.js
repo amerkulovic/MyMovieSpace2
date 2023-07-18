@@ -1,11 +1,21 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { json, matchPath, useParams } from "react-router-dom";
+import { faBookmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import notFoundImg from "./../images/notfoundimg.png";
 import LoadingPage from "./LoadingPage";
 import ReviewCard from "./ReviewCard";
 
 const MoviePage = () => {
   let [movie, setMovie] = useState(null);
+  let [bookmarks, setBookmarks] = useState([]);
+
+  useEffect(() => {
+    const storedBookmarks = localStorage.getItem("bookmarks");
+    if (storedBookmarks) {
+      setBookmarks(JSON.parse(storedBookmarks));
+    }
+  }, []);
 
   let { id } = useParams();
 
@@ -19,10 +29,20 @@ const MoviePage = () => {
       });
   };
 
+  const bookmarkHandler = (newBookmark) => {
+    setBookmarks([...bookmarks, newBookmark]);
+    console.log(bookmarks);
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+  };
+
   useEffect(() => {
     showMovie();
     console.log(movie);
   }, []);
+
+  // useEffect(() => {
+  //   bookmarkHandler();
+  // }, []);
 
   return (
     <>
@@ -53,6 +73,13 @@ const MoviePage = () => {
                   </p>
                 ))}
               </section>
+              <button
+                onClick={() => {
+                  bookmarkHandler({ id: movie.imdbID, title: movie.Title, poster: movie.Poster });
+                }}
+              >
+                Bookmark
+              </button>
             </div>
           </div>
           <section className="mb-10 flex flex-col items-center">
