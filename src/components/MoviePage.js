@@ -28,16 +28,26 @@ const MoviePage = () => {
         setMovie(data);
       });
   };
-
+  
   const bookmarkHandler = (newBookmark) => {
-    setBookmarks([...bookmarks, newBookmark]);
-    console.log(bookmarks);
-    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+    const updatedBookmarks = [...bookmarks];
+
+    const existingBookmarkIndex = updatedBookmarks.findIndex((bookmark) => bookmark.id === newBookmark.id);
+
+    if (existingBookmarkIndex !== -1) {
+      updatedBookmarks.splice(existingBookmarkIndex, 1);
+      console.log("Bookmark removed");
+    } else {
+      updatedBookmarks.push(newBookmark);
+      console.log("Bookmark added");
+    }
+
+    setBookmarks(updatedBookmarks);
+    localStorage.setItem("bookmarks", JSON.stringify(updatedBookmarks));
   };
 
   useEffect(() => {
     showMovie();
-    console.log(movie);
   }, []);
 
   // useEffect(() => {
