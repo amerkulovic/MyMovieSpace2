@@ -14,12 +14,17 @@ const BookmarksPage = () => {
 
   return (
     <>
-      {bookmarks && (
-        <div className="flex flex-row justify-center items-center h-[600px]">
-          {bookmarks.map((movie) => (
-            <MovieCard moviePoster={movie.poster !== "N/A" ? movie.poster : notFoundImg} movieTitle={movie.title} imdbID={movie.id} />
-          ))}
+      {bookmarks.length !== 0 ? (
+        <div>
+          <h1 className="movie-header text-4xl text-center pt-10">Your Bookmarks!</h1>
+          <div className="flex flex-wrap justify-center items-center h-full">
+            {bookmarks.map((movie) => (
+              <MovieCard moviePoster={movie.poster !== "N/A" ? movie.poster : notFoundImg} movieTitle={movie.title} imdbID={movie.id} />
+            ))}
+          </div>
         </div>
+      ) : (
+        <h1 className="movie-header text-6xl flex justify-center items-center h-[600px]">Find Your Favorite Movies!</h1>
       )}
     </>
   );

@@ -1,9 +1,8 @@
-import "./MovieCard.css";
 import { Link } from "react-router-dom";
 
 const MovieCard = (props) => {
   return (
-    <div className="text-center pt-2 px-1 my-2 mx-1">
+    <div className="text-center pt-2 px-1 my-2 mr-5">
       <Link to={`${props.imdbID}`}>
         <div className="flex flex-col justify-center w-64 container">
           <img className="p-2 text-center movie-picture" src={props.moviePoster} />
