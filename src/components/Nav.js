@@ -21,6 +21,11 @@ const Nav = (props) => {
             <li className="mx-3 opacity-80 hover:opacity-100">
               <button className="movie-header">Message Board</button>
             </li>
+            <li className="mx-3 opacity-80 hover:opacity-100">
+              <Link to="/bookmarks">
+                <button className="movie-header">Bookmarks</button>
+              </Link>
+            </li>
           </ul>
         </section>
         <div className="opacity-70 hover:opacity-100 flex items-center">

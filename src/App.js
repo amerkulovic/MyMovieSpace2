@@ -37,7 +37,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/search" element={<div className="flex flex-wrap justify-center">{movies ? movies.Search.map((movie) => <MovieCard moviePoster={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} movieTitle={movie.Title} imdbID={movie.imdbID} />) : <LoadingPage />}</div>} />
-            <Route path="/search/:id" element={<MoviePage />} />
+            <Route path="/:search/:id" element={<MoviePage />} />
             <Route path="/bookmarks" element={<BookmarksPage />} />
             <Route path="/signup" element={<CreateAccountPage />} />
             <Route path="/signin" element={<SignInPage />} />
