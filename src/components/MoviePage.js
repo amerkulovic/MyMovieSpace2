@@ -28,7 +28,7 @@ const MoviePage = () => {
         setMovie(data);
       });
   };
-  
+
   const bookmarkHandler = (newBookmark) => {
     const updatedBookmarks = [...bookmarks];
 
@@ -36,10 +36,8 @@ const MoviePage = () => {
 
     if (existingBookmarkIndex !== -1) {
       updatedBookmarks.splice(existingBookmarkIndex, 1);
-      console.log("Bookmark removed");
     } else {
       updatedBookmarks.push(newBookmark);
-      console.log("Bookmark added");
     }
 
     setBookmarks(updatedBookmarks);
@@ -49,11 +47,7 @@ const MoviePage = () => {
   useEffect(() => {
     showMovie();
   }, []);
-
-  // useEffect(() => {
-  //   bookmarkHandler();
-  // }, []);
-
+  
   return (
     <>
       {!movie && <LoadingPage />}
