@@ -9,15 +9,27 @@ import ReviewCard from "./ReviewCard";
 const MoviePage = () => {
   let [movie, setMovie] = useState(null);
   let [bookmarks, setBookmarks] = useState([]);
+  let [bookmarkStyling, setBookmarkStyling] = useState("text-4xl mt-3");
+
+  let { id } = useParams();
 
   useEffect(() => {
     const storedBookmarks = localStorage.getItem("bookmarks");
     if (storedBookmarks) {
       setBookmarks(JSON.parse(storedBookmarks));
     }
+    showMovie();
   }, []);
 
-  let { id } = useParams();
+  useEffect(() => {
+    for (let i = 0; i < bookmarks.length; i++) {
+      console.log(bookmarks[i].id);
+      console.log(id);
+      if (bookmarks[i].id === id) {
+        setBookmarkStyling("text-4xl mt-3 text-yellow-400");
+      }
+    }
+  });
 
   const showMovie = async () => {
     await fetch(`http://www.omdbapi.com/?i=${id}&apikey=f14ca85d`)
@@ -36,18 +48,16 @@ const MoviePage = () => {
 
     if (existingBookmarkIndex !== -1) {
       updatedBookmarks.splice(existingBookmarkIndex, 1);
+      setBookmarkStyling("text-4xl mt-3 text-white");
     } else {
       updatedBookmarks.push(newBookmark);
+      setBookmarkStyling("text-4xl mt-3 text-yellow-400");
     }
 
     setBookmarks(updatedBookmarks);
     localStorage.setItem("bookmarks", JSON.stringify(updatedBookmarks));
   };
 
-  useEffect(() => {
-    showMovie();
-  }, []);
-  
   return (
     <>
       {!movie && <LoadingPage />}
@@ -82,7 +92,7 @@ const MoviePage = () => {
                   bookmarkHandler({ id: movie.imdbID, title: movie.Title, poster: movie.Poster });
                 }}
               >
-                Bookmark
+                <FontAwesomeIcon icon={faBookmark} className={bookmarkStyling} />
               </button>
             </div>
           </div>
