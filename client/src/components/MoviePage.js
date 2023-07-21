@@ -23,11 +23,7 @@ const MoviePage = () => {
 
   useEffect(() => {
     for (let i = 0; i < bookmarks.length; i++) {
-      console.log(bookmarks[i].id);
-      console.log(id);
-      if (bookmarks[i].id === id) {
-        setBookmarkStyling("text-4xl mt-3 text-yellow-400");
-      }
+      if (bookmarks[i].id === id) setBookmarkStyling("text-4xl mt-3 text-yellow-400");
     }
   });
 
