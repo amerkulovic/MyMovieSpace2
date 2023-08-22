@@ -10,8 +10,23 @@ const MoviePage = () => {
   let [movie, setMovie] = useState(null);
   let [bookmarks, setBookmarks] = useState([]);
   let [bookmarkStyling, setBookmarkStyling] = useState("text-4xl mt-3");
-
+  let [reviews, setReviews] = useState([]);
   let { id } = useParams();
+
+  useEffect(() => {
+    async function fetchReviews() {
+      try {
+        const response = await fetch("/all-reviews"); // Replace with your API endpoint
+        const data = await response.json();
+        setReviews(data);
+        console.log(reviews);
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      }
+    }
+
+    fetchReviews();
+  }, []);
 
   useEffect(() => {
     const storedBookmarks = localStorage.getItem("bookmarks");
