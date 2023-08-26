@@ -11,7 +11,7 @@ const connectionStringURI = `mongodb://127.0.0.1:27017/mymoviespaceDB`;
 mongodb.connect(connectionStringURI, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
   db = client.db();
   app.listen(PORT, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+    console.log(`Example app listening at http://localhost:${PORT}`);
   });
 });
 

@@ -14,19 +14,20 @@ const MoviePage = () => {
   let { id } = useParams();
 
   useEffect(() => {
-    async function fetchReviews() {
+    async function fetchData() {
       try {
-        const response = await fetch("/all-reviews"); // Replace with your API endpoint
-        const data = await response.json();
-        setReviews(data);
-        console.log(reviews);
+        const response = await fetch('/all-reviews');
+        const reviews = await response.json();
+        setReviews(reviews);
       } catch (error) {
-        console.error("Error fetching reviews:", error);
+        console.error('Error fetching data:', error);
       }
     }
 
-    fetchReviews();
-  }, []);
+    fetchData();
+  }, []); 
+
+  console.log(reviews);
 
   useEffect(() => {
     const storedBookmarks = localStorage.getItem("bookmarks");
