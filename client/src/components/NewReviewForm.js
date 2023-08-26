@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
-const NewReviewForm = () => {
+const NewReviewForm = (props) => {
   let [isOpen, setIsOpen] = useState(false);
   let [username, setUsername] = useState("");
   let [message, setMessage] = useState("");
   let [title, setTitle] = useState("");
+  let { id } = useParams();
 
   let usernameHandler = (e) => {
     setUsername(e.target.value);
@@ -24,7 +26,7 @@ const NewReviewForm = () => {
     fetch("/create-review", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title: title, description: message, username: username }),
+      body: JSON.stringify({ title: title, description: message, username: username, movieId: id}),
     }).then(() => {
       console.log("new review added!");
     });
