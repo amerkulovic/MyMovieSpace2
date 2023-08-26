@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import notFoundImg from "./../images/notfoundimg.png";
 import LoadingPage from "./LoadingPage";
 import ReviewCard from "./ReviewCard";
+import NewReviewForm from "./NewReviewForm";
 
 const MoviePage = () => {
   let [movie, setMovie] = useState(null);
@@ -26,8 +27,6 @@ const MoviePage = () => {
 
     fetchData();
   }, []);
-
-  console.log(reviews);
 
   useEffect(() => {
     const storedBookmarks = localStorage.getItem("bookmarks");
@@ -110,9 +109,8 @@ const MoviePage = () => {
           </div>
           <section className="mb-10 flex flex-col items-center">
             <h1 className="flex justify-center movie-header text-4xl border-b-[0.5px] border-white w-[900px] mb-4">User Reviews</h1>
-            {reviews.map((review, index) => (
-              <ReviewCard title={review.title} date="7/3/23" text={review.description} username={review.username} />
-            ))}
+            {reviews ? reviews.map((review, index) => <ReviewCard title={review.title} date={review.lastAccessed} text={review.description} username={review.username} />) : <h1>Be the first to write a review!</h1>}
+            <NewReviewForm />
           </section>
         </div>
       )}
