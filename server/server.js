@@ -29,7 +29,7 @@ app.get("/all-reviews", async (req, res) => {
 });
 
 app.post("/create-review", (req, res) => {
-  const newReview = new Review({ title: req.body.title, description: req.body.description });
+  const newReview = new Review({ title: req.body.title, description: req.body.description, username: req.body.username });
   newReview.save();
   if (newReview) {
     res.status(201).json(newReview);

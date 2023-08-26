@@ -16,16 +16,16 @@ const MoviePage = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch('/all-reviews');
+        const response = await fetch("/all-reviews");
         const reviews = await response.json();
         setReviews(reviews);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     }
 
     fetchData();
-  }, []); 
+  }, []);
 
   console.log(reviews);
 
@@ -110,9 +110,9 @@ const MoviePage = () => {
           </div>
           <section className="mb-10 flex flex-col items-center">
             <h1 className="flex justify-center movie-header text-4xl border-b-[0.5px] border-white w-[900px] mb-4">User Reviews</h1>
-            <ReviewCard title="Amazing Movie" date="7/3/23" text="It was great to see Harrison Ford play the role of Indiana Jones one last time!It was great to see Harrison Ford play the role of Indiana Jones one last time!It was great to see Harrison Ford play the role of Indiana Jones one last time!It was great to see Harrison Ford play the role of Indiana Jones one last time!" username="Akulovic" />
-            <ReviewCard title="Amazing Movie" date="7/3/23" text="It was great to see Harrison Ford play the role of Indiana Jones one last time!" username="Akulovic" />
-            <ReviewCard title="Amazing Movie" date="7/3/23" text="It was great to see Harrison Ford play the role of Indiana Jones one last time!" username="Akulovic" />
+            {reviews.map((review, index) => (
+              <ReviewCard title={review.title} date="7/3/23" text={review.description} username={review.username} />
+            ))}
           </section>
         </div>
       )}
