@@ -21,7 +21,7 @@ const NewReviewForm = (props) => {
     console.log(title);
   };
   let submitHandler = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     fetch("/create-review", {
       method: "POST",

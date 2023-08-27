@@ -110,8 +110,25 @@ const MoviePage = () => {
             </div>
           </div>
           <section className="mb-10 flex flex-col items-center">
-            <h1 className="flex justify-center movie-header text-4xl border-b-[0.5px] border-white w-[900px] mb-4">User Reviews</h1>
-            {filteredReviews.length !== 0 ? filteredReviews.map((review, index) => <ReviewCard title={review.title} date={review.lastAccessed} text={review.description} username={review.username} />) : <h1 className="movie-header text-4xl">Be the first to write a review!</h1>}
+            {filteredReviews.length !== 0 ? (
+              <>
+                <h1 className="flex justify-center movie-header text-4xl border-b-[0.5px] border-white w-[900px] mb-4">Reviews</h1>
+                {filteredReviews.map((review, index) => (
+                  <ReviewCard
+                    title={review.title}
+                    date={new Date(review.lastAccessed).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                    text={review.description}
+                    username={review.username}
+                  />
+                ))}
+              </>
+            ) : (
+              <h1 className="movie-header text-4xl">Be the first to write a review!</h1>
+            )}
             <NewReviewForm />
           </section>
         </div>
