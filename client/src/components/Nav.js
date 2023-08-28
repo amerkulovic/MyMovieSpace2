@@ -7,9 +7,9 @@ const Nav = (props) => {
   return (
     <div className="bg-gradient-to-r from-black via-red-700 to-black flex items-center justify-center py-4">
       <Link to="/">
-        <h1 className="header-font text-white text-6xl mr-10">MyMovieSpace</h1>
+        <h1 className="header-font text-white text-6xl mr-10 max-xl:m-0">MyMovieSpace</h1>
       </Link>
-      <div className="ml-4 flex items-center">
+      <div className="ml-4 flex items-center max-xl:hidden">
         <section>
           <ul className="flex flex-row mr-10">
             <li className="mx-3 opacity-80 hover:opacity-100">

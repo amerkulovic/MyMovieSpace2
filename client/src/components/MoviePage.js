@@ -77,17 +77,17 @@ const MoviePage = () => {
       {movie && (
         <div className="flex flex-col">
           <div className="flex flex-row flex-wrap justify-center">
-            <div className="mr-5 my-10">
+            <div className="mr-5 my-10 max-xl:mr-0">
               <img src={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} className="h-[500px] w-96" />
             </div>
-            <div className="text-white mt-10">
+            <div className="text-white mt-10 max-xl:bg-gradient-to-r from-black via-red-600 to-black max-xl:p-5 max-xl:rounded-lg max-xl:mt-0 max-xl:mb-3 max-xl:w-10/12">
               <section className="border-b-[0.5px] border-white mb-5">
-                <h1 className="movie-header text-5xl w-[800px]">{movie.Title}</h1>
+                <h1 className="movie-header text-5xl w-full">{movie.Title}</h1>
                 <p>
                   {movie.Year} directed by {movie.Director}
                 </p>
               </section>
-              <p className="w-[750px] mt-4">{movie.Plot}</p>
+              <p className="w-[750px] max-xl:w-full mt-4">{movie.Plot}</p>
               <section>
                 <h2 className="movie-header text-xl mt-5 mb-5 border-b-[0.5px] border-white">Notable Actors</h2>
                 <p>{movie.Actors}</p>
@@ -109,7 +109,7 @@ const MoviePage = () => {
               </button>
             </div>
           </div>
-          <section className="mb-10 flex flex-col items-center">
+          <section className="pb-10 flex flex-col items-center bg-gradient-to-b from-transparent from-10%  via-black/[.80] via-20% to-black/[.90] to-100% overflow-hidden bg-opacity-70">
             {filteredReviews.length !== 0 ? (
               <>
                 <h1 className="flex justify-center movie-header text-4xl border-b-[0.5px] border-white w-[900px] mb-4">Reviews</h1>
