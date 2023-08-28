@@ -80,7 +80,7 @@ const MoviePage = () => {
             <div className="mr-5 my-10 max-xl:mr-0">
               <img src={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} className="h-[500px] w-96" />
             </div>
-            <div className="text-white mt-10 max-xl:bg-gradient-to-r from-black via-red-600 to-black w-3/5 max-xl:p-5 max-xl:rounded-lg max-xl:mt-0 max-xl:mb-3 max-xl:w-10/12">
+            <div className="text-white mt-10 max-xl:w-1/2 max-xl:ml-5 max-md:bg-gradient-to-r from-black via-red-600 to-black w-3/5 max-md:p-5 max-md:rounded-lg max-md:mt-0 max-md:mb-3 max-md:w-10/12">
               <section className="border-b-[0.5px] border-white mb-5">
                 <h1 className="movie-header text-5xl w-full">{movie.Title}</h1>
                 <p>
