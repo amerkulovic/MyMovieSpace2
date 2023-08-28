@@ -2,7 +2,7 @@ const ReviewCard = (props) => {
   return (
     <div className="flex flex-col bg-gradient-to-r from-black via-red-600 to-black text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black">
       <div className="flex justify-between">
-        <h1 className="movie-header text-2xl">{props.title}</h1>
+        <h1 className="movie-header text-4xl">{props.title}</h1>
         <p>{props.date}</p>
       </div>
       <section>

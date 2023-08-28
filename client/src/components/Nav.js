@@ -6,7 +6,9 @@ import { Link } from "react-router-dom";
 const Nav = (props) => {
   return (
     <div className="bg-gradient-to-r from-black via-red-700 to-black flex items-center justify-center py-4">
-      <h1 className="header-font text-white text-6xl mr-10">MyMovieSpace</h1>
+      <Link to="/">
+        <h1 className="header-font text-white text-6xl mr-10">MyMovieSpace</h1>
+      </Link>
       <div className="ml-4 flex items-center">
         <section>
           <ul className="flex flex-row mr-10">
@@ -16,7 +18,9 @@ const Nav = (props) => {
               </Link>
             </li>
             <li className="mx-3 opacity-80 hover:opacity-100">
-              <button className="movie-header">Sign In</button>
+              <Link to="/signin">
+                <button className="movie-header">Sign In</button>
+              </Link>
             </li>
             <li className="mx-3 opacity-80 hover:opacity-100">
               <button className="movie-header">Message Board</button>

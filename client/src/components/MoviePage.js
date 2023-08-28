@@ -69,14 +69,14 @@ const MoviePage = () => {
     localStorage.setItem("bookmarks", JSON.stringify(updatedBookmarks));
   };
 
-  const filteredReviews = reviews.filter((review) => review.movieId === id);
+  const filteredReviews = reviews.filter((review) => review.movieId === id).reverse();
 
   return (
     <>
       {!movie && <LoadingPage />}
       {movie && (
         <div className="flex flex-col">
-          <div className="flex flex-row justify-center">
+          <div className="flex flex-row flex-wrap justify-center">
             <div className="mr-5 my-10">
               <img src={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} className="h-[500px] w-96" />
             </div>
