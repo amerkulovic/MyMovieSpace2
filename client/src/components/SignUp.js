@@ -47,7 +47,7 @@ const SignUp = () => {
   }, [user, pwd, matchPwd]);
 
   return (
-    <section className="bg-red-600 w-1/3 p-3">
+    <section className="bg-red-600 w-1/3 max-xl:w-1/2 max-md:w-10/12 p-3">
       <p ref={errRef} className={errMsg ? "errmsg" : "hidden"} aria-live="assertive">
         {errMsg}
       </p>
