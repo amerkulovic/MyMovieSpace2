@@ -4,8 +4,15 @@ import login from "./../svgs/right-to-bracket-solid.svg";
 import { Link } from "react-router-dom";
 import NavLinks from "./NavLinks";
 import HamburgerMenu from "./HamburgerMenu";
+import React, { useState } from "react";
 
 const Nav = (props) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <div className="bg-gradient-to-r from-black via-red-700 to-black flex items-center justify-center py-4">
       <Link to="/">
@@ -22,8 +29,12 @@ const Nav = (props) => {
           </Link>
         </div>
       </div>
+
       <div className="hidden max-xl:flex">
-        <HamburgerMenu />
+        <button onClick={toggleMenu} className="absolute left-3 top-5 z-20 px-3 py-2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-lg text-red-800 font-bold text-2xl ">
+          X
+        </button>
+        <HamburgerMenu isOpen={isOpen} toggleMenu={toggleMenu} />
       </div>
     </div>
   );
