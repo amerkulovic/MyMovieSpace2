@@ -2,8 +2,8 @@ import search from "./../svgs/search.svg";
 import bookmark from "./../svgs/bookmark.svg";
 import login from "./../svgs/right-to-bracket-solid.svg";
 import { Link } from "react-router-dom";
-import NavLinks from "./NavLinks";
 import HamburgerMenu from "./HamburgerMenu";
+import NavLinks from "./NavLinks";
 import React, { useState } from "react";
 
 const Nav = (props) => {
@@ -22,7 +22,7 @@ const Nav = (props) => {
         <HamburgerMenu isOpen={isOpen} toggleMenu={toggleMenu} search={props.search} value={props.value} />
       </div>
       <Link to="/">
-        <h1 className="header-font text-white text-6xl mr-10 max-xl:m-0">MyMovieSpace</h1>
+        <h1 className="header-font text-white text-6xl mr-10 max-xl:m-0 max-sm:text-5xl">MyMovieSpace</h1>
       </Link>
       <div className="ml-4 flex items-center">
         <div className="max-xl:hidden">

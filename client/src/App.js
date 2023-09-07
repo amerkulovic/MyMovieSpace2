@@ -16,7 +16,7 @@ import BookmarksPage from "./components/BookmarksPage";
 function App() {
   let [movies, setMovies] = useState(null);
   let [name, setName] = useState("");
-  
+
   const valueHandler = (event) => {
     setName(event.target.value);
   };

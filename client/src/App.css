@@ -103,6 +103,13 @@
   pointer-events: none;
 }
 
+@media (max-width: 550px) {
+  .movie-picture {
+    width: 400px;
+    /* height: 300px; New height at 550px and above */
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
