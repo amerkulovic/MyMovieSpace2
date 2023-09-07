@@ -106,7 +106,13 @@
 @media (max-width: 550px) {
   .movie-picture {
     width: 400px;
-    /* height: 300px; New height at 550px and above */
+    height: 300px;
+  }
+}
+
+@media (max-width: 470px) {
+  .movie-picture {
+    height: 250px;
   }
 }
 

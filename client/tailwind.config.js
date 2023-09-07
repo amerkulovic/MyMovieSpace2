@@ -22,8 +22,10 @@ module.exports = {
         "max-md": { max: "820px" },
 
         "max-sm": { max: "639px" },
-        
+
         "max-xsm": { max: "471px" },
+
+        "max-xxsm": { max: "375px" },
       },
     },
   },
