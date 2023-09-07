@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import HamburgerMenu from "./HamburgerMenu";
 import NavLinks from "./NavLinks";
 import React, { useState } from "react";
+import { faBars, faX } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Nav = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +19,7 @@ const Nav = (props) => {
     <div className="bg-gradient-to-r from-black via-red-700 to-black flex items-center max-xl:justify-between justify-center py-4">
       <div className="hidden max-xl:flex">
         <button onClick={toggleMenu} className="z-20 ml-5 px-3 py-2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-lg text-red-800 font-bold text-2xl max-xsm:ml-2 max-xsm:px-2 ">
-          X
+          <FontAwesomeIcon icon={!isOpen ? faBars : faX} />
         </button>
         <HamburgerMenu isOpen={isOpen} toggleMenu={toggleMenu} search={props.search} value={props.value} />
       </div>
