@@ -6,7 +6,7 @@ const FooterSection = (props) => {
       <h1 className="text-4xl">{props.header}</h1>
       <ul className="font-extralight ml-3 mt-3">
         <Link to={props.item1link}>
-          <li className="py-0.5">{props.item1}</li>
+          <li className="py-0.5 flex flex-wrap">{props.item1}</li>
         </Link>
         <Link to={props.item2link}>
           <li className="py-0.5">{props.item2}</li>
