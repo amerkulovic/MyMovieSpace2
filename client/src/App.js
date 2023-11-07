@@ -12,10 +12,16 @@ import CreateAccountPage from "./components/CreateAccountPage";
 import LoadingPage from "./components/LoadingPage";
 import SignInPage from "./components/SignInPage";
 import BookmarksPage from "./components/BookmarksPage";
+import HamburgerMenu from "./components/HamburgerMenu";
 
 function App() {
   let [movies, setMovies] = useState(null);
   let [name, setName] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
   const valueHandler = (event) => {
     setName(event.target.value);
@@ -26,13 +32,15 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         setMovies(data);
+        if (isOpen) setIsOpen(!isOpen);
       });
   };
 
   return (
     <Router>
       <>
-        <Nav search={searchHandler} value={valueHandler} />
+        <Nav search={searchHandler} value={valueHandler} toggleMenu={toggleMenu} isOpen={isOpen} />
+        {isOpen && <HamburgerMenu isOpen={isOpen} toggleMenu={toggleMenu} search={searchHandler} value={valueHandler} />}
         <div className="background-image">
           <Routes>
             <Route path="/" element={<HomePage />} />

@@ -18,10 +18,9 @@ const Nav = (props) => {
   return (
     <div className="bg-gradient-to-r from-black via-red-700 to-black flex items-center max-xl:justify-between justify-center py-4">
       <div className="hidden max-xl:flex">
-        <button onClick={toggleMenu} className="z-20 ml-5 px-3 py-2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-lg text-red-800 font-bold text-2xl max-xsm:ml-2 max-xsm:px-2 ">
-          <FontAwesomeIcon icon={!isOpen ? faBars : faX} />
+        <button onClick={props.toggleMenu} className="z-20 ml-5 px-3 py-2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-lg text-red-800 font-bold text-2xl max-xsm:ml-2 max-xsm:px-2 ">
+          <FontAwesomeIcon icon={!props.isOpen ? faBars : faX} />
         </button>
-        <HamburgerMenu isOpen={isOpen} toggleMenu={toggleMenu} search={props.search} value={props.value} />
       </div>
       <Link to="/">
         <h1 className="header-font text-white text-6xl text-center mr-10 max-xl:m-0 max-sm:text-5xl">MyMovieSpace</h1>
