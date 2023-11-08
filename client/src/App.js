@@ -32,7 +32,7 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         setMovies(data);
-        if (isOpen) setIsOpen(!isOpen);
+        if (isOpen) toggleMenu();
       });
   };
 
