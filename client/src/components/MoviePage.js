@@ -121,6 +121,7 @@ const MoviePage = () => {
                       month: "long",
                       day: "numeric",
                     })}
+                    rating={review.movieRating}
                     text={review.description}
                     username={review.username}
                   />

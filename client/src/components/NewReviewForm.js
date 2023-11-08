@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import StarRating from "./StarRating";
+import { FaStar } from "react-icons/fa";
 
 const NewReviewForm = (props) => {
   let [isOpen, setIsOpen] = useState(false);
   let [username, setUsername] = useState("");
   let [message, setMessage] = useState("");
   let [title, setTitle] = useState("");
+  let [rating, setRating] = useState(null);
+  let [hover, setHover] = useState(null);
+  console.log(rating);
+
   let { id } = useParams();
 
   let usernameHandler = (e) => {
@@ -20,13 +26,17 @@ const NewReviewForm = (props) => {
     setTitle(e.target.value);
     console.log(title);
   };
+
+  let ratingHandler = () => {
+    setRating();
+  };
   let submitHandler = (e) => {
     // e.preventDefault();
 
     fetch("/create-review", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title: title, description: message, username: username, movieId: id}),
+      body: JSON.stringify({ title: title, description: message, username: username, movieId: id, movieRating: rating }),
     }).then(() => {
       console.log("new review added!");
     });
@@ -40,26 +50,29 @@ const NewReviewForm = (props) => {
         {isOpen && (
           <form className="flex flex-col" onSubmit={submitHandler}>
             <div className="my-4">
-              <div>
-                <label className="text-white">Username:</label>
-              </div>
-              <div>
-                <input className="w-full rounded-lg p-2 text-black" onChange={usernameHandler} />
-              </div>
+              <label className="text-white">Username:</label>
+              <input className="w-full rounded-lg p-2 text-black" onChange={usernameHandler} />
             </div>
             <div className="my-4">
-              <div>
-                <label className="text-white">Title:</label>
-              </div>
-              <div>
-                <input className="w-full rounded-lg p-2 text-black" onChange={titleHandler} />
-              </div>
+              <label className="text-white">Title:</label>
+              <input className="w-full rounded-lg p-2 text-black" onChange={titleHandler} />
             </div>
             <div className="my-4">
-              <div>
-                <label className="text-white">Message:</label>
-              </div>
+              <label className="text-white">Message:</label>
               <textarea className="w-full rounded-lg p-2 text-black" onChange={messageHandler} />
+            </div>
+            <div className="flex justify-center my-4">
+              <div className="flex flex-row">
+                {[...Array(5)].map((star, index) => {
+                  const currentRating = index + 1;
+                  return (
+                    <label>
+                      <input type="radio" name="rating" value={currentRating} className="hidden" onClick={() => setRating(currentRating)} />
+                      <FaStar size={25} className="cursor-pointer" color={currentRating <= (hover || rating) ? "#ffc107" : "#e4e5e9"} onMouseEnter={() => setHover(currentRating)} onMouseLeave={() => setHover(null)} />
+                    </label>
+                  );
+                })}
+              </div>
             </div>
             <button className="bg-red-900 movie-header text-2xl py-3 rounded-lg mb-10">Publish Review</button>
           </form>
