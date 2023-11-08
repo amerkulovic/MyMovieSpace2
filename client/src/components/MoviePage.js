@@ -6,6 +6,7 @@ import notFoundImg from "./../images/notfoundimg.png";
 import LoadingPage from "./LoadingPage";
 import ReviewCard from "./ReviewCard";
 import NewReviewForm from "./NewReviewForm";
+import { FaStar } from "react-icons/fa";
 
 const MoviePage = () => {
   let [movie, setMovie] = useState(null);
@@ -71,6 +72,12 @@ const MoviePage = () => {
 
   const filteredReviews = reviews.filter((review) => review.movieId === id).reverse();
 
+  console.log(filteredReviews.length);
+
+  let averageReview = filteredReviews.reduce((currReview, review) => {
+    return currReview + review.movieRating / filteredReviews.length;
+  }, 0);
+
   return (
     <>
       {!movie && <LoadingPage />}
@@ -99,6 +106,10 @@ const MoviePage = () => {
                     {rating.Source} {rating.Value}
                   </p>
                 ))}
+                <p className="flex flex-row items-center">
+                  MyMovieSpace {averageReview.toFixed(1)}
+                  <FaStar size={15} className="text-yellow-500 ml-1" />
+                </p>
               </section>
               <button
                 onClick={() => {
@@ -121,7 +132,7 @@ const MoviePage = () => {
                       month: "long",
                       day: "numeric",
                     })}
-                    rating={review.movieRating}
+                    rating={!review.movieRating ? (review.movieRating = 0) : review.movieRating}
                     text={review.description}
                     username={review.username}
                   />
