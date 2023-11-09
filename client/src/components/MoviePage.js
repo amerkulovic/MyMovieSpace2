@@ -107,8 +107,15 @@ const MoviePage = () => {
                   </p>
                 ))}
                 <p className="flex flex-row items-center">
-                  MyMovieSpace {averageReview.toFixed(1)}
-                  <FaStar size={15} className="text-yellow-500 ml-1" />
+                  MyMovieSpace{" "}
+                  {averageReview <= 0 ? (
+                    "N/A"
+                  ) : (
+                    <>
+                      {averageReview.toFixed(1)}
+                      <FaStar size={15} className="text-yellow-500 ml-1" />
+                    </>
+                  )}
                 </p>
               </section>
               <button
