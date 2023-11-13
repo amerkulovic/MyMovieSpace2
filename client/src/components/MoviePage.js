@@ -74,8 +74,8 @@ const MoviePage = () => {
 
   console.log(filteredReviews.length);
 
-  let averageReview = filteredReviews.reduce((currReview, review) => {
-    return currReview + review.movieRating / filteredReviews.length;
+  let averageReview = filteredReviews.reduce((currNumber, review) => {
+    return currNumber + review.movieRating / filteredReviews.length;
   }, 0);
 
   return (
