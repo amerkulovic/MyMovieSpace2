@@ -7,10 +7,14 @@ const BookmarksPage = () => {
   let [bookmarks, setBookmarks] = useState([]);
 
   useEffect(() => {
-    setBookmarks(JSON.parse(storedBookmarks));
+    if (storedBookmarks) {
+      setBookmarks(JSON.parse(storedBookmarks));
+    } else {
+      setBookmarks([]);
+    }
   }, []);
 
-  console.warn(bookmarks);
+  console.warn("Your bookmarks are " + bookmarks);
 
   return (
     <>
