@@ -2,9 +2,10 @@ const express = require("express");
 const db = require("./config/connection");
 const Review = require("./models/Review");
 const mongodb = require("mongodb").MongoClient;
-
+require("dotenv").config();
 const PORT = process.env.PORT || 3001;
 const app = express();
+const path = require("path");
 
 const connectionStringURI = `mongodb://127.0.0.1:27017/mymoviespaceDB`;
 
