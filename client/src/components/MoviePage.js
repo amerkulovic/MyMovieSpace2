@@ -44,7 +44,7 @@ const MoviePage = () => {
   });
 
   const showMovie = async () => {
-    await fetch(`http://www.omdbapi.com/?i=${id}&apikey=f14ca85d`)
+    await fetch(`https://www.omdbapi.com/?i=${id}&apikey=f14ca85d`)
       .then(function (response) {
         return response.json();
       })
