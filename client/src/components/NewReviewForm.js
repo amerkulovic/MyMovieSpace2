@@ -16,30 +16,32 @@ const NewReviewForm = (props) => {
 
   let usernameHandler = (e) => {
     setUsername(e.target.value);
-    console.log(username);
   };
   let messageHandler = (e) => {
     setMessage(e.target.value);
-    console.log(message);
   };
   let titleHandler = (e) => {
     setTitle(e.target.value);
-    console.log(title);
   };
 
   let ratingHandler = () => {
     setRating();
   };
+
   let submitHandler = (e) => {
     // e.preventDefault();
 
-    fetch("/create-review", {
+    fetch(`/create-review`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title: title, description: message, username: username, movieId: id, movieRating: rating }),
-    }).then(() => {
-      console.log("new review added!");
-    });
+    })
+      .then(() => {
+        console.log("new review added!");
+      })
+      .catch((error) => {
+        console.error("Error creating review:", error);
+      });
   };
   return (
     <div className="bg-gradient-to-r from-red-600 via-red-700 to-red-600 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black">
