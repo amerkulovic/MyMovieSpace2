@@ -1,25 +1,28 @@
 const express = require("express");
 const mongoose = require("mongoose");
-require("dotenv").config();
 const path = require("path");
 const Review = require("./models/Review");
-
 const PORT = process.env.PORT || 3001;
 const app = express();
+require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // MongoDB Connection
-const connectionStringURI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/mymoviespaceDB";
-
+const connectionStringURI = process.env.MONGODB_URI;
+if (!connectionStringURI) {
+  console.error("Error: MONGODB_URI is not defined in the environment variables.");
+  process.exit(1);
+}
+console.log(process.env);
 mongoose
   .connect(connectionStringURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
+console.log("MongoDB URI:", connectionStringURI);
 
-// Static file serving (for production builds)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
   app.get("*", (req, res) => {
@@ -27,7 +30,6 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-// API Routes
 app.get("/all-reviews", async (req, res) => {
   try {
     const result = await Review.find({});
@@ -55,7 +57,6 @@ app.post("/create-review", async (req, res) => {
   }
 });
 
-// Start Server
 app.listen(PORT, () => {
   console.log(`API server running on port ${PORT}!`);
 });
