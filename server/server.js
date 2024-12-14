@@ -23,12 +23,6 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 console.log("MongoDB URI:", connectionStringURI);
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client/build", "index.html"));
-  });
-}
 
 app.get("/all-reviews", async (req, res) => {
   try {
@@ -56,6 +50,13 @@ app.post("/create-review", async (req, res) => {
     res.status(500).json({ error: "Something went wrong" });
   }
 });
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/build")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`API server running on port ${PORT}!`);
