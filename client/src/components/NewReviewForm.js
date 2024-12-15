@@ -1,31 +1,26 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import StarRating from "./StarRating";
 import { FaStar } from "react-icons/fa";
 
 const NewReviewForm = (props) => {
   let [isOpen, setIsOpen] = useState(false);
-  let [username, setUsername] = useState("");
-  let [message, setMessage] = useState("");
-  let [title, setTitle] = useState("");
   let [rating, setRating] = useState(null);
   let [hover, setHover] = useState(null);
-  console.log(rating);
 
   let { id } = useParams();
 
-  let usernameHandler = (e) => {
-    setUsername(e.target.value);
-  };
-  let messageHandler = (e) => {
-    setMessage(e.target.value);
-  };
-  let titleHandler = (e) => {
-    setTitle(e.target.value);
-  };
+  const [formData, setFormData] = useState({
+    userName: "",
+    message: "",
+    title: "",
+  });
 
-  let ratingHandler = () => {
-    setRating();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   let submitHandler = (e) => {
@@ -34,7 +29,7 @@ const NewReviewForm = (props) => {
     fetch(`/create-review`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title: title, description: message, username: username, movieId: id, movieRating: rating }),
+      body: JSON.stringify({ title: formData.title, description: formData.message, username: formData.userName, movieId: id, movieRating: rating }),
     })
       .then(() => {
         console.log("new review added!");
@@ -52,15 +47,15 @@ const NewReviewForm = (props) => {
         <form className="flex flex-col" onSubmit={submitHandler}>
           <div className="my-4">
             <label className="text-white">Username:</label>
-            <input className="w-full rounded-lg p-2 text-black" onChange={usernameHandler} />
+            <input className="w-full rounded-lg p-2 text-black" name="userName" value={formData.userName} onChange={handleChange} />
           </div>
           <div className="my-4">
             <label className="text-white">Title:</label>
-            <input className="w-full rounded-lg p-2 text-black" onChange={titleHandler} />
+            <input className="w-full rounded-lg p-2 text-black" name="title" value={formData.title} onChange={handleChange} />
           </div>
           <div className="my-4">
             <label className="text-white">Message:</label>
-            <textarea className="w-full rounded-lg p-2 text-black" onChange={messageHandler} />
+            <textarea className="w-full rounded-lg p-2 text-black" name="message" value={formData.message} onChange={handleChange} />
           </div>
           <div className="flex justify-center mt-2 mb-4">
             <div className="flex flex-row">
