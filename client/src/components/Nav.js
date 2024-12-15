@@ -16,20 +16,22 @@ const Nav = (props) => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-black via-red-700 to-black flex items-center max-xl:justify-between justify-center py-4">
-      <div className="hidden max-xl:flex">
+    <div className="bg-gradient-to-r from-black via-red-700 to-black flex items-center max-lg:justify-between justify-center py-4">
+      <div className="hidden max-lg:flex">
         <button onClick={props.toggleMenu} className="z-20 ml-5 px-3 py-2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-lg text-red-800 font-bold text-2xl max-xsm:ml-2 max-xsm:px-2 ">
           <FontAwesomeIcon icon={!props.isOpen ? faBars : faX} />
         </button>
       </div>
-      <Link to="/">
-        <h1 className="header-font text-white text-6xl text-center mr-10 max-xl:m-0 max-sm:text-5xl">MyMovieSpace</h1>
-      </Link>
-      <div className="ml-4 flex items-center">
-        <div className="max-xl:hidden">
+      <div className="flex justify-end max-lg:justify-center w-[33%]">
+        <Link to="/">
+          <h1 className="header-font text-white text-6xl text-center mr-10 max-lg:m-0 max-sm:text-5xl">MyMovieSpace</h1>
+        </Link>
+      </div>
+      <div className="ml-4 flex justify-around items-center w-[66%] max-lg:w-[0%]">
+        <div className="max-lg:hidden">
           <NavLinks />
         </div>
-        <div className="opacity-70 hover:opacity-100 flex items-center max-xl:hidden">
+        <div className="opacity-70 hover:opacity-100 flex items-center pr-10 max-lg:hidden">
           <input className="h-14 px-4 rounded-tl-xl rounded-bl-xl focus:outline-none" placeholder="Find a Movie!" onChange={props.value} />
           <Link to="/search">
             <button className="bg-white p-4 h-14 rounded-tr-xl rounded-br-xl " onClick={props.search}>

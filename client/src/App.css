@@ -55,10 +55,10 @@
 
 .movie-picture {
   position: relative;
-  width: 480px;
+  /* width: 480px; */
   height: 370px;
   /* border: 3px solid #fefbec; */
-  margin: 10px;
+  /* margin: 10px; */
 }
 
 .movie-picture:hover {

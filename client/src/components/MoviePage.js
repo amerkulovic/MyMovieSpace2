@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { json, matchPath, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import notFoundImg from "./../images/notfoundimg.png";
@@ -28,6 +28,10 @@ const MoviePage = () => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    console.log("Reviews state updated:", reviews);
+  }, [reviews]);
 
   useEffect(() => {
     const storedBookmarks = localStorage.getItem("bookmarks");
@@ -72,16 +76,15 @@ const MoviePage = () => {
 
   const filteredReviews = reviews.filter((review) => review.movieId === id).reverse();
 
-  console.log(filteredReviews.length);
-
   let averageReview = filteredReviews.reduce((currNumber, review) => {
     return currNumber + review.movieRating / filteredReviews.length;
   }, 0);
 
   return (
     <>
-      {!movie && <LoadingPage />}
-      {movie && (
+      {!movie ? (
+        <LoadingPage />
+      ) : (
         <div className="flex flex-col">
           <div className="flex flex-row flex-wrap justify-center">
             <div className="mr-5 my-10 max-xl:mr-0 max-sm:w-2/3">
