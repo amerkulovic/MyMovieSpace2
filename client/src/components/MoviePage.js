@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { faBookmark } from "@fortawesome/free-solid-svg-icons";
+import { faBookmark, faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import notFoundImg from "./../images/notfoundimg.png";
 import LoadingPage from "./LoadingPage";
@@ -11,7 +11,9 @@ import { FaStar } from "react-icons/fa";
 const MoviePage = () => {
   let [movie, setMovie] = useState(null);
   let [bookmarks, setBookmarks] = useState([]);
+  let [watchedMovies, setWatchedMovies] = useState([]);
   let [bookmarkStyling, setBookmarkStyling] = useState("text-4xl mt-3");
+  let [watchedStyling, setWatchedStyling] = useState("text-4xl mt-3 ml-2");
   let [reviews, setReviews] = useState([]);
   let { id } = useParams();
 
@@ -30,13 +32,13 @@ const MoviePage = () => {
   }, []);
 
   useEffect(() => {
-    console.log("Reviews state updated:", reviews);
-  }, [reviews]);
-
-  useEffect(() => {
     const storedBookmarks = localStorage.getItem("bookmarks");
+    const storedWatchedMovies = localStorage.getItem("watched");
     if (storedBookmarks) {
       setBookmarks(JSON.parse(storedBookmarks));
+    }
+    if (storedWatchedMovies) {
+      setWatchedMovies(JSON.parse(storedWatchedMovies));
     }
     showMovie();
   }, []);
@@ -44,6 +46,9 @@ const MoviePage = () => {
   useEffect(() => {
     for (let i = 0; i < bookmarks.length; i++) {
       if (bookmarks[i].id === id) setBookmarkStyling("text-4xl mt-3 text-yellow-400");
+    }
+    for (let i = 0; i < watchedMovies.length; i++) {
+      if (watchedMovies[i].id === id) setWatchedStyling("text-4xl ml-2 mt-3 text-blue-400");
     }
   });
 
@@ -72,6 +77,23 @@ const MoviePage = () => {
 
     setBookmarks(updatedBookmarks);
     localStorage.setItem("bookmarks", JSON.stringify(updatedBookmarks));
+  };
+
+  const watchedMoviesHandler = (newMovie) => {
+    const updatedMovies = [...watchedMovies];
+
+    const existingMovieIndex = updatedMovies.findIndex((movie) => movie.id === newMovie.id);
+
+    if (existingMovieIndex !== -1) {
+      updatedMovies.splice(existingMovieIndex, 1);
+      setWatchedStyling("text-4xl ml-2 mt-3 text-white");
+    } else {
+      updatedMovies.push(newMovie);
+      setWatchedStyling("text-4xl ml-2 mt-3 text-blue-400");
+    }
+
+    setWatchedMovies(updatedMovies);
+    localStorage.setItem("watched", JSON.stringify(updatedMovies));
   };
 
   const filteredReviews = reviews.filter((review) => review.movieId === id).reverse();
@@ -127,6 +149,13 @@ const MoviePage = () => {
                 }}
               >
                 <FontAwesomeIcon icon={faBookmark} className={bookmarkStyling} />
+              </button>
+              <button
+                onClick={() => {
+                  watchedMoviesHandler({ id: movie.imdbID, title: movie.Title, poster: movie.Poster });
+                }}
+              >
+                <FontAwesomeIcon icon={faEye} className={watchedStyling} />
               </button>
             </div>
           </div>

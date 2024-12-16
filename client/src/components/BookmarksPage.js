@@ -14,8 +14,6 @@ const BookmarksPage = () => {
     }
   }, []);
 
-  console.warn("Your bookmarks are " + bookmarks);
-
   return (
     <>
       {bookmarks.length !== 0 ? (

@@ -13,6 +13,7 @@ import LoadingPage from "./components/LoadingPage";
 import SignInPage from "./components/SignInPage";
 import BookmarksPage from "./components/BookmarksPage";
 import HamburgerMenu from "./components/HamburgerMenu";
+import WatchedMoviesPage from "./components/WatchedMoviesPage";
 
 function App() {
   let [movies, setMovies] = useState(null);
@@ -47,6 +48,7 @@ function App() {
             <Route path="/search" element={<div className="flex flex-wrap justify-center">{movies ? movies.Search.map((movie) => <MovieCard moviePoster={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} movieTitle={movie.Title} imdbID={movie.imdbID} />) : <LoadingPage />}</div>} />
             <Route path="/:search/:id" element={<MoviePage />} />
             <Route path="/bookmarks" element={<BookmarksPage />} />
+            <Route path="/watched-movies" element={<WatchedMoviesPage />} />
             <Route path="/signup" element={<CreateAccountPage />} />
             <Route path="/signin" element={<SignInPage />} />
           </Routes>
