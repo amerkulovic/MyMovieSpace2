@@ -16,7 +16,6 @@ if (!connectionStringURI) {
   console.error("Error: MONGODB_URI is not defined in the environment variables.");
   process.exit(1);
 }
-console.log(process.env);
 mongoose
   .connect(connectionStringURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("MongoDB connected"))

@@ -44,7 +44,6 @@
 }
 .movie-header {
   font-family: movie-header;
-  /* font-size: 30px; */
   color: white;
 }
 .background-image {
@@ -55,12 +54,9 @@
 
 .movie-picture {
   position: relative;
-  /* width: 480px; */
+  width: 270px;
   height: 370px;
-  /* border: 3px solid #fefbec; */
-  /* margin: 10px; */
 }
-
 .movie-picture:hover {
   filter: blur(2px) brightness(60%);
   box-shadow: 0 0 16px #cc1d1d;
@@ -95,10 +91,10 @@
 }
 
 .picture-text {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: bold;
   position: absolute;
-  top: 40%;
+  top: 45%;
   left: 52%;
   transform: translate(-50%, -50%);
   opacity: 0;

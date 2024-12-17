@@ -12,6 +12,7 @@ const MoviePage = () => {
   let [movie, setMovie] = useState(null);
   let [bookmarks, setBookmarks] = useState([]);
   let [watchedMovies, setWatchedMovies] = useState([]);
+  const [reviewCap, setReviewCap] = useState(3);
   let [bookmarkStyling, setBookmarkStyling] = useState("text-4xl mt-3");
   let [watchedStyling, setWatchedStyling] = useState("text-4xl mt-3 ml-2");
   let [reviews, setReviews] = useState([]);
@@ -96,6 +97,14 @@ const MoviePage = () => {
     localStorage.setItem("watched", JSON.stringify(updatedMovies));
   };
 
+  const showMoreHandler = () => {
+    setReviewCap(filteredReviews.length);
+  };
+
+  const showLessHandler = () => {
+    setReviewCap(3);
+  };
+
   const filteredReviews = reviews.filter((review) => review.movieId === id).reverse();
 
   let averageReview = filteredReviews.reduce((currNumber, review) => {
@@ -163,19 +172,30 @@ const MoviePage = () => {
             {filteredReviews.length !== 0 ? (
               <>
                 <h1 className="flex justify-center movie-header text-4xl border-b-[0.5px] border-white w-[900px] mb-4">Reviews</h1>
-                {filteredReviews.map((review, index) => (
+                {filteredReviews.slice(0, reviewCap).map((review, index) => (
                   <ReviewCard
+                    key={index}
                     title={review.title}
                     date={new Date(review.lastAccessed).toLocaleDateString("en-US", {
                       year: "numeric",
                       month: "long",
                       day: "numeric",
                     })}
-                    rating={!review.movieRating ? (review.movieRating = 0) : review.movieRating}
+                    rating={review.movieRating || 0}
                     text={review.description}
                     username={review.username}
                   />
                 ))}
+                {reviewCap < filteredReviews.length && (
+                  <button onClick={showMoreHandler} className="bg-gradient-to-r from-red-800 via-red-700 to-red-800 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
+                    Show more
+                  </button>
+                )}
+                {reviewCap === filteredReviews.length && (
+                  <button onClick={showLessHandler} className="bg-gradient-to-r from-red-800 via-red-700 to-red-800 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
+                    Show less
+                  </button>
+                )}
               </>
             ) : (
               <h1 className="movie-header text-4xl text-center max-md:text-3xl max-xsm:text-2xl mt-10">Be the first to write a review!</h1>
