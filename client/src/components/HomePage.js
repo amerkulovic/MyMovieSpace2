@@ -57,34 +57,38 @@ const HomePage = () => {
         <HomeCard img={bookmark} text={"Bookmark your must-watch films to create a personalized list you'll never lose track of."} />
         <HomeCard img={bookmark} text={"Leave star ratings to share your thoughts and help others discover their next favorite movie."} />
       </section>
-      <h1 className="text-white text-2xl">Reviews this week</h1>
-      {recentReviews
-        .reverse()
-        .slice(0, reviewCap)
-        .map((review, index) => (
-          <ReviewCard
-            key={index}
-            title={review.title}
-            // date={new Date(review.lastAccessed).toLocaleDateString("en-US", {
-            //   year: "numeric",
-            //   month: "long",
-            //   day: "numeric",
-            // })}
-            rating={review.movieRating || 0}
-            text={review.description}
-            username={review.username}
-          />
-        ))}
-      {reviewCap < recentReviews.length && (
-        <button onClick={showMoreHandler} className="bg-gradient-to-r from-red-800 via-red-700 to-red-800 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
-          Show more
-        </button>
-      )}
-      {reviewCap === recentReviews.length && (
-        <button onClick={showLessHandler} className="bg-gradient-to-r from-red-800 via-red-700 to-red-800 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
-          Show less
-        </button>
-      )}
+      <section className="flex flex-col items-center w-full bg-gradient-to-b from-transparent via-black to-black">
+        <h1 className="text-white text-3xl movie-header py-4 text-center">Reviews this week</h1>
+        <div className="w-[80%] h-px bg-white mx-auto"></div>
+
+        {recentReviews
+          .reverse()
+          .slice(0, reviewCap)
+          .map((review, index) => (
+            <ReviewCard
+              key={index}
+              title={review.title}
+              // date={new Date(review.lastAccessed).toLocaleDateString("en-US", {
+              //   year: "numeric",
+              //   month: "long",
+              //   day: "numeric",
+              // })}
+              rating={review.movieRating || 0}
+              text={review.description}
+              username={review.username}
+            />
+          ))}
+        {reviewCap < recentReviews.length && (
+          <button onClick={showMoreHandler} className="bg-gradient-to-r from-red-800 via-red-700 to-red-800 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
+            Show more
+          </button>
+        )}
+        {reviewCap === recentReviews.length && (
+          <button onClick={showLessHandler} className="bg-gradient-to-r from-red-800 via-red-700 to-red-800 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
+            Show less
+          </button>
+        )}
+      </section>
     </div>
   );
 };
