@@ -12,7 +12,7 @@ const MoviePage = () => {
   let [movie, setMovie] = useState(null);
   let [bookmarks, setBookmarks] = useState([]);
   let [watchedMovies, setWatchedMovies] = useState([]);
-  const [reviewCap, setReviewCap] = useState(3);
+  let [reviewCap, setReviewCap] = useState(3);
   let [bookmarkStyling, setBookmarkStyling] = useState("text-4xl mt-3");
   let [watchedStyling, setWatchedStyling] = useState("text-4xl mt-3 ml-2");
   let [reviews, setReviews] = useState([]);
