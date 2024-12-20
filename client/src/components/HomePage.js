@@ -60,7 +60,6 @@ const HomePage = () => {
       <section className="flex flex-col items-center w-full bg-gradient-to-b from-transparent via-black to-black">
         <h1 className="text-white text-3xl movie-header py-4 text-center">Reviews this week</h1>
         <div className="w-[80%] h-px bg-white mx-auto"></div>
-
         {recentReviews
           .reverse()
           .slice(0, reviewCap)

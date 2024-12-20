@@ -6,6 +6,7 @@ const reviewSchema = new mongoose.Schema({
   username: { type: String, required: true },
   movieId: { type: String, required: true },
   movieRating: { type: Number, required: true },
+  poster: { type: String, required: false },
   lastAccessed: { type: Date, default: Date.now },
 });
 

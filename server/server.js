@@ -40,6 +40,7 @@ app.post("/create-review", async (req, res) => {
       username: req.body.username,
       movieId: req.body.movieId,
       movieRating: req.body.movieRating,
+      poster: req.body.poster,
     });
     const savedReview = await newReview.save();
     res.status(201).json(savedReview);

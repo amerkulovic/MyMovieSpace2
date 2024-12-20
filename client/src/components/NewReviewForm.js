@@ -22,14 +22,14 @@ const NewReviewForm = (props) => {
       [name]: value,
     }));
   };
-
+  
   let submitHandler = (e) => {
     // e.preventDefault();
 
     fetch(`/create-review`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title: formData.title, description: formData.message, username: formData.userName, movieId: id, movieRating: rating }),
+      body: JSON.stringify({ title: formData.title, description: formData.message, username: formData.userName, movieId: id, movieRating: rating, poster: props.poster }),
     })
       .then(() => {
         console.log("new review added!");

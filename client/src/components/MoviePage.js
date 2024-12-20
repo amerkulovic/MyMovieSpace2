@@ -18,6 +18,8 @@ const MoviePage = () => {
   let [reviews, setReviews] = useState([]);
   let { id } = useParams();
 
+  console.log(movie);
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -200,7 +202,7 @@ const MoviePage = () => {
             ) : (
               <h1 className="movie-header text-4xl text-center max-md:text-3xl max-xsm:text-2xl mt-10">Be the first to write a review!</h1>
             )}
-            <NewReviewForm />
+            <NewReviewForm poster={movie.Poster} />
           </section>
         </div>
       )}
