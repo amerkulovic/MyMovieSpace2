@@ -6,7 +6,7 @@ const StarRating = (props) => {
       {[...Array(5)].map((star, index) => {
         const currentRating = index + 1;
         return (
-          <label key={index}>
+          <label key={index} className={props?.styling}>
             <FaStar size={25} color={currentRating <= props.rating ? "#ffc107" : "#e4e5e9"} />
           </label>
         );

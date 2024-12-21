@@ -48,8 +48,8 @@
 }
 .background-image {
   background-image: url("./images/main-bg.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-size: 100%;
+  background-repeat: repeat-y;
 }
 
 .movie-picture {

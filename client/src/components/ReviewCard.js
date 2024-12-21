@@ -8,7 +8,7 @@ const ReviewCard = (props) => {
         <StarRating rating={props.rating} />
       </div>
       <section>
-        <p className="text-center my-5 mx-5 text-lg font-light">{props.text}</p>
+        <p className="text-center my-5 mx-5 text-lg font-bold">{props.text}</p>
         <section className="flex flex-row justify-between items-center">
           <p>{props?.date}</p>
           <h1 className="flex justify-end mr-5 movie-header text-xl">-{props.username}</h1>
