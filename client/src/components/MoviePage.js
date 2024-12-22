@@ -193,7 +193,7 @@ const MoviePage = () => {
                     Show more
                   </button>
                 )}
-                {reviewCap === filteredReviews.length && (
+                {reviewCap === filteredReviews.length && filteredReviews.length > 3 && (
                   <button onClick={showLessHandler} className="bg-gradient-to-r from-red-800 via-red-700 to-red-800 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
                     Show less
                   </button>
