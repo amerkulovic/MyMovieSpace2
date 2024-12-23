@@ -103,10 +103,8 @@
 .picture-text:hover {
   opacity: 1;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.mobile-poster {
+  visibility: hidden;
 }
 
 @media (max-width: 550px) {

@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 const Review = require("./models/Review");
+const Message = require("./models/Message");
 const PORT = process.env.PORT || 3001;
 const app = express();
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
@@ -32,6 +33,16 @@ app.get("/all-reviews", async (req, res) => {
   }
 });
 
+app.get("/all-messages", async (req, res) => {
+  try {
+    const result = await Message.find({});
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Error fetching reviews:", error);
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+});
+
 app.post("/create-review", async (req, res) => {
   try {
     const newReview = new Review({
@@ -46,6 +57,21 @@ app.post("/create-review", async (req, res) => {
     res.status(201).json(savedReview);
   } catch (error) {
     console.error("Error creating review:", error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
+app.post("/create-message", async (req, res) => {
+  try {
+    const newMessage = new Message({
+      title: req.body.title,
+      description: req.body.description,
+      username: req.body.username,
+    });
+    const savedMessage = await newMessage.save();
+    res.status(201).json(savedMessage);
+  } catch (error) {
+    console.error("Error creating message:", error.message, error.stack);
     res.status(500).json({ error: "Something went wrong" });
   }
 });

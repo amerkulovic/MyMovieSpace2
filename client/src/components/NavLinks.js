@@ -19,9 +19,11 @@ const NavLinks = (props) => {
           </Link>
         </li> */}
         <li className="mx-3 opacity-80 py-[10px] hover:opacity-100">
-          <button className="movie-header" onClick={props.buttonClick}>
-            Message Board
-          </button>
+          <Link to="/messages">
+            <button className="movie-header" onClick={props.buttonClick}>
+              Message Board
+            </button>
+          </Link>
         </li>
         <li className="mx-3 opacity-80 py-[10px] hover:opacity-100">
           <Link to="/bookmarks">

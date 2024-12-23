@@ -1,3 +1,4 @@
 const Review = require("./Review");
+const Message = require("./Message");
 
-module.exports = { Review };
+module.exports = { Review, Message };

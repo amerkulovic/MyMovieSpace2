@@ -54,7 +54,7 @@ const HomePage = () => {
           <p className="text-white w-10/12 text-2xl font-semibold">Track films you’ve watched. Bookmark those you're interested in. Tell your friends what they need to watch.</p>
         </div>
       </div>
-      <section className="flex flex-wrap justify-center w-[80%] pb-[70px]">
+      <section className="flex flex-wrap justify-center w-[80%] pb-[70px] max-sm:w-11/12">
         <HomeCard img={eye} text={"Keep track of every film you’ve ever watched (or just start from the day you join)"} />
         <HomeCard img={search} text={"Easily search for any movie, from classics to blockbusters, and find exactly what you're looking for."} />
         <HomeCard img={bookmark} text={"Bookmark your must-watch films to create a personalized list you'll never lose track of."} />
