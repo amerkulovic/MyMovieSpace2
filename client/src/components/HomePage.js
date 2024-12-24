@@ -7,10 +7,18 @@ import bar from "../svgs/bars.svg";
 import filmreel from "../svgs/filmreel.svg";
 import { useState, useEffect } from "react";
 import HomeReviewCard from "./HomeReviewCard";
+import AOS from "aos";
 
 const HomePage = () => {
   const [reviews, setReviews] = useState([]);
   let [reviewCap, setReviewCap] = useState(3);
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -49,8 +57,10 @@ const HomePage = () => {
   return (
     <div className="flex flex-col justify-center items-center text-center">
       <div className="flex flex-col justify-center py-52 max-md:py-20">
-        <h1 className=" flex justify-center text-6xl movie-header mb-5">Search. Save. Discover</h1>
-        <div className="flex justify-center">
+        <h1 data-aos="fade-down" className=" flex justify-center text-6xl movie-header mb-5">
+          Search. Save. Discover
+        </h1>
+        <div data-aos="fade-up" className="flex justify-center">
           <p className="text-white w-10/12 text-2xl font-semibold">Track films you’ve watched. Bookmark those you're interested in. Tell your friends what they need to watch.</p>
         </div>
       </div>

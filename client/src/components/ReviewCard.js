@@ -1,8 +1,16 @@
+import { useEffect } from "react";
 import StarRating from "./StarRating";
+import AOS from "aos";
 
 const ReviewCard = (props) => {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+  }, []);
   return (
-    <div className="flex flex-col bg-gradient-to-r from-black via-red-600 to-black text-white rounded-lg w-5/6 p-3 my-3 border border-red-700">
+    <div data-aos="fade-up" className="flex flex-col bg-gradient-to-r from-black via-red-600 to-black text-white rounded-lg w-5/6 p-3 my-3 border border-red-700">
       <div className="flex justify-between">
         <h1 className="movie-header text-4xl">{props.title}</h1>
         <StarRating rating={props.rating} />

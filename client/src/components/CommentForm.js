@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import {  faX } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const CommentForm = () => {
   let [isOpen, setIsOpen] = useState(false);
@@ -45,9 +47,12 @@ const CommentForm = () => {
 
   return (
     <div className="bg-gradient-to-r from-red-600 via-red-700 to-red-600 text-white rounded-lg w-full p-3 my-3 border-2 border-black">
-      <button className="w-full" onClick={() => setIsOpen(!isOpen)}>
-        <h1 className="text-center text-3xl movie-header">Leave A Comment</h1>
-      </button>
+      <div className="flex items-center">
+        <FontAwesomeIcon className={`text-2xl hover:cursor-pointer ${!isOpen ? "hidden" : ""}`} icon={faX} onClick={() => setIsOpen(!isOpen)} />
+        <button className="w-full" onClick={() => setIsOpen(!isOpen)}>
+          <h1 className="text-center text-3xl movie-header">Leave A Comment</h1>
+        </button>
+      </div>
       {isOpen && (
         <form className="flex flex-col" onSubmit={submitHandler}>
           <div className="my-4">

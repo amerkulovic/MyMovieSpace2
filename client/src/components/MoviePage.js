@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import AOS from "aos";
 import { faBookmark, faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import notFoundImg from "./../images/notfoundimg.png";
@@ -18,7 +19,12 @@ const MoviePage = () => {
   let [reviews, setReviews] = useState([]);
   let { id } = useParams();
 
-  console.log(movie);
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -120,10 +126,10 @@ const MoviePage = () => {
       ) : (
         <div className="flex flex-col">
           <div className="flex flex-row flex-wrap justify-center">
-            <div className="mr-5 my-10 max-xl:mr-0 max-sm:w-2/3">
+            <div data-aos="fade-right" className="mr-5 my-10 max-xl:mr-0 max-sm:w-2/3">
               <img src={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} className="h-[500px] max-sm:h-[400px] w-96" />
             </div>
-            <div className="text-white mt-10 max-xl:w-1/2 max-xl:ml-5 max-md:ml-0 max-md:bg-gradient-to-r from-red-900 via-red-600 to-red-900 w-3/5 max-md:p-5 max-md:rounded-lg max-md:mt-0 max-md:mb-3 max-md:w-10/12">
+            <div data-aos="fade-left" className="text-white mt-10 max-xl:w-1/2 max-xl:ml-5 max-md:ml-0 max-md:bg-gradient-to-r from-red-900 via-red-600 to-red-900 w-3/5 max-md:p-5 max-md:rounded-lg max-md:mt-0 max-md:mb-3 max-md:w-10/12">
               <section className="border-b-[0.5px] border-white mb-5">
                 <h1 className="movie-header text-5xl w-full">{movie.Title}</h1>
                 <p>

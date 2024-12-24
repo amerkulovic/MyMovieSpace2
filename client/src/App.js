@@ -16,6 +16,7 @@ import BookmarksPage from "./components/BookmarksPage";
 import HamburgerMenu from "./components/HamburgerMenu";
 import WatchedMoviesPage from "./components/WatchedMoviesPage";
 import MessagesPage from "./components/MessagesPage";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   let [movies, setMovies] = useState(null);
@@ -42,6 +43,7 @@ function App() {
   return (
     <Router>
       <>
+        <ScrollToTop />
         <Nav search={searchHandler} value={valueHandler} toggleMenu={toggleMenu} isOpen={isOpen} />
         {isOpen && <HamburgerMenu isOpen={isOpen} toggleMenu={toggleMenu} search={searchHandler} value={valueHandler} />}
         <div className="background-image">

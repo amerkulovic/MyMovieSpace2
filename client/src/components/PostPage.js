@@ -1,9 +1,17 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CommentForm from "./CommentForm";
+import AOS from "aos";
 
 const PostPage = () => {
   const [post, setPost] = useState("");
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+  }, []);
 
   let { id } = useParams();
 
@@ -26,7 +34,7 @@ const PostPage = () => {
         <p>No post</p>
       ) : (
         <div className="w-4/6 flex flex-col items-center">
-          <div className="flex bg-gradient-to-r from-red-800 via-red-700 to-black rounded-lg w-full p-3 my-3 relative max-sm:w-11/12 max-sm:flex-col">
+          <div className="flex bg-gradient-to-r from-red-800 via-red-700 to-red-800 rounded-lg w-full p-3 my-3 relative max-sm:w-11/12 max-sm:flex-col">
             <section className="flex flex-row">
               <div className="flex flex-col items-start max-sm:w-2/3">
                 <h1 className="text-3xl movie-header max-sm:text-2xl">{post.title}</h1>
@@ -40,7 +48,7 @@ const PostPage = () => {
           </div>
           <div className="flex flex-col w-full items-end">
             {post.comments.map((comment, index) => (
-              <div className="flex bg-slate-700 w-3/4 p-3 my-3 relative rounded-tl-lg rounded-bl-lg max-sm:w-11/12 max-sm:flex-col">
+              <div data-aos="slide-left" className="flex bg-slate-700 w-3/4 p-3 my-3 relative rounded-tl-lg rounded-bl-lg max-sm:w-11/12 max-sm:flex-col">
                 <section className="flex flex-row">
                   <div className="flex flex-col items-start max-sm:w-2/3">
                     <h1 className="text-xl movie-header max-sm:text-2xl">{comment.title}</h1>
