@@ -1,8 +1,17 @@
 import StarRating from "./StarRating";
+import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const HomeReviewCard = (props) => {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+  }, []);
   return (
-    <div className="flex bg-red-700 rounded-lg w-4/6 p-3 my-3 relative max-sm:w-11/12 max-sm:flex-col">
+    <div data-aos="fade-up" className="flex bg-red-700 rounded-lg w-4/6 p-3 my-3 relative max-sm:w-11/12 max-sm:flex-col">
       <section className="flex flex-row">
         <a href={`/search/${props.link}`}>
           <img src={props.poster} className="w-[95px] h-[145px] mr-5" />

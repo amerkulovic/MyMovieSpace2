@@ -43,6 +43,20 @@ app.get("/all-messages", async (req, res) => {
   }
 });
 
+app.get("/message/:id", async (req, res) => {
+  try {
+    const message = await Message.findById(req.params.id);
+    if (!message) {
+      return res.status(404).json({ error: "Message not found" });
+    }
+
+    res.status(200).json(message);
+  } catch (error) {
+    console.error("Error retrieving message:", error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
 app.post("/create-review", async (req, res) => {
   try {
     const newReview = new Review({
@@ -72,6 +86,28 @@ app.post("/create-message", async (req, res) => {
     res.status(201).json(savedMessage);
   } catch (error) {
     console.error("Error creating message:", error.message, error.stack);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
+app.post("/message/:id/comment", async (req, res) => {
+  try {
+    const { comment } = req.body;
+    const messageId = req.params.id;
+
+    if (!comment || !comment.username || !comment.title || !comment.description) {
+      return res.status(400).json({ error: "Incomplete comment data" });
+    }
+    const message = await Message.findById(messageId);
+    if (!message) {
+      return res.status(404).json({ error: "Message not found" });
+    }
+    message.comments.push(comment);
+    await message.save();
+
+    res.status(200).json(message);
+  } catch (error) {
+    console.error("Error adding comment:", error);
     res.status(500).json({ error: "Something went wrong" });
   }
 });

@@ -5,6 +5,7 @@ import Nav from "./components/Nav";
 import Body from "./pages/Body";
 import Footer from "./components/Footer/Footer";
 import MovieCard from "./components/MovieCard";
+import PostPage from "./components/PostPage";
 import notFoundImg from "./images/notfoundimg.png";
 import MoviePage from "./components/MoviePage";
 import HomePage from "./components/HomePage";
@@ -14,7 +15,7 @@ import SignInPage from "./components/SignInPage";
 import BookmarksPage from "./components/BookmarksPage";
 import HamburgerMenu from "./components/HamburgerMenu";
 import WatchedMoviesPage from "./components/WatchedMoviesPage";
-import MessagePage from "./components/MessagePage";
+import MessagesPage from "./components/MessagesPage";
 
 function App() {
   let [movies, setMovies] = useState(null);
@@ -48,7 +49,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/search" element={<div className="flex flex-wrap justify-center">{movies ? movies.Search.map((movie) => <MovieCard moviePoster={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} movieTitle={movie.Title} imdbID={movie.imdbID} />) : <LoadingPage />}</div>} />
             <Route path="/:search/:id" element={<MoviePage />} />
-            <Route path="/messages" element={<MessagePage />} />
+            <Route path="/messages" element={<MessagesPage />} />
+            <Route path="/message/:id" element={<PostPage />} />
             <Route path="/bookmarks" element={<BookmarksPage />} />
             <Route path="/watched-movies" element={<WatchedMoviesPage />} />
             <Route path="/signup" element={<CreateAccountPage />} />
