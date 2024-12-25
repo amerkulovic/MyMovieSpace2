@@ -95,12 +95,12 @@ const HomePage = () => {
             />
           ))}
         {reviewCap < recentReviews.length && (
-          <button onClick={showMoreHandler} className="bg-gradient-to-r from-red-800 via-red-700 to-red-800 text-white rounded-lg w-4/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
+          <button onClick={showMoreHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-4/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
             Show more
           </button>
         )}
         {reviewCap === recentReviews.length && (
-          <button onClick={showLessHandler} className="bg-gradient-to-r from-red-800 via-red-700 to-red-800 text-white rounded-lg w-4/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
+          <button onClick={showLessHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-4/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
             Show less
           </button>
         )}

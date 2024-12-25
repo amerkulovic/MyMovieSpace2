@@ -11,7 +11,7 @@ const HomeReviewCard = (props) => {
     });
   }, []);
   return (
-    <div data-aos="fade-up" className="flex bg-red-700 rounded-lg w-4/6 p-3 my-3 relative max-sm:w-11/12 max-sm:flex-col">
+    <div data-aos="fade-up" className="flex bg-gradient-to-r from-red-900 via-red-600 to-red-900 rounded-lg w-4/6 p-3 my-3 relative max-sm:w-11/12 max-sm:flex-col">
       <section className="flex flex-row">
         <a href={`/search/${props.link}`}>
           <img src={props.poster} className="w-[95px] h-[145px] mr-5" />

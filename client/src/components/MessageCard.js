@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const MessageCard = (props) => {
   return (
-    <div className="flex bg-red-700 rounded-lg w-4/6 p-3 my-3 relative max-sm:w-11/12 max-sm:flex-col">
+    <div className="flex bg-gradient-to-r from-red-900 via-red-600 to-red-900 rounded-lg w-4/6 p-3 my-3 relative max-sm:w-11/12 max-sm:flex-col">
       <section className="flex flex-row">
         <div className="flex flex-col items-start max-sm:w-2/3">
           <Link to={`/message/${props.link}`}>
