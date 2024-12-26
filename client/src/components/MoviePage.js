@@ -128,7 +128,7 @@ const MoviePage = () => {
       {!movie ? (
         <LoadingPage />
       ) : (
-        <div className="flex flex-col">
+        <div className="flex flex-col overflow-hidden">
           <div className="flex flex-row flex-wrap justify-center">
             <div data-aos="fade-right" className="mr-5 my-10 max-xl:mr-0 max-sm:flex max-sm:justify-center max-sm:w-8/12">
               <img src={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} className="h-[500px] max-sm:h-[400px] w-96" />
