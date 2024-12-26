@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { faX } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const NewMessageForm = (props) => {
   let [isOpen, setIsOpen] = useState(false);
-
-  //   let { id } = useParams();
 
   const [formData, setFormData] = useState({
     userName: "",
@@ -37,6 +36,7 @@ const NewMessageForm = (props) => {
   };
   return (
     <div className="bg-gradient-to-r from-red-600 via-red-700 to-red-600 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black">
+      <FontAwesomeIcon className={`text-2xl hover:cursor-pointer ${!isOpen ? "hidden" : ""}`} icon={faX} onClick={() => setIsOpen(!isOpen)} />
       <button className="w-full" onClick={() => setIsOpen(!isOpen)}>
         <h1 className="text-center text-3xl movie-header">Leave A Message</h1>
       </button>
