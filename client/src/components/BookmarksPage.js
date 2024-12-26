@@ -1,18 +1,26 @@
 import MovieCard from "./MovieCard";
 import notFoundImg from "../images/notfoundimg.png";
 import { useEffect, useState } from "react";
+import LoadingPage from "./LoadingPage";
 
 const BookmarksPage = () => {
   const storedBookmarks = localStorage.getItem("bookmarks");
   let [bookmarks, setBookmarks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (storedBookmarks) {
       setBookmarks(JSON.parse(storedBookmarks));
+      setIsLoading(false);
     } else {
       setBookmarks([]);
+      setIsLoading(false);
     }
   }, []);
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
 
   return (
     <>

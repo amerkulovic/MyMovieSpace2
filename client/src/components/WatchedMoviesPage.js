@@ -1,18 +1,26 @@
 import MovieCard from "./MovieCard";
 import notFoundImg from "../images/notfoundimg.png";
+import LoadingPage from "./LoadingPage";
 import { useEffect, useState } from "react";
 
 const WatchedMoviesPage = () => {
   const storedMovies = localStorage.getItem("watched");
   let [watchedMovies, setWatchedMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (storedMovies) {
       setWatchedMovies(JSON.parse(storedMovies));
+      setIsLoading(false);
     } else {
       setWatchedMovies([]);
+      setIsLoading(false);
     }
   }, []);
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
 
   return (
     <>
