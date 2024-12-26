@@ -50,7 +50,7 @@ const MoviePage = () => {
       setWatchedMovies(JSON.parse(storedWatchedMovies));
     }
     showMovie();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     for (let i = 0; i < bookmarks.length; i++) {
@@ -114,6 +114,10 @@ const MoviePage = () => {
   };
 
   const filteredReviews = reviews.filter((review) => review.movieId === id).reverse();
+
+  const addNewReview = (newReview) => {
+    setReviews((prevReviews) => [...prevReviews, newReview]);
+  };
 
   let averageReview = filteredReviews.reduce((currNumber, review) => {
     return currNumber + review.movieRating / filteredReviews.length;
@@ -208,7 +212,7 @@ const MoviePage = () => {
             ) : (
               <h1 className="movie-header text-4xl text-center max-md:text-3xl max-xsm:text-2xl mt-10">Be the first to write a review!</h1>
             )}
-            <NewReviewForm poster={movie.Poster} />
+            <NewReviewForm poster={movie.Poster} id={id} addNewReview={addNewReview} />
           </section>
         </div>
       )}

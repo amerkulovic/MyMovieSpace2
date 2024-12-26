@@ -4,13 +4,11 @@ import { FaStar } from "react-icons/fa";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const NewReviewForm = (props) => {
+const NewReviewForm = ({ id, addNewReview, poster }) => {
   let [isOpen, setIsOpen] = useState(false);
   let [rating, setRating] = useState(null);
   let [hover, setHover] = useState(null);
-
-  let { id } = useParams();
-
+  
   const [formData, setFormData] = useState({
     userName: "",
     message: "",
@@ -26,15 +24,22 @@ const NewReviewForm = (props) => {
   };
 
   let submitHandler = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
+
+    const review = { title: formData.title, description: formData.message, username: formData.userName, movieId: id, movieRating: rating, poster: poster };
 
     fetch(`/create-review`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title: formData.title, description: formData.message, username: formData.userName, movieId: id, movieRating: rating, poster: props.poster }),
+      body: JSON.stringify(review),
     })
       .then(() => {
         console.log("new review added!");
+      })
+      .then((updatedMessage) => {
+        addNewReview(review);
+        setIsOpen(false);
+        setFormData({ userName: "", message: "", title: "" });
       })
       .catch((error) => {
         console.error("Error creating review:", error);

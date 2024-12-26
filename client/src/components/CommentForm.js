@@ -1,17 +1,13 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const CommentForm = () => {
+const CommentForm = ({ id, addNewComment }) => {
   let [isOpen, setIsOpen] = useState(false);
-
-  let { id } = useParams();
 
   const [formData, setFormData] = useState({
     userName: "",
     message: "",
-    title: "",
   });
 
   const handleChange = (e) => {
@@ -23,26 +19,29 @@ const CommentForm = () => {
   };
 
   let submitHandler = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
 
     const comment = {
-      // title: formData.title,
       description: formData.message,
       username: formData.userName,
     };
-
     fetch(`/message/${id}/comment`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ comment }),
     })
-      .then(() => {
-        console.log("New comment added!");
-        setFormData({ userName: "", message: "", title: "" });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to add comment");
+        }
+        return response.json();
       })
-      .catch((error) => {
-        console.error("Error creating comment:", error);
-      });
+      .then((updatedMessage) => {
+        addNewComment(comment);
+        setIsOpen(false);
+        setFormData({ userName: "", message: "" });
+      })
+      .catch((error) => console.error("Error creating comment:", error));
   };
 
   return (
@@ -59,10 +58,6 @@ const CommentForm = () => {
             <label className="text-white">Username:</label>
             <input className="w-full rounded-lg p-2 text-black" name="userName" value={formData.userName} onChange={handleChange} />
           </div>
-          {/* <div className="my-4">
-            <label className="text-white">Title:</label>
-            <input className="w-full rounded-lg p-2 text-black" name="title" value={formData.title} onChange={handleChange} />
-          </div> */}
           <div className="my-4">
             <label className="text-white">Message:</label>
             <textarea className="w-full rounded-lg p-2 text-black" name="message" value={formData.message} onChange={handleChange} />

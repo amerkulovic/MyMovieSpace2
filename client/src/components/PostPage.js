@@ -27,7 +27,14 @@ const PostPage = () => {
       }
     }
     fetchData();
-  }, []);
+  }, [id]);
+
+  const addNewComment = (newComment) => {
+    setPost((prevPost) => ({
+      ...prevPost,
+      comments: [...prevPost.comments, newComment],
+    }));
+  };
   return (
     <div className="flex flex-col w-full items-center pt-10 pb-20">
       {!post ? (
@@ -43,25 +50,25 @@ const PostPage = () => {
             </section>
             <section className="absolute bottom-3 right-3 text-white font-bold max-sm:static max-sm:flex max-sm:justify-end">
               <p>{post?.date}</p>
-              <h1 className="text-xl">{post.username}</h1>
+              <h1 className="text-xl max-sm:text-sm">Post by {post.username}</h1>
             </section>
           </div>
           <div className="flex flex-col w-full items-end">
             {post.comments.map((comment, index) => (
               <div className="flex flex-col bg-gradient-to-r from-slate-800 via-slate-600 to-slate-800 w-3/4 p-3 my-3 relative rounded-tl-lg rounded-bl-lg max-sm:w-full max-sm:flex-col max-sm:rounded-tr-lg max-sm:rounded-br-lg max-sm:my-1">
                 <section className="flex flex-row">
-                  <div className="flex flex-col items-start max-sm:w-full">
+                  <div className="flex flex-col items-start justify-start max-sm:w-full">
                     <p className="text-white font-bold pt-5 pl-5 text-start">{comment.description}</p>
                   </div>
                 </section>
                 <section className="flex justify-end text-white font-bold max-sm:static max-sm:flex max-sm:justify-end">
                   {/* <p>{comment?.date}</p> */}
-                  <h1 className="text-xl">{comment.username}</h1>
+                  <h1 className="text-xl max-sm:text-sm">{comment.username}</h1>
                 </section>
               </div>
             ))}
           </div>
-          <CommentForm />
+          <CommentForm id={id} addNewComment={addNewComment} />
         </div>
       )}
     </div>
