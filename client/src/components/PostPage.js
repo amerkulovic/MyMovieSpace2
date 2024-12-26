@@ -33,11 +33,11 @@ const PostPage = () => {
       {!post ? (
         <p>No post</p>
       ) : (
-        <div className="w-4/6 flex flex-col items-center">
-          <div className="flex bg-gradient-to-r from-red-800 via-red-700 to-red-800 rounded-lg w-full p-3 my-3 relative max-sm:w-11/12 max-sm:flex-col">
+        <div className="w-4/6 flex flex-col items-center max-sm:w-11/12">
+          <div className="flex bg-gradient-to-r from-red-900 via-red-600 to-red-900 rounded-lg w-full p-3 my-3 relative max-sm:w-full max-sm:flex-col max-sm:my-1">
             <section className="flex flex-row">
-              <div className="flex flex-col items-start max-sm:w-2/3">
-                <h1 className="text-3xl movie-header max-sm:text-2xl">{post.title}</h1>
+              <div className="flex flex-col items-start max-sm:w-full">
+                <h1 className="text-3xl movie-header max-sm:text-lg">{post.title}</h1>
                 <p className="text-white font-bold pt-5 text-start">{post.description}</p>
               </div>
             </section>
@@ -48,14 +48,13 @@ const PostPage = () => {
           </div>
           <div className="flex flex-col w-full items-end">
             {post.comments.map((comment, index) => (
-              <div data-aos="slide-left" className="flex bg-slate-700 w-3/4 p-3 my-3 relative rounded-tl-lg rounded-bl-lg max-sm:w-11/12 max-sm:flex-col">
+              <div className="flex flex-col bg-gradient-to-r from-slate-800 via-slate-600 to-slate-800 w-3/4 p-3 my-3 relative rounded-tl-lg rounded-bl-lg max-sm:w-full max-sm:flex-col max-sm:rounded-tr-lg max-sm:rounded-br-lg max-sm:my-1">
                 <section className="flex flex-row">
-                  <div className="flex flex-col items-start max-sm:w-2/3">
-                    <h1 className="text-xl movie-header max-sm:text-2xl">{comment.title}</h1>
-                    <p className="text-white font-bold pt-5 text-start">{comment.description}</p>
+                  <div className="flex flex-col items-start max-sm:w-full">
+                    <p className="text-white font-bold pt-5 pl-5 text-start">{comment.description}</p>
                   </div>
                 </section>
-                <section className="absolute bottom-3 right-3 text-white font-bold max-sm:static max-sm:flex max-sm:justify-end">
+                <section className="flex justify-end text-white font-bold max-sm:static max-sm:flex max-sm:justify-end">
                   {/* <p>{comment?.date}</p> */}
                   <h1 className="text-xl">{comment.username}</h1>
                 </section>

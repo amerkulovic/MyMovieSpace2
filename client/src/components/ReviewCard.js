@@ -10,7 +10,7 @@ const ReviewCard = (props) => {
     });
   }, []);
   return (
-    <div data-aos="fade-up" className="flex flex-col bg-gradient-to-r from-black via-red-600 to-black text-white rounded-lg w-5/6 p-3 my-3 border border-red-700">
+    <div data-aos="fade-up" className="flex flex-col bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-5/6 p-3 my-3 border border-red-700">
       <div className="flex justify-between">
         <h1 className="movie-header text-4xl">{props.title}</h1>
         <StarRating rating={props.rating} />

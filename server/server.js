@@ -95,7 +95,7 @@ app.post("/message/:id/comment", async (req, res) => {
     const { comment } = req.body;
     const messageId = req.params.id;
 
-    if (!comment || !comment.username || !comment.title || !comment.description) {
+    if (!comment || !comment.username || !comment.description) {
       return res.status(400).json({ error: "Incomplete comment data" });
     }
     const message = await Message.findById(messageId);

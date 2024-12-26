@@ -41,7 +41,7 @@ const NewReviewForm = (props) => {
       });
   };
   return (
-    <div className="bg-gradient-to-r from-red-600 via-red-700 to-red-600 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black">
+    <div className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black">
       <div className="flex items-center">
         <FontAwesomeIcon className={`text-2xl hover:cursor-pointer ${!isOpen ? "hidden" : ""}`} icon={faX} onClick={() => setIsOpen(!isOpen)} />
         <button className="w-full" onClick={() => setIsOpen(!isOpen)}>
@@ -75,7 +75,7 @@ const NewReviewForm = (props) => {
               })}
             </div>
           </div>
-          <button className="bg-red-900 movie-header text-2xl py-3 rounded-lg mt-2 mb-5">Publish Review</button>
+          <button className="border border-white bg-red-900 movie-header text-2xl py-3 rounded-lg mt-2 mb-5">Publish Review</button>
         </form>
       )}
     </div>

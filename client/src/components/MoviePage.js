@@ -126,12 +126,12 @@ const MoviePage = () => {
       ) : (
         <div className="flex flex-col">
           <div className="flex flex-row flex-wrap justify-center">
-            <div data-aos="fade-right" className="mr-5 my-10 max-xl:mr-0 max-sm:w-2/3">
+            <div data-aos="fade-right" className="mr-5 my-10 max-xl:mr-0 max-sm:flex max-sm:justify-center max-sm:w-8/12">
               <img src={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} className="h-[500px] max-sm:h-[400px] w-96" />
             </div>
-            <div data-aos="fade-left" className="text-white mt-10 max-xl:w-1/2 max-xl:ml-5 max-md:ml-0 max-md:bg-gradient-to-r from-red-900 via-red-600 to-red-900 w-3/5 max-md:p-5 max-md:rounded-lg max-md:mt-0 max-md:mb-3 max-md:w-10/12">
+            <div data-aos="fade-left" className="text-white mt-10 max-xl:w-1/2 max-xl:ml-5 max-md:ml-0 max-md:bg-gradient-to-r from-red-900 via-red-600 to-red-900 w-3/5 max-md:p-5 max-md:rounded-lg max-md:mt-0 max-md:mb-3 max-md:w-11/12">
               <section className="border-b-[0.5px] border-white mb-5">
-                <h1 className="movie-header text-5xl w-full">{movie.Title}</h1>
+                <h1 className="movie-header text-5xl w-full max-sm:text-3xl">{movie.Title}</h1>
                 <p>
                   {movie.Year} directed by {movie.Director}
                 </p>
@@ -195,12 +195,12 @@ const MoviePage = () => {
                   />
                 ))}
                 {reviewCap < filteredReviews.length && (
-                  <button onClick={showMoreHandler} className="bg-gradient-to-r from-red-800 via-red-700 to-red-800 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
+                  <button onClick={showMoreHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
                     Show more
                   </button>
                 )}
                 {reviewCap === filteredReviews.length && filteredReviews.length > 3 && (
-                  <button onClick={showLessHandler} className="bg-gradient-to-r from-red-800 via-red-700 to-red-800 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
+                  <button onClick={showLessHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
                     Show less
                   </button>
                 )}
