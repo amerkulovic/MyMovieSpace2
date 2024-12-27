@@ -18,7 +18,7 @@ const Nav = (props) => {
   return (
     <div className="bg-gradient-to-r from-black via-red-700 to-black flex items-center max-lg:justify-between justify-center py-4">
       <div className="hidden max-lg:flex">
-        <button onClick={props.toggleMenu} className="z-20 ml-5 px-3 py-2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-lg text-red-800 font-bold text-2xl max-xsm:ml-2 max-xsm:px-2 ">
+        <button onClick={props.toggleMenu} className={`z-20 ml-5 px-3 py-2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-lg text-red-800 font-bold text-2xl max-xsm:ml-2 max-xsm:px-2 ${props.isOpen ? "hidden" : ""}`}>
           <FontAwesomeIcon icon={!props.isOpen ? faBars : faX} />
         </button>
       </div>
