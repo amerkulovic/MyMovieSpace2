@@ -22,12 +22,12 @@ const Nav = (props) => {
           <FontAwesomeIcon icon={!props.isOpen ? faBars : faX} />
         </button>
       </div>
-      <div className="flex justify-end max-lg:justify-center w-[35%]">
+      <div className="flex justify-end max-lg:justify-center w-[25%]">
         <Link to="/">
           <h1 className="header-font text-white text-6xl text-center mr-10 max-lg:m-0 max-sm:text-5xl">MyMovieSpace</h1>
         </Link>
       </div>
-      <div className="ml-4 flex justify-around items-center w-[55%] max-lg:w-[0%]">
+      <div className="ml-4 flex justify-around items-center w-[62%] max-lg:w-[0%]">
         <div className="max-lg:hidden">
           <NavLinks />
         </div>

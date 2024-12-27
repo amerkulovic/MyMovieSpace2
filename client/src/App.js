@@ -1,22 +1,21 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useParams } from "react-router-dom";
 import "./App.css";
-import Nav from "./components/Nav";
-import Body from "./pages/Body";
-import Footer from "./components/Footer/Footer";
-import MovieCard from "./components/MovieCard";
-import PostPage from "./components/PostPage";
-import notFoundImg from "./images/notfoundimg.png";
-import MoviePage from "./components/MoviePage";
-import HomePage from "./components/HomePage";
-import CreateAccountPage from "./components/CreateAccountPage";
-import LoadingPage from "./components/LoadingPage";
-import SignInPage from "./components/SignInPage";
 import BookmarksPage from "./components/BookmarksPage";
+import Footer from "./components/Footer/Footer";
 import HamburgerMenu from "./components/HamburgerMenu";
-import WatchedMoviesPage from "./components/WatchedMoviesPage";
+import HomePage from "./components/HomePage";
+import LoadingPage from "./components/LoadingPage";
+import Login from "./components/Login";
 import MessagesPage from "./components/MessagesPage";
+import MovieCard from "./components/MovieCard";
+import MoviePage from "./components/MoviePage";
+import Nav from "./components/Nav";
+import PostPage from "./components/PostPage";
 import ScrollToTop from "./components/ScrollToTop";
+import SignUp from "./components/SignUp";
+import WatchedMoviesPage from "./components/WatchedMoviesPage";
+import notFoundImg from "./images/notfoundimg.png";
 
 function App() {
   let [movies, setMovies] = useState(null);
@@ -55,8 +54,8 @@ function App() {
             <Route path="/message/:id" element={<PostPage />} />
             <Route path="/bookmarks" element={<BookmarksPage />} />
             <Route path="/watched-movies" element={<WatchedMoviesPage />} />
-            <Route path="/signup" element={<CreateAccountPage />} />
-            <Route path="/signin" element={<SignInPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
           </Routes>
         </div>
         <Footer />
