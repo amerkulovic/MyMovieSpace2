@@ -1,6 +1,8 @@
-import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useAuth } from "./components/AuthContext";
 import "./App.css";
+import axios from "axios";
 import BookmarksPage from "./components/BookmarksPage";
 import Footer from "./components/Footer/Footer";
 import HamburgerMenu from "./components/HamburgerMenu";
@@ -16,11 +18,31 @@ import ScrollToTop from "./components/ScrollToTop";
 import SignUp from "./components/SignUp";
 import WatchedMoviesPage from "./components/WatchedMoviesPage";
 import notFoundImg from "./images/notfoundimg.png";
+import ProfilePage from "./components/ProfilePage";
 
 function App() {
+  let { logout } = useAuth();
   let [movies, setMovies] = useState(null);
   let [name, setName] = useState("");
+  let [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -43,8 +65,8 @@ function App() {
     <Router>
       <>
         <ScrollToTop />
-        <Nav search={searchHandler} value={valueHandler} toggleMenu={toggleMenu} isOpen={isOpen} />
-        {isOpen && <HamburgerMenu isOpen={isOpen} toggleMenu={toggleMenu} search={searchHandler} value={valueHandler} />}
+        <Nav isLoggedIn={isLoggedIn} logoutHandler={logout} search={searchHandler} value={valueHandler} toggleMenu={toggleMenu} isOpen={isOpen} />
+        {isOpen && <HamburgerMenu isLoggedIn={isLoggedIn} logoutHandler={logout} isOpen={isOpen} toggleMenu={toggleMenu} search={searchHandler} value={valueHandler} />}
         <div className="background-image">
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -54,8 +76,9 @@ function App() {
             <Route path="/message/:id" element={<PostPage />} />
             <Route path="/bookmarks" element={<BookmarksPage />} />
             <Route path="/watched-movies" element={<WatchedMoviesPage />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/profile" element={localStorage.getItem("token") ? <ProfilePage /> : <Navigate to="/login" />} />
           </Routes>
         </div>
         <Footer />

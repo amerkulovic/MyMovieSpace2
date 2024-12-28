@@ -84,6 +84,16 @@ app.get("/users/:username", async (req, res) => {
   }
 });
 
+app.get("/profile", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 app.get("/message/:id", async (req, res) => {
   try {
     const message = await Message.findById(req.params.id);
@@ -174,10 +184,7 @@ app.post("/signup", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-  console.log("Request body:", req.body);
   const { username, password } = req.body;
-  console.log("Username from request:", username);
-
   try {
     const user = await User.findOne({ username });
     if (!user) return res.status(400).json({ message: "Invalid username" });
@@ -186,7 +193,10 @@ app.post("/login", async (req, res) => {
     if (!isMatch) return res.status(400).json({ message: "Invalid password" });
 
     const token = jwt.sign({ id: user._id }, SECRET, { expiresIn: "1h" });
-    res.json({ token });
+    res.json({
+      token,
+      username: user.username,
+    });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }

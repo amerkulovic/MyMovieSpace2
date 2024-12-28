@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 import { FaStar } from "react-icons/fa";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,7 +9,8 @@ const NewReviewForm = ({ id, addNewReview, poster }) => {
   let [isOpen, setIsOpen] = useState(false);
   let [rating, setRating] = useState(null);
   let [hover, setHover] = useState(null);
-  
+  const { user } = useAuth();
+
   const [formData, setFormData] = useState({
     userName: "",
     message: "",
@@ -26,7 +28,7 @@ const NewReviewForm = ({ id, addNewReview, poster }) => {
   let submitHandler = (e) => {
     e.preventDefault();
 
-    const review = { title: formData.title, description: formData.message, username: formData.userName, movieId: id, movieRating: rating, poster: poster };
+    const review = { title: formData.title, description: formData.message, username: user.username, movieId: id, movieRating: rating, poster: poster };
 
     fetch(`/create-review`, {
       method: "POST",

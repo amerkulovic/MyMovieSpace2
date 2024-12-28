@@ -29,7 +29,7 @@ const Nav = (props) => {
       </div>
       <div className="ml-4 flex justify-around items-center w-[62%] max-lg:w-[0%]">
         <div className="max-lg:hidden">
-          <NavLinks />
+          <NavLinks logoutHandler={props.logoutHandler} />
         </div>
         <div className="opacity-70 hover:opacity-100 flex items-center pr-10 max-lg:hidden">
           <input className="h-14 px-4 rounded-tl-xl rounded-bl-xl focus:outline-none" placeholder="Find a Movie!" onChange={props.value} />

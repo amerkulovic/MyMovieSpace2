@@ -13,7 +13,7 @@ const HamburgerMenu = (props) => {
           <FontAwesomeIcon icon={!props.isOpen ? faBars : faX} />
         </button>
       </div>
-      <NavLinks buttonClick={props.toggleMenu} />
+      <NavLinks isLoggedIn={props.isLoggedIn} logoutHandler={props.logoutHandler} buttonClick={props.toggleMenu} />
       <div className="opacity-70 hover:opacity-100 flex items-center max-xl:pl-2 max-xl:mt-10">
         <input className="h-14 max-sm:w-[165px] px-4 rounded-tl-xl rounded-bl-xl focus:outline-none" placeholder="Find a Movie!" onChange={props.value} />
         <Link to="/search">
