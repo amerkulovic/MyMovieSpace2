@@ -12,6 +12,8 @@ const SignUp = () => {
   const errRef = useRef();
 
   const [user, setUser] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [validName, setValidName] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
 
@@ -52,7 +54,7 @@ const SignUp = () => {
       const response = await fetch("/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: user, password: pwd }),
+        body: JSON.stringify({ username: user, password: pwd, firstName: firstName, lastName: lastName }),
       });
 
       if (response.ok) {
@@ -75,7 +77,21 @@ const SignUp = () => {
         </p>
         <h1 className="movie-header text-5xl pb-5">Create Account</h1>
         <form className="flex flex-col" onSubmit={handleSubmit}>
-          <div className="my-4">
+          <div className="flex flex-row my-4 pb-2">
+            <div className="w-1/2 pr-1">
+              <label className="text-white" htmlFor="username">
+                First Name:
+              </label>
+              <input className="w-full rounded-lg p-2" type="text" placeholder="First name" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+            </div>
+            <div className="w-1/2 pl-1">
+              <label className="text-white" htmlFor="username">
+                Last Name:
+              </label>
+              <input className="w-full rounded-lg p-2" type="text" placeholder="Last name" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
+            </div>
+          </div>
+          <div className="mb-4">
             <div>
               <label className="text-white" htmlFor="username">
                 Username:

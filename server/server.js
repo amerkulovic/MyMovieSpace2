@@ -23,6 +23,7 @@ const authMiddleware = (req, res, next) => {
   try {
     const verified = jwt.verify(token, SECRET);
     req.user = verified;
+    req.username = verified.username;
     next();
   } catch (err) {
     if (err.name === "TokenExpiredError") {
@@ -108,9 +109,32 @@ app.get("/message/:id", async (req, res) => {
   }
 });
 
+app.get("/user-reviews/:username", async (req, res) => {
+  try {
+    const username = req.params.username;
+
+    // Log the received username for debugging
+    console.log("Username from params:", username);
+
+    const user = await User.findOne({ username }).populate("reviews");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Log the retrieved user for debugging
+    console.log("User found:", user);
+
+    res.status(200).json({ reviews: user.reviews });
+  } catch (error) {
+    console.error("Error fetching user reviews:", error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
 app.post("/create-review", async (req, res) => {
   try {
-    const newReview = new Review({
+    const reviewData = new Review({
       title: req.body.title,
       description: req.body.description,
       username: req.body.username,
@@ -118,8 +142,22 @@ app.post("/create-review", async (req, res) => {
       movieRating: req.body.movieRating,
       poster: req.body.poster,
     });
+
+    const newReview = new Review(reviewData);
     const savedReview = await newReview.save();
-    res.status(201).json(savedReview);
+
+    const user = await User.findOne({ username: req.body.username });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.reviews.push(savedReview._id);
+    await user.save();
+
+    res.status(201).json({
+      message: "Review created and added to user profile",
+      review: savedReview,
+    });
   } catch (error) {
     console.error("Error creating review:", error);
     res.status(500).json({ error: "Something went wrong" });
@@ -164,7 +202,7 @@ app.post("/message/:id/comment", async (req, res) => {
 });
 
 app.post("/signup", async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, firstName, lastName } = req.body;
 
   try {
     const userExists = await User.findOne({ username });
@@ -173,7 +211,7 @@ app.post("/signup", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     console.log("Hashed password during signup:", hashedPassword);
 
-    const newUser = new User({ username, password: hashedPassword });
+    const newUser = new User({ username, firstName, lastName, password: hashedPassword });
     await newUser.save();
 
     res.status(201).json({ message: "User created successfully" });
@@ -192,7 +230,7 @@ app.post("/login", async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: "Invalid password" });
 
-    const token = jwt.sign({ id: user._id }, SECRET, { expiresIn: "1h" });
+    const token = jwt.sign({ id: user._id, username: user.username }, SECRET, { expiresIn: "1h" });
     res.json({
       token,
       username: user.username,
