@@ -6,20 +6,8 @@ const UserSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
-  bookmarks: [
-    {
-      id: { type: String, required: true },
-      title: { type: String, required: true },
-      poster: { type: String, required: true },
-    },
-  ],
-  watched: [
-    {
-      id: { type: String, required: true },
-      title: { type: String, required: true },
-      poster: { type: String, required: true },
-    },
-  ],
+  bookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Bookmark" }],
+  watched: [{ type: mongoose.Schema.Types.ObjectId, ref: "WatchedMovie" }],
 });
 
 module.exports = mongoose.model("User", UserSchema);

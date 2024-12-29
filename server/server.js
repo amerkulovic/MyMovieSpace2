@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const path = require("path");
 const Review = require("./models/Review");
 const Message = require("./models/Message");
+const Bookmark = require("./models/Bookmark");
+const WatchedMovie = require("./models/WatchedMovie");
 const User = require("./models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -113,21 +115,48 @@ app.get("/user-reviews/:username", async (req, res) => {
   try {
     const username = req.params.username;
 
-    // Log the received username for debugging
-    console.log("Username from params:", username);
-
     const user = await User.findOne({ username }).populate("reviews");
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Log the retrieved user for debugging
-    console.log("User found:", user);
-
     res.status(200).json({ reviews: user.reviews });
   } catch (error) {
     console.error("Error fetching user reviews:", error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
+app.get("/user-bookmarks/:username", async (req, res) => {
+  try {
+    const username = req.params.username;
+
+    const user = await User.findOne({ username }).populate("bookmarks");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ bookmarks: user.bookmarks });
+  } catch (error) {
+    console.error("Error fetching user bookmarks:", error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
+app.get("/user-watched/:username", async (req, res) => {
+  try {
+    const username = req.params.username;
+
+    const user = await User.findOne({ username }).populate("watched");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({ watched: user.watched });
+  } catch (error) {
+    console.error("Error fetching user watched movies:", error);
     res.status(500).json({ error: "Something went wrong" });
   }
 });
@@ -160,6 +189,69 @@ app.post("/create-review", async (req, res) => {
     });
   } catch (error) {
     console.error("Error creating review:", error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
+app.post("/create-bookmark/:username", async (req, res) => {
+  try {
+    const username = req.params.username;
+    const { id, title, poster } = req.body;
+
+    const savedBookmark = await Bookmark.findOneAndUpdate({ id }, { id, title, poster }, { upsert: true, new: true });
+
+    const user = await User.findOne({ username }).populate("bookmarks");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const watchedMovieExists = user.bookmarks.some((bookmark) => bookmark.id === id);
+    if (watchedMovieExists) {
+      // Remove the bookmark from the user's profile
+      user.bookmarks = user.bookmarks.filter((bookmark) => bookmark.id !== id);
+      await user.save();
+      return res.status(200).json({ message: "Bookmark removed from user's profile" });
+    }
+    user.bookmarks.push(savedBookmark._id);
+    await user.save();
+
+    res.status(201).json({
+      message: "Bookmark created and added to user profile",
+      bookmark: savedBookmark,
+      bookmarked: true,
+    });
+  } catch (error) {
+    console.error("Error creating bookmark:", error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
+app.post("/create-watched/:username", async (req, res) => {
+  try {
+    const username = req.params.username;
+    const { id, title, poster } = req.body;
+
+    const savedWatchedMovie = await WatchedMovie.findOneAndUpdate({ id }, { id, title, poster }, { upsert: true, new: true });
+
+    const user = await User.findOne({ username }).populate("watched");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const watchedMovieExists = user.watched.some((movie) => movie.id === id);
+    if (watchedMovieExists) {
+      user.watched = user.watched.filter((movie) => movie.id !== id);
+      await user.save();
+      return res.status(200).json({ message: "Watched movie removed from user's profile" });
+    }
+    user.watched.push(savedWatchedMovie._id);
+    await user.save();
+
+    res.status(201).json({
+      message: "Watched movie created and added to user profile",
+      watched: savedWatchedMovie,
+      hasWatched: true,
+    });
+  } catch (error) {
+    console.error("Error creating watched movie:", error);
     res.status(500).json({ error: "Something went wrong" });
   }
 });

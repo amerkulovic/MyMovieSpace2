@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 import AOS from "aos";
 import { faBookmark, faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,6 +19,7 @@ const MoviePage = () => {
   let [watchedStyling, setWatchedStyling] = useState("text-4xl mt-3 ml-2");
   let [reviews, setReviews] = useState([]);
   let { id } = useParams();
+  let { user } = useAuth();
 
   useEffect(() => {
     AOS.init({
@@ -41,25 +43,115 @@ const MoviePage = () => {
   }, []);
 
   useEffect(() => {
-    const storedBookmarks = localStorage.getItem("bookmarks");
-    const storedWatchedMovies = localStorage.getItem("watched");
-    if (storedBookmarks) {
-      setBookmarks(JSON.parse(storedBookmarks));
-    }
-    if (storedWatchedMovies) {
-      setWatchedMovies(JSON.parse(storedWatchedMovies));
-    }
     showMovie();
   }, [id]);
 
   useEffect(() => {
     for (let i = 0; i < bookmarks.length; i++) {
-      if (bookmarks[i].id === id) setBookmarkStyling("text-4xl mt-3 text-yellow-400");
+      if (bookmarks[i] === id) setBookmarkStyling("text-4xl mt-3 text-yellow-400");
     }
     for (let i = 0; i < watchedMovies.length; i++) {
-      if (watchedMovies[i].id === id) setWatchedStyling("text-4xl ml-2 mt-3 text-blue-400");
+      if (watchedMovies[i] === id) setWatchedStyling("text-4xl ml-2 mt-3 text-blue-400");
     }
   });
+
+  useEffect(() => {
+    const fetchBookmarks = async () => {
+      try {
+        const response = await fetch(`/user-bookmarks/${user.username}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch bookmarks");
+        }
+
+        const data = await response.json();
+        setBookmarks(data.bookmarks.map((bookmark) => bookmark.id));
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
+
+    fetchBookmarks();
+  }, [user]);
+
+  useEffect(() => {
+    const fetchWatched = async () => {
+      try {
+        const response = await fetch(`/user-watched/${user.username}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch bookmarks");
+        }
+
+        const data = await response.json();
+        setWatchedMovies(data.watched.map((movie) => movie.id));
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
+
+    fetchWatched();
+  }, [user]);
+
+  const toggleBookmark = async (movie) => {
+    try {
+      const response = await fetch(`/create-bookmark/${user.username}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          id: movie.id,
+          title: movie.title,
+          poster: movie.poster,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to toggle bookmark");
+      }
+      const data = await response.json();
+      const isBookmarked = data.bookmarked;
+      setBookmarkStyling(isBookmarked ? "text-4xl mt-3 text-yellow-400" : "text-4xl mt-3 text-white");
+      setBookmarks((prevBookmarkedMovies) => (data.bookmarked ? [...prevBookmarkedMovies, movie.id] : prevBookmarkedMovies.filter((id) => id !== movie.id)));
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  const toggleWatched = async (movie) => {
+    try {
+      const response = await fetch(`/create-watched/${user.username}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          id: movie.id,
+          title: movie.title,
+          poster: movie.poster,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to toggle bookmark");
+      }
+      const data = await response.json();
+      const isWatched = data.hasWatched;
+      setWatchedStyling(isWatched ? "text-4xl mt-3 text-blue-400 ml-2 " : "text-4xl mt-3 text-white ml-2 ");
+      setWatchedMovies((prevWatchedMovies) => (data.hasWatched ? [...prevWatchedMovies, movie.id] : prevWatchedMovies.filter((id) => id !== movie.id)));
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
 
   const showMovie = async () => {
     await fetch(`https://www.omdbapi.com/?i=${id}&apikey=f14ca85d`)
@@ -69,40 +161,6 @@ const MoviePage = () => {
       .then(function (data) {
         setMovie(data);
       });
-  };
-
-  const bookmarkHandler = (newBookmark) => {
-    const updatedBookmarks = [...bookmarks];
-
-    const existingBookmarkIndex = updatedBookmarks.findIndex((bookmark) => bookmark.id === newBookmark.id);
-
-    if (existingBookmarkIndex !== -1) {
-      updatedBookmarks.splice(existingBookmarkIndex, 1);
-      setBookmarkStyling("text-4xl mt-3 text-white");
-    } else {
-      updatedBookmarks.push(newBookmark);
-      setBookmarkStyling("text-4xl mt-3 text-yellow-400");
-    }
-
-    setBookmarks(updatedBookmarks);
-    localStorage.setItem("bookmarks", JSON.stringify(updatedBookmarks));
-  };
-
-  const watchedMoviesHandler = (newMovie) => {
-    const updatedMovies = [...watchedMovies];
-
-    const existingMovieIndex = updatedMovies.findIndex((movie) => movie.id === newMovie.id);
-
-    if (existingMovieIndex !== -1) {
-      updatedMovies.splice(existingMovieIndex, 1);
-      setWatchedStyling("text-4xl ml-2 mt-3 text-white");
-    } else {
-      updatedMovies.push(newMovie);
-      setWatchedStyling("text-4xl ml-2 mt-3 text-blue-400");
-    }
-
-    setWatchedMovies(updatedMovies);
-    localStorage.setItem("watched", JSON.stringify(updatedMovies));
   };
 
   const showMoreHandler = () => {
@@ -164,16 +222,12 @@ const MoviePage = () => {
                   )}
                 </p>
               </section>
-              <button
-                onClick={() => {
-                  bookmarkHandler({ id: movie.imdbID, title: movie.Title, poster: movie.Poster });
-                }}
-              >
+              <button onClick={() => toggleBookmark({ id: movie.imdbID, title: movie.Title, poster: movie.Poster })}>
                 <FontAwesomeIcon icon={faBookmark} className={bookmarkStyling} />
               </button>
               <button
                 onClick={() => {
-                  watchedMoviesHandler({ id: movie.imdbID, title: movie.Title, poster: movie.Poster });
+                  toggleWatched({ id: movie.imdbID, title: movie.Title, poster: movie.Poster });
                 }}
               >
                 <FontAwesomeIcon icon={faEye} className={watchedStyling} />
