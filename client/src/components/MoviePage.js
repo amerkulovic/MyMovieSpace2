@@ -19,7 +19,7 @@ const MoviePage = () => {
   let [watchedStyling, setWatchedStyling] = useState("text-4xl mt-3 ml-2");
   let [reviews, setReviews] = useState([]);
   let { id } = useParams();
-  let { user } = useAuth();
+  let { user, isLoggedIn } = useAuth();
 
   useEffect(() => {
     AOS.init({
@@ -222,16 +222,22 @@ const MoviePage = () => {
                   )}
                 </p>
               </section>
-              <button onClick={() => toggleBookmark({ id: movie.imdbID, title: movie.Title, poster: movie.Poster })}>
-                <FontAwesomeIcon icon={faBookmark} className={bookmarkStyling} />
-              </button>
-              <button
-                onClick={() => {
-                  toggleWatched({ id: movie.imdbID, title: movie.Title, poster: movie.Poster });
-                }}
-              >
-                <FontAwesomeIcon icon={faEye} className={watchedStyling} />
-              </button>
+              {isLoggedIn ? (
+                <>
+                  <button onClick={() => toggleBookmark({ id: movie.imdbID, title: movie.Title, poster: movie.Poster })}>
+                    <FontAwesomeIcon icon={faBookmark} className={bookmarkStyling} />
+                  </button>
+                  <button
+                    onClick={() => {
+                      toggleWatched({ id: movie.imdbID, title: movie.Title, poster: movie.Poster });
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faEye} className={watchedStyling} />
+                  </button>
+                </>
+              ) : (
+                ""
+              )}
             </div>
           </div>
           <section className="pb-10 flex flex-col items-center bg-gradient-to-b from-transparent from-10%  via-black/[.80] via-20% to-black/[.90] to-100% overflow-hidden bg-opacity-70">
@@ -266,7 +272,15 @@ const MoviePage = () => {
             ) : (
               <h1 className="movie-header text-4xl text-center max-md:text-3xl max-xsm:text-2xl mt-10">Be the first to write a review!</h1>
             )}
-            <NewReviewForm poster={movie.Poster} id={id} addNewReview={addNewReview} />
+            {isLoggedIn ? (
+              <NewReviewForm poster={movie.Poster} id={id} addNewReview={addNewReview} />
+            ) : (
+              <div className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-3/4 p-3 my-3 border-2 border-black">
+                <a href="/login">
+                  <h1 className="text-center text-3xl movie-header">Login to add to the discussion!</h1>
+                </a>
+              </div>
+            )}
           </section>
         </div>
       )}

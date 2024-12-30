@@ -32,22 +32,22 @@ const NavLinks = (props) => {
             </button>
           </Link>
         </li>
-        <li className="mx-3 opacity-80 py-[10px] hover:opacity-100">
-          <Link to="/bookmarks">
-            <button className="movie-header" onClick={props.buttonClick}>
-              Bookmarks
-            </button>
-          </Link>
-        </li>
-        <li className="mx-3 opacity-80 py-[10px] hover:opacity-100">
-          <Link to="/watched-movies">
-            <button className="movie-header" onClick={props.buttonClick}>
-              Watched Movies
-            </button>
-          </Link>
-        </li>
         {isLoggedIn && (
           <>
+            <li className="mx-3 opacity-80 py-[10px] hover:opacity-100">
+              <Link to="/bookmarks">
+                <button className="movie-header" onClick={props.buttonClick}>
+                  Bookmarks
+                </button>
+              </Link>
+            </li>
+            <li className="mx-3 opacity-80 py-[10px] hover:opacity-100">
+              <Link to="/watched-movies">
+                <button className="movie-header" onClick={props.buttonClick}>
+                  Watched Movies
+                </button>
+              </Link>
+            </li>
             <li className="mx-3 opacity-80 py-[10px] hover:opacity-100">
               <Link to="/profile">
                 <button className="movie-header" onClick={props.buttonClick}>

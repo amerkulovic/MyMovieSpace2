@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useAuth } from "./AuthContext";
 import NewMessageForm from "./NewMessageForm";
 import MessageCard from "./MessageCard";
 import LoadingPage from "./LoadingPage";
@@ -6,6 +7,7 @@ import LoadingPage from "./LoadingPage";
 const MessagesPage = () => {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { isLoggedIn } = useAuth();
 
   useEffect(() => {
     async function fetchData() {
@@ -44,7 +46,15 @@ const MessagesPage = () => {
               <MessageCard key={index} link={message._id} title={message.title} text={message.description} username={message.username} />
             ))}
           </section>
-          <NewMessageForm />
+          {isLoggedIn ? (
+            <NewMessageForm />
+          ) : (
+            <div className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-8/12 p-3 my-3 border-2 border-black">
+              <a href="/login">
+                <h1 className="text-center text-3xl movie-header">Login to add to the discussion!</h1>
+              </a>
+            </div>
+          )}
         </div>
       )}
     </div>

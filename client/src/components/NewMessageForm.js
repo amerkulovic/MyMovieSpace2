@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAuth } from "./AuthContext";
 
 const NewMessageForm = (props) => {
   let [isOpen, setIsOpen] = useState(false);
+  let { user } = useAuth();
 
   const [formData, setFormData] = useState({
-    userName: "",
     message: "",
     title: "",
   });
@@ -25,10 +26,10 @@ const NewMessageForm = (props) => {
     fetch(`/create-message`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title: formData.title, description: formData.message, username: formData.userName }),
+      body: JSON.stringify({ title: formData.title, description: formData.message, username: user.username }),
     })
       .then(() => {
-        console.log("new review added!");
+        console.log("new message added!");
       })
       .catch((error) => {
         console.error("Error creating review:", error);
@@ -44,10 +45,10 @@ const NewMessageForm = (props) => {
       </div>
       {isOpen && (
         <form className="flex flex-col" onSubmit={submitHandler}>
-          <div className="my-4">
+          {/* <div className="my-4">
             <label className="text-white">Username:</label>
             <input className="w-full rounded-lg p-2 text-black" name="userName" value={formData.userName} onChange={handleChange} />
-          </div>
+          </div> */}
           <div className="my-4">
             <label className="text-white">Movie Name & Title of Post:</label>
             <input className="w-full rounded-lg p-2 text-black" name="title" value={formData.title} onChange={handleChange} />

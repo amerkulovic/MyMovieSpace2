@@ -151,9 +151,9 @@ const ProfilePage = () => {
   };
   let showLessHandler = (name) => {
     if (name === "watched") {
-      setWatchedCap(5);
+      setWatchedCap(6);
     } else if (name === "bookmarks") {
-      setBookmarksCap(5);
+      setBookmarksCap(6);
     } else {
       setReviewsCap(3);
     }
@@ -178,7 +178,7 @@ const ProfilePage = () => {
             Show More
           </button>
         )}
-        {watchedCap > 10 && (
+        {watchedCap > 6 && (
           <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showLessHandler("watched")}>
             Show Less
           </button>
@@ -190,7 +190,7 @@ const ProfilePage = () => {
             Show More
           </button>
         )}
-        {bookmarksCap > 10 && (
+        {bookmarksCap > 6 && (
           <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showLessHandler("bookmarks")}>
             Show Less
           </button>

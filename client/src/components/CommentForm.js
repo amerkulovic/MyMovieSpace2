@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAuth } from "./AuthContext";
 
 const CommentForm = ({ id, addNewComment }) => {
   let [isOpen, setIsOpen] = useState(false);
+  let { user } = useAuth();
 
   const [formData, setFormData] = useState({
-    userName: "",
     message: "",
   });
 
@@ -23,7 +24,7 @@ const CommentForm = ({ id, addNewComment }) => {
 
     const comment = {
       description: formData.message,
-      username: formData.userName,
+      username: user.username,
     };
     fetch(`/message/${id}/comment`, {
       method: "POST",
@@ -39,7 +40,7 @@ const CommentForm = ({ id, addNewComment }) => {
       .then((updatedMessage) => {
         addNewComment(comment);
         setIsOpen(false);
-        setFormData({ userName: "", message: "" });
+        setFormData({ message: "" });
       })
       .catch((error) => console.error("Error creating comment:", error));
   };
@@ -54,10 +55,10 @@ const CommentForm = ({ id, addNewComment }) => {
       </div>
       {isOpen && (
         <form className="flex flex-col" onSubmit={submitHandler}>
-          <div className="my-4">
+          {/* <div className="my-4">
             <label className="text-white">Username:</label>
             <input className="w-full rounded-lg p-2 text-black" name="userName" value={formData.userName} onChange={handleChange} />
-          </div>
+          </div> */}
           <div className="my-4">
             <label className="text-white">Message:</label>
             <textarea className="w-full rounded-lg p-2 text-black" name="message" value={formData.message} onChange={handleChange} />

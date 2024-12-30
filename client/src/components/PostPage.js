@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useAuth } from "./AuthContext";
 import { useParams } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import LoadingPage from "./LoadingPage";
@@ -7,6 +8,7 @@ import AOS from "aos";
 const PostPage = () => {
   const [post, setPost] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const { isLoggedIn } = useAuth();
 
   useEffect(() => {
     AOS.init({
@@ -71,7 +73,15 @@ const PostPage = () => {
             </div>
           ))}
         </div>
-        <CommentForm id={id} addNewComment={addNewComment} />
+        {isLoggedIn ? (
+          <CommentForm id={id} addNewComment={addNewComment} />
+        ) : (
+          <div className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-3/4 p-3 my-3 border-2 border-black">
+            <a href="/login">
+              <h1 className="text-center text-3xl movie-header">Login to add to the discussion!</h1>
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );
