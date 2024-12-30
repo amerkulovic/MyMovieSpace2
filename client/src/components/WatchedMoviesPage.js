@@ -2,21 +2,41 @@ import MovieCard from "./MovieCard";
 import notFoundImg from "../images/notfoundimg.png";
 import LoadingPage from "./LoadingPage";
 import { useEffect, useState } from "react";
+import { useAuth } from "./AuthContext";
 
 const WatchedMoviesPage = () => {
-  const storedMovies = localStorage.getItem("watched");
+  const [error, setError] = useState(null);
   let [watchedMovies, setWatchedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  let { user } = useAuth();
 
   useEffect(() => {
-    if (storedMovies) {
-      setWatchedMovies(JSON.parse(storedMovies));
-      setIsLoading(false);
-    } else {
-      setWatchedMovies([]);
-      setIsLoading(false);
-    }
-  }, []);
+    if (!user) return;
+    const fetchWatchedMovies = async () => {
+      try {
+        setIsLoading(true);
+        const token = localStorage.getItem("token");
+        const response = await fetch(`/user-watched/${user.username}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch watched movies");
+        }
+
+        const data = await response.json();
+        setWatchedMovies(data.watched.reverse());
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchWatchedMovies();
+  }, [user]);
 
   if (isLoading) {
     return <LoadingPage />;

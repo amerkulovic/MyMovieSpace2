@@ -1,22 +1,42 @@
 import MovieCard from "./MovieCard";
 import notFoundImg from "../images/notfoundimg.png";
 import { useEffect, useState } from "react";
+import { useAuth } from "./AuthContext";
 import LoadingPage from "./LoadingPage";
 
 const BookmarksPage = () => {
-  const storedBookmarks = localStorage.getItem("bookmarks");
+  const [error, setError] = useState(null);
   let [bookmarks, setBookmarks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  let { user } = useAuth();
 
   useEffect(() => {
-    if (storedBookmarks) {
-      setBookmarks(JSON.parse(storedBookmarks));
-      setIsLoading(false);
-    } else {
-      setBookmarks([]);
-      setIsLoading(false);
-    }
-  }, []);
+    if (!user) return;
+    const fetchBookmarks = async () => {
+      try {
+        setIsLoading(true);
+        const token = localStorage.getItem("token");
+        const response = await fetch(`/user-bookmarks/${user.username}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch bookmarks");
+        }
+
+        const data = await response.json();
+        setBookmarks(data.bookmarks.reverse());
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBookmarks();
+  }, [user]);
 
   if (isLoading) {
     return <LoadingPage />;
@@ -34,7 +54,7 @@ const BookmarksPage = () => {
           </div>
         </div>
       ) : (
-        <h1 className="movie-header text-6xl flex justify-center items-center h-[600px]">Find Your Favorite Movies!</h1>
+        <h1 className="movie-header text-6xl flex text-center justify-center items-center h-[600px]">Find Your Favorite Movies!</h1>
       )}
     </>
   );
