@@ -63,5 +63,4 @@ export const AuthProvider = ({ children }) => {
   return <AuthContext.Provider value={{ user, login, logout, isLoggedIn }}>{children}</AuthContext.Provider>;
 };
 
-// Custom hook to use AuthContext
 export const useAuth = () => useContext(AuthContext);

@@ -315,19 +315,29 @@ app.post("/signup", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
+  console.log("Login request:", req.body);
   try {
     const user = await User.findOne({ username });
-    if (!user) return res.status(400).json({ message: "Invalid username" });
+    if (!user) {
+      console.log("User not found:", username);
+      return res.status(400).json({ message: "Invalid username" });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: "Invalid password" });
+    if (!isMatch) {
+      console.log("Password mismatch for user:", username);
+      return res.status(400).json({ message: "Invalid password" });
+    }
 
     const token = jwt.sign({ id: user._id, username: user.username }, SECRET, { expiresIn: "1h" });
+
+    console.log("Token generated for user:", username);
     res.json({
       token,
       username: user.username,
     });
   } catch (error) {
+    console.error("Error in /login route:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
