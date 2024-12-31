@@ -57,10 +57,6 @@ const NewReviewForm = ({ id, addNewReview, poster }) => {
       </div>
       {isOpen && (
         <form className="flex flex-col" onSubmit={submitHandler}>
-          {/* <div className="my-4">
-            <label className="text-white">Username:</label>
-            <input className="w-full rounded-lg p-2 text-black" name="userName" value={formData.userName} onChange={handleChange} />
-          </div> */}
           <div className="my-4">
             <label className="text-white">Title:</label>
             <input className="w-full rounded-lg p-2 text-black" name="title" value={formData.title} onChange={handleChange} />
@@ -82,7 +78,13 @@ const NewReviewForm = ({ id, addNewReview, poster }) => {
               })}
             </div>
           </div>
-          <button className="border border-white bg-red-900 movie-header text-2xl py-3 rounded-lg mt-2 mb-5">Publish Review</button>
+          <button
+            className={`movie-header text-2xl py-3 rounded-lg mt-2 mb-5 
+    ${!formData.title || !formData.message || !rating ? "bg-gray-500 text-gray-700 border-gray-800 cursor-not-allowed" : "border border-white bg-red-900"}`}
+            disabled={!formData.title || !formData.message || !rating}
+          >
+            Publish Review
+          </button>
         </form>
       )}
     </div>

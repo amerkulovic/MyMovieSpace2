@@ -4,6 +4,7 @@ import { useAuth } from "./components/AuthContext";
 import "./App.css";
 import axios from "axios";
 import BookmarksPage from "./components/BookmarksPage";
+import ErrorPage from "./components/ErrorPage";
 import Footer from "./components/Footer/Footer";
 import HamburgerMenu from "./components/HamburgerMenu";
 import HomePage from "./components/HomePage";
@@ -53,12 +54,20 @@ function App() {
   };
 
   const searchHandler = async () => {
-    await fetch(`https://www.omdbapi.com/?apikey=f14ca85d&s=${name}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setMovies(data);
-        if (isOpen) toggleMenu();
-      });
+    try {
+      const response = await fetch(`https://www.omdbapi.com/?apikey=f14ca85d&s=${name}`);
+      const data = await response.json();
+
+      if (data.Response === "False" || !data.Search) {
+        setMovies([{ title: "No movies found", isError: true }]);
+      } else {
+        setMovies(data.Search);
+      }
+
+      if (isOpen) toggleMenu();
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   return (
@@ -70,7 +79,7 @@ function App() {
         <div className="background-image">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/search" element={<div className="flex flex-wrap justify-center">{movies ? movies.Search.map((movie) => <MovieCard moviePoster={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} movieTitle={movie.Title} imdbID={movie.imdbID} />) : <LoadingPage />}</div>} />
+            <Route path="/search" element={<div className="flex flex-wrap justify-center">{movies ? movies[0]?.isError ? <ErrorPage /> : movies.map((movie) => <MovieCard key={movie.imdbID} moviePoster={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} movieTitle={movie.Title} imdbID={movie.imdbID} />) : <LoadingPage />}</div>} />
             <Route path="/:search/:id" element={<MoviePage />} />
             <Route path="/messages" element={<MessagesPage />} />
             <Route path="/message/:id" element={<PostPage />} />
