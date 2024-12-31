@@ -259,12 +259,12 @@ const MoviePage = () => {
                   />
                 ))}
                 {reviewCap < filteredReviews.length && (
-                  <button onClick={showMoreHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
+                  <button onClick={showMoreHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-5/6 max-sm:w-11/12  p-3 my-3 border-2 border-black text-center text-xl movie-header">
                     Show more
                   </button>
                 )}
                 {reviewCap === filteredReviews.length && filteredReviews.length > 3 && (
-                  <button onClick={showLessHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
+                  <button onClick={showLessHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-5/6 max-sm:w-11/12  p-3 my-3 border-2 border-black text-center text-xl movie-header">
                     Show less
                   </button>
                 )}
@@ -275,7 +275,7 @@ const MoviePage = () => {
             {isLoggedIn ? (
               <NewReviewForm poster={movie.Poster} id={id} addNewReview={addNewReview} />
             ) : (
-              <div className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-3/4 p-3 my-3 border-2 border-black">
+              <div className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-3/4 max-sm:w-11/12  p-3 my-3 border-2 border-black">
                 <a href="/login">
                   <h1 className="text-center text-3xl movie-header">Login to add to the discussion!</h1>
                 </a>

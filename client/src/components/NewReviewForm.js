@@ -48,7 +48,7 @@ const NewReviewForm = ({ id, addNewReview, poster }) => {
       });
   };
   return (
-    <div className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black">
+    <div className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-5/6 max-sm:w-11/12  p-3 my-3 border-2 border-black">
       <div className="flex items-center">
         <FontAwesomeIcon className={`text-2xl hover:cursor-pointer ${!isOpen ? "hidden" : ""}`} icon={faX} onClick={() => setIsOpen(!isOpen)} />
         <button className="w-full" onClick={() => setIsOpen(!isOpen)}>

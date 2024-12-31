@@ -16,11 +16,11 @@ const HomeReviewCard = (props) => {
         <a href={`/search/${props.link}`}>
           <img src={props.poster} className="w-[95px] h-[145px] mr-5" />
         </a>
-        <div className="flex flex-col items-start max-sm:w-2/3">
-          <h1 className="text-3xl movie-header max-sm:text-2xl">{props.title}</h1>
+        <div className="flex flex-col items-start w-[80%] max-sm:w-2/3">
+          <h1 className="text-3xl movie-header text-start max-sm:text-2xl">{props.title}</h1>
           <p className="text-white">Reviewed by {props.username}</p>
           <StarRating styling="w-[2px] mr-6" rating={props.rating} />
-          <p className="text-white font-bold pt-3 text-start">{props.text}</p>
+          <p className="text-white font-bold pt-3 text-start min-w-[500px] max-lg:min-w-0">{props.text}</p>
         </div>
       </section>
       {/* <section className="absolute bottom-3 right-3 text-white font-bold max-sm:static max-sm:flex max-sm:justify-end">
