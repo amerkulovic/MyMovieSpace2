@@ -7,6 +7,7 @@ import AOS from "aos";
 
 const PostPage = () => {
   const [post, setPost] = useState("");
+  const [commentCap, setCommentCap] = useState(5);
   const [isLoading, setIsLoading] = useState(true);
   const { isLoggedIn } = useAuth();
 
@@ -32,6 +33,14 @@ const PostPage = () => {
     }
     fetchData();
   }, [id]);
+
+  const showMoreHandler = () => {
+    setCommentCap(post.comments.length);
+  };
+
+  const showLessHandler = () => {
+    setCommentCap(5);
+  };
 
   const addNewComment = (newComment) => {
     setPost((prevPost) => ({
@@ -59,7 +68,7 @@ const PostPage = () => {
           </section>
         </div>
         <div className="flex flex-col w-full items-end">
-          {post.comments.map((comment, index) => (
+          {post.comments.slice(0, commentCap).map((comment, index) => (
             <div className="flex flex-col bg-gradient-to-r from-slate-800 via-slate-600 to-slate-800 w-3/4 p-3 my-3 relative rounded-tl-lg rounded-bl-lg max-sm:w-full max-sm:flex-col max-sm:rounded-tr-lg max-sm:rounded-br-lg max-sm:my-1">
               <section className="flex flex-row p-2">
                 <div className="flex flex-col items-start justify-start max-sm:w-full">
@@ -72,6 +81,16 @@ const PostPage = () => {
               </section>
             </div>
           ))}
+          {commentCap < post.comments.length && (
+            <button onClick={showMoreHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-full p-3 my-3 border-2 border-black text-center text-xl movie-header">
+              Show more
+            </button>
+          )}
+          {commentCap === post.comments.length && post.comments.length > 5 && (
+            <button onClick={showLessHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-full p-3 my-3 border-2 border-black text-center text-xl movie-header">
+              Show less
+            </button>
+          )}
         </div>
         {isLoggedIn ? (
           <CommentForm id={id} addNewComment={addNewComment} />

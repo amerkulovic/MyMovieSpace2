@@ -2,7 +2,9 @@ import { useRef, useState, useEffect } from "react";
 
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Toast from "./Toast";
+import { useAuth } from "./AuthContext";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -10,6 +12,8 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const SignUp = () => {
   const userRef = useRef();
   const errRef = useRef();
+  const navigate = useNavigate();
+  const { success, setSuccess } = useAuth();
 
   const [user, setUser] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -26,7 +30,6 @@ const SignUp = () => {
   const [matchFocus, setMatchFocus] = useState(false);
 
   const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     const result = USER_REGEX.test(user);
@@ -66,12 +69,14 @@ const SignUp = () => {
       }
     } catch (err) {
       setErrMsg("Server error");
+    } finally {
+      navigate("/login");
     }
   };
 
   return (
     <div className="w-full py-10 flex justify-center">
-      <section className="bg-red-600 w-1/3 max-xl:w-1/2 max-md:w-10/12 p-3">
+      <section className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 w-1/3 max-xl:w-1/2 max-md:w-10/12 p-3">
         <p ref={errRef} className={errMsg ? "errmsg" : "hidden"} aria-live="assertive">
           {errMsg}
         </p>
@@ -100,7 +105,7 @@ const SignUp = () => {
               <FontAwesomeIcon icon={faTimes} className={validName || !user ? "hidden" : "invalid"} />
             </div>
             <div>
-              <input className="w-full rounded-lg p-2" type="text" id="username" ref={userRef} autoComplete="off" onChange={(e) => setUser(e.target.value)} value={user} required aria-invalid={validName ? "false" : "true"} aria-describedby="uidnote" onFocus={() => setUserFocus(true)} onBlur={() => setUserFocus(false)} />
+              <input className="w-full rounded-lg p-2" type="text" id="username" ref={userRef} autoComplete="off" placeholder="Username" onChange={(e) => setUser(e.target.value)} value={user} required aria-invalid={validName ? "false" : "true"} aria-describedby="uidnote" onFocus={() => setUserFocus(true)} onBlur={() => setUserFocus(false)} />
             </div>
             <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "hidden"}>
               <FontAwesomeIcon icon={faInfoCircle} />
@@ -111,7 +116,6 @@ const SignUp = () => {
               Letters, numbers, underscores, hyphens allowed.
             </p>
           </div>
-
           <div className="my-4">
             <div>
               <label className="text-white" htmlFor="password">
@@ -120,7 +124,7 @@ const SignUp = () => {
               <FontAwesomeIcon icon={faCheck} className={validPwd ? "valid" : "hidden"} />
               <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? "hidden" : "invalid"} />
             </div>
-            <input className="w-full rounded-lg p-2" type="password" id="password" onChange={(e) => setPwd(e.target.value)} value={pwd} required aria-invalid={validPwd ? "false" : "true"} aria-describedby="pwdnote" onFocus={() => setPwdFocus(true)} onBlur={() => setPwdFocus(false)} />
+            <input className="w-full rounded-lg p-2" type="password" id="password" placeholder="Password" onChange={(e) => setPwd(e.target.value)} value={pwd} required aria-invalid={validPwd ? "false" : "true"} aria-describedby="pwdnote" onFocus={() => setPwdFocus(true)} onBlur={() => setPwdFocus(false)} />
 
             <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "hidden"}>
               <FontAwesomeIcon icon={faInfoCircle} />
@@ -140,14 +144,14 @@ const SignUp = () => {
               <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? "hidden" : "invalid"} />
             </div>
             <div>
-              <input className="w-full rounded-lg p-2" type="password" id="confirm_pwd" onChange={(e) => setMatchPwd(e.target.value)} value={matchPwd} required aria-invalid={validMatch ? "false" : "true"} aria-describedby="confirmnote" onFocus={() => setMatchFocus(true)} onBlur={() => setMatchFocus(false)} />
+              <input className="w-full rounded-lg p-2" type="password" id="confirm_pwd" placeholder="Confirm Password" onChange={(e) => setMatchPwd(e.target.value)} value={matchPwd} required aria-invalid={validMatch ? "false" : "true"} aria-describedby="confirmnote" onFocus={() => setMatchFocus(true)} onBlur={() => setMatchFocus(false)} />
             </div>
             <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "hidden"}>
               <FontAwesomeIcon icon={faInfoCircle} />
               Must match the first password input field.
             </p>
           </div>
-          <button className="bg-red-800 movie-header text-2xl py-3 rounded-lg mb-10" disabled={!validName || !validPwd || !validMatch ? true : false}>
+          <button className="bg-red-800 movie-header text-2xl py-3 rounded-lg mb-10 border border-white" disabled={!validName || !validPwd || !validMatch ? true : false}>
             Sign Up
           </button>
         </form>

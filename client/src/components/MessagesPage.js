@@ -6,6 +6,7 @@ import LoadingPage from "./LoadingPage";
 
 const MessagesPage = () => {
   const [messages, setMessages] = useState([]);
+  const [messageCap, setMessageCap] = useState(5);
   const [isLoading, setIsLoading] = useState(true);
   const { isLoggedIn } = useAuth();
 
@@ -26,6 +27,14 @@ const MessagesPage = () => {
     fetchData();
   }, []);
 
+  const showMoreHandler = () => {
+    setMessageCap(messages.length);
+  };
+
+  const showLessHandler = () => {
+    setMessageCap(5);
+  };
+
   if (isLoading) {
     return <LoadingPage />;
   }
@@ -42,12 +51,24 @@ const MessagesPage = () => {
           <h1 className="text-white text-3xl movie-header py-4 text-center">Message Board</h1>
           <div className="w-[80%] h-px bg-white mx-auto"></div>
           <section className="w-full flex flex-col items-center">
-            {messages.map((message, index) => (
+            {messages.slice(0, messageCap).map((message, index) => (
               <MessageCard key={index} link={message._id} title={message.title} text={message.description} username={message.username} />
             ))}
           </section>
           {isLoggedIn ? (
-            <NewMessageForm />
+            <>
+              <NewMessageForm />
+              {messageCap < messages.length && (
+                <button onClick={showMoreHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
+                  Show more
+                </button>
+              )}
+              {messageCap === messageCap.length && messages.length > 5 && (
+                <button onClick={showLessHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
+                  Show less
+                </button>
+              )}
+            </>
           ) : (
             <div className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-8/12 p-3 my-3 border-2 border-black">
               <a href="/login">

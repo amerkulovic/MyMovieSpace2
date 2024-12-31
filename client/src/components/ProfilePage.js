@@ -5,6 +5,7 @@ import ProfileCard from "./ProfileCard";
 import notFoundImg from "../images/notfoundimg.png";
 import HomeReviewCard from "./HomeReviewCard";
 import LoadingSpinner from "./LoadingSpinner";
+import LoadingPage from "./LoadingPage";
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState(null);
@@ -164,15 +165,16 @@ const ProfilePage = () => {
   }
 
   if (!userData) {
-    return <div>Loading...</div>;
+    return <LoadingPage />;
   }
 
   return (
-    <div className="p-2">
-      <p className="movie-header text-4xl text-start pt-10 pl-10">Hello {userData.firstName}</p>
+    <div className="p-2 py-10">
+      {/* <p className="movie-header text-4xl text-start pt-10 pl-10">Hello {userData.firstName}</p> */}
       <section className="flex flex-col items-center">
         <h1 className="flex justify-center movie-header text-4xl border-b-[0.5px] border-white w-11/12 mb-4"> Your Watched Movies</h1>
         <section className="flex flex-wrap justify-center">{isWatchedLoading ? <LoadingSpinner /> : watchedMovies.slice(0, watchedCap).map((movie) => <ProfileCard moviePoster={movie.poster !== "N/A" ? movie.poster : notFoundImg} movieTitle={movie.title} imdbID={movie.id} />)}</section>
+        {watchedMovies.length === 0 && <p className="movie-header text-xl py-10">No watched movies</p>}
         {watchedCap < watchedMovies.length && (
           <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showMoreHandler("watched", watchedMovies)}>
             Show More
@@ -185,6 +187,7 @@ const ProfilePage = () => {
         )}
         <h1 className="flex justify-center movie-header text-4xl border-b-[0.5px] border-white w-11/12 mb-4"> Your Bookmarks</h1>
         <section className="flex flex-wrap justify-center">{isBookmarksLoading ? <LoadingSpinner /> : bookmarks.slice(0, bookmarksCap).map((movie) => <ProfileCard moviePoster={movie.poster !== "N/A" ? movie.poster : notFoundImg} movieTitle={movie.title} imdbID={movie.id} />)}</section>
+        {bookmarks.length === 0 && <p className="movie-header text-xl py-10">No bookmark</p>}
         {bookmarksCap < bookmarks.length && (
           <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showMoreHandler("bookmarks", watchedMovies)}>
             Show More
@@ -216,6 +219,7 @@ const ProfilePage = () => {
             />
           ))
         )}
+        {reviews.length === 0 && <p className="movie-header text-xl py-10">No reviews</p>}
         {reviewsCap < reviews.length && (
           <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showMoreHandler("reviews", reviews)}>
             Show More

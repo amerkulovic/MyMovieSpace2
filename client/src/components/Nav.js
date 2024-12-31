@@ -1,14 +1,13 @@
 import search from "./../svgs/search.svg";
-import bookmark from "./../svgs/bookmark.svg";
-import login from "./../svgs/right-to-bracket-solid.svg";
 import { Link } from "react-router-dom";
-import HamburgerMenu from "./HamburgerMenu";
+import { useAuth } from "./AuthContext";
 import NavLinks from "./NavLinks";
 import React, { useState } from "react";
 import { faBars, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Nav = (props) => {
+  let { isLoggedIn } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -22,12 +21,12 @@ const Nav = (props) => {
           <FontAwesomeIcon icon={!props.isOpen ? faBars : faX} />
         </button>
       </div>
-      <div className="flex justify-end max-lg:justify-center w-[25%]">
+      <div className={`flex justify-end max-lg:justify-center ${isLoggedIn ? "w-[33%]" : "w-[33%]"}`}>
         <Link to="/">
           <h1 className="header-font text-white text-6xl text-center mr-10 max-lg:m-0 max-sm:text-5xl">MyMovieSpace</h1>
         </Link>
       </div>
-      <div className="ml-4 flex justify-around items-center w-[62%] max-lg:w-[0%]">
+      <div className={`ml-4 flex ${isLoggedIn ? "" : "justify-around "} items-center w-[66%] max-lg:w-[0%]`}>
         <div className="max-lg:hidden">
           <NavLinks logoutHandler={props.logoutHandler} />
         </div>
