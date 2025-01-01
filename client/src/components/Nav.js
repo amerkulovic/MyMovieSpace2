@@ -1,5 +1,5 @@
 import search from "./../svgs/search.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import NavLinks from "./NavLinks";
 import React, { useState } from "react";
@@ -8,10 +8,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Nav = (props) => {
   let { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const keySearchHandler = (event) => {
+    if (event.key === "Enter") {
+      props.search();
+      navigate("/search");
+    }
   };
 
   return (
@@ -31,7 +39,7 @@ const Nav = (props) => {
           <NavLinks logoutHandler={props.logoutHandler} />
         </div>
         <div className="opacity-70 hover:opacity-100 flex items-center pr-10 max-lg:hidden">
-          <input className="h-14 px-4 rounded-tl-xl rounded-tr-none rounded-bl-xl rounded-br-none focus:outline-none" placeholder="Find a Movie!" onChange={props.value} />
+          <input className="h-14 px-4 rounded-tl-xl rounded-tr-none rounded-bl-xl rounded-br-none focus:outline-none" placeholder="Find a Movie!" onKeyDown={keySearchHandler} onChange={props.value} />
           <Link to="/search">
             <button className="bg-white p-4 h-14 rounded-tr-xl rounded-br-xl" onClick={props.search}>
               <img className="h-5 w-5" src={search} />

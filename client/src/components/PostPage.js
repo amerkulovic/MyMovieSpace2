@@ -69,7 +69,7 @@ const PostPage = () => {
         </div>
         <div className="flex flex-col w-full items-end">
           {post.comments.slice(0, commentCap).map((comment, index) => (
-            <div className="flex flex-col bg-gradient-to-r from-slate-800 via-slate-600 to-slate-800 w-3/4 p-3 my-3 relative rounded-tl-lg rounded-bl-lg max-sm:w-full max-sm:flex-col max-sm:rounded-tr-lg max-sm:rounded-br-lg max-sm:my-1">
+            <div className="flex flex-col bg-gradient-to-r from-slate-800 via-slate-600 to-slate-800 w-full p-3 my-2 relative rounded-lg border border-slate-400 max-sm:w-full max-sm:flex-col max-sm:rounded-tr-lg max-sm:rounded-br-lg max-sm:my-1">
               <section className="flex flex-row p-2">
                 <div className="flex flex-col items-start justify-start max-sm:w-full">
                   <p className="text-white font-bold text-start">{comment.description}</p>

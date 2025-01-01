@@ -63,7 +63,7 @@ const NewReviewForm = ({ id, addNewReview, poster }) => {
           </div>
           <div className="my-4">
             <label className="text-white">Message:</label>
-            <textarea className="w-full rounded-lg p-2 text-black" name="message" value={formData.message} onChange={handleChange} />
+            <textarea className="w-full rounded-lg p-2 text-black" name="message" rows={4} value={formData.message} onChange={handleChange} />
           </div>
           <div className="flex justify-center mt-2 mb-4">
             <div className="flex flex-row">
