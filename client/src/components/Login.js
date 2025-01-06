@@ -44,13 +44,13 @@ const Login = ({ onLogin }) => {
             <label className="text-white" htmlFor="username">
               Username:
             </label>
-            <input className="w-full rounded-lg p-2" type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} required />
+            <input className="w-full rounded-lg p-2" type="text" placeholder="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
           </div>
           <div className="my-4 pb-5">
             <label className="text-white" htmlFor="username">
               Password:
             </label>
-            <input className="w-full rounded-lg p-2" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <input className="w-full rounded-lg p-2" type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           </div>
           <button className="bg-red-800 movie-header text-2xl py-3 rounded-lg mb-10 w-full border border-white" type="submit">
             Login

@@ -87,13 +87,13 @@ const SignUp = () => {
               <label className="text-white" htmlFor="username">
                 First Name:
               </label>
-              <input className="w-full rounded-lg p-2" type="text" placeholder="First name" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+              <input className="w-full rounded-lg p-2" type="text" placeholder="first name" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
             </div>
             <div className="w-1/2 pl-1">
               <label className="text-white" htmlFor="username">
                 Last Name:
               </label>
-              <input className="w-full rounded-lg p-2" type="text" placeholder="Last name" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
+              <input className="w-full rounded-lg p-2" type="text" placeholder="last name" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
             </div>
           </div>
           <div className="mb-4">
@@ -105,7 +105,7 @@ const SignUp = () => {
               <FontAwesomeIcon icon={faTimes} className={validName || !user ? "hidden" : "invalid"} />
             </div>
             <div>
-              <input className="w-full rounded-lg p-2" type="text" id="username" ref={userRef} autoComplete="off" placeholder="Username" onChange={(e) => setUser(e.target.value)} value={user} required aria-invalid={validName ? "false" : "true"} aria-describedby="uidnote" onFocus={() => setUserFocus(true)} onBlur={() => setUserFocus(false)} />
+              <input className="w-full rounded-lg p-2" type="text" id="username" ref={userRef} autoComplete="off" placeholder="username" onChange={(e) => setUser(e.target.value)} value={user} required aria-invalid={validName ? "false" : "true"} aria-describedby="uidnote" onFocus={() => setUserFocus(true)} onBlur={() => setUserFocus(false)} />
             </div>
             <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "hidden"}>
               <FontAwesomeIcon icon={faInfoCircle} />
@@ -124,7 +124,7 @@ const SignUp = () => {
               <FontAwesomeIcon icon={faCheck} className={validPwd ? "valid" : "hidden"} />
               <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? "hidden" : "invalid"} />
             </div>
-            <input className="w-full rounded-lg p-2" type="password" id="password" placeholder="Password" onChange={(e) => setPwd(e.target.value)} value={pwd} required aria-invalid={validPwd ? "false" : "true"} aria-describedby="pwdnote" onFocus={() => setPwdFocus(true)} onBlur={() => setPwdFocus(false)} />
+            <input className="w-full rounded-lg p-2" type="password" id="password" placeholder="password" onChange={(e) => setPwd(e.target.value)} value={pwd} required aria-invalid={validPwd ? "false" : "true"} aria-describedby="pwdnote" onFocus={() => setPwdFocus(true)} onBlur={() => setPwdFocus(false)} />
 
             <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "hidden"}>
               <FontAwesomeIcon icon={faInfoCircle} />
@@ -144,7 +144,7 @@ const SignUp = () => {
               <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? "hidden" : "invalid"} />
             </div>
             <div>
-              <input className="w-full rounded-lg p-2" type="password" id="confirm_pwd" placeholder="Confirm Password" onChange={(e) => setMatchPwd(e.target.value)} value={matchPwd} required aria-invalid={validMatch ? "false" : "true"} aria-describedby="confirmnote" onFocus={() => setMatchFocus(true)} onBlur={() => setMatchFocus(false)} />
+              <input className="w-full rounded-lg p-2" type="password" id="confirm_pwd" placeholder="confirm password" onChange={(e) => setMatchPwd(e.target.value)} value={matchPwd} required aria-invalid={validMatch ? "false" : "true"} aria-describedby="confirmnote" onFocus={() => setMatchFocus(true)} onBlur={() => setMatchFocus(false)} />
             </div>
             <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "hidden"}>
               <FontAwesomeIcon icon={faInfoCircle} />
