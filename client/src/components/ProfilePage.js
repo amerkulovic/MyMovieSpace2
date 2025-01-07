@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import defaultPhoto from "../images/default.jpg";
 import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
 import ProfileCard from "./ProfileCard";
@@ -170,9 +171,43 @@ const ProfilePage = () => {
 
   return (
     <div className="p-2 py-10">
-      {/* <p className="movie-header text-4xl text-start pt-10 pl-10">Hello {userData.firstName}</p> */}
       <section className="flex flex-col items-center">
-        <h1 className="flex justify-center movie-header text-4xl border-b-[0.5px] border-white w-11/12 mb-4"> Your Watched Movies</h1>
+        <section className="flex w-[90%] items-center justify-between py-10">
+          <section className="flex items-center">
+            <span className="photo-container flex items-center relative">
+              <img src={userData.profilePhoto ? userData.profilePhoto : defaultPhoto} className="w-[180px] h-[180px] min-w-[180px]" />
+              {!userData.profilePhoto && <button className="bg-red-800 font-bold absolute top-1 right-2  py-[6px] px-[15px] rounded-full text-white text-xl">+</button>}
+            </span>
+            <h1 className="movie-header text-white text-4xl pl-5">{userData.firstName}</h1>
+          </section>
+          <div className="flex">
+            <section className="flex mx-5">
+              <h1 className="movie-header text-white mr-1">Reviews: </h1>
+              <h1 className="movie-header text-white">
+                {reviews.reduce((currNumber, review) => {
+                  return currNumber + 1;
+                }, 0)}
+              </h1>
+            </section>
+            <section className="flex mx-5">
+              <h1 className="movie-header text-white mr-1">Bookmarks: </h1>
+              <h1 className="movie-header text-white">
+                {bookmarks.reduce((currNumber, review) => {
+                  return currNumber + 1;
+                }, 0)}
+              </h1>
+            </section>
+            <section className="flex mx-5">
+              <h1 className="movie-header text-white mr-1">Watched Movies: </h1>
+              <h1 className="movie-header text-white">
+                {watchedMovies.reduce((currNumber, review) => {
+                  return currNumber + 1;
+                }, 0)}
+              </h1>
+            </section>
+          </div>
+        </section>
+        <h1 className="flex justify-center movie-header text-4xl border-b-[0.5px] border-white w-11/12 mb-4 pt-10"> Your Watched Movies</h1>
         <section className="flex flex-wrap justify-center">{isWatchedLoading ? <LoadingSpinner /> : watchedMovies.slice(0, watchedCap).map((movie) => <ProfileCard moviePoster={movie.poster !== "N/A" ? movie.poster : notFoundImg} movieTitle={movie.title} imdbID={movie.id} />)}</section>
         {watchedMovies.length === 0 && <p className="movie-header text-xl py-10">No watched movies</p>}
         {watchedCap < watchedMovies.length && (

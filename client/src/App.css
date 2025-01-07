@@ -130,6 +130,14 @@
   visibility: hidden;
 }
 
+.photo-container {
+  width: 180px;
+  img {
+    border-radius: 50%;
+    width: 100%;
+  }
+}
+
 @media (max-width: 550px) {
   .movie-picture {
     width: 400px;

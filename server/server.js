@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const multer = require("multer");
 const path = require("path");
 const Review = require("./models/Review");
 const Message = require("./models/Message");
@@ -15,6 +16,7 @@ require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const SECRET = process.env.JWT_SECRET;
 
 // Middleware
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -45,6 +47,16 @@ mongoose
   .connect(connectionStringURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, uniqueSuffix + path.extname(file.originalname));
+  },
+});
 
 app.get("/all-reviews", async (req, res) => {
   try {
@@ -81,8 +93,14 @@ app.get("/users/:username", async (req, res) => {
     const user = await User.findOne({ username: req.params.username });
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    res.json(user);
+    const profilePhoto = user.profilePhoto || "";
+
+    res.json({
+      username: user.username,
+      profilePhoto: profilePhoto,
+    });
   } catch (error) {
+    console.error("Error fetching user:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
@@ -157,6 +175,26 @@ app.get("/user-watched/:username", async (req, res) => {
     res.status(200).json({ watched: user.watched });
   } catch (error) {
     console.error("Error fetching user watched movies:", error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
+const upload = multer({ storage });
+
+app.post("/upload-profile-photo", upload.single("profilePhoto"), async (req, res) => {
+  try {
+    const { username } = req.body;
+    const filePath = `/uploads/${req.file.filename}`;
+
+    const user = await User.findOneAndUpdate({ username: username }, { profilePhoto: filePath }, { new: true });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ message: "Profile photo updated successfully", user });
+  } catch (error) {
+    console.error("Error updating profile photo:", error);
     res.status(500).json({ error: "Something went wrong" });
   }
 });
