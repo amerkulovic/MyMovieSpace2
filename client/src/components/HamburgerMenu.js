@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const HamburgerMenu = (props) => {
   return (
-    // <div>
     <div className={`fixed z-10 left-0 top-0 h-full w-full pt-[100px] pl-10 bg-red-800 transform transition-transform duration-300 ease-in-out ${props.isOpen ? "translate-x-0" : "-translate-x-full"}`}>
       <div className={`${props.isOpen ? "" : "hidden"} max-lg:flex fixed top-8 left-8`}>
         <button onClick={props.toggleMenu} className="z-20 ml-5 px-3 py-2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-lg text-red-800 font-bold text-2xl max-xsm:ml-2 max-xsm:px-2 ">
@@ -23,7 +22,6 @@ const HamburgerMenu = (props) => {
         </Link>
       </div>
     </div>
-    // </div>
   );
 };
 
