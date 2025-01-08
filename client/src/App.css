@@ -1,0 +1,189 @@
+@font-face {
+  font-family: art-deco;
+  src: url(./fonts/Showtime-R9Ke.ttf);
+}
+@font-face {
+  font-family: movie-header;
+  src: url(./fonts/KungFuMaster-K7vrX.otf);
+}
+
+.App {
+  text-align: center;
+}
+
+.errmsg {
+  background-color: lightpink;
+  color: firebrick;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.header-font {
+  font-family: art-deco;
+}
+
+.instructions {
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+  background: #000;
+  color: #fff;
+  padding: 0.25rem;
+  position: relative;
+  bottom: -4px;
+}
+
+.valid {
+  color: limegreen;
+  margin-left: 0.25rem;
+}
+
+.invalid {
+  color: black;
+  margin-left: 0.25rem;
+}
+.movie-header {
+  font-family: movie-header;
+  color: white;
+}
+.background-image {
+  background-image: url("./images/main-bg.jpg");
+  background-size: 100%;
+  background-repeat: repeat-y;
+}
+
+.movie-picture {
+  position: relative;
+  width: 270px;
+  height: 370px;
+}
+.movie-picture:hover {
+  filter: blur(2px) brightness(60%);
+  box-shadow: 0 0 16px #cc1d1d;
+}
+
+.container:hover .picture-text {
+  opacity: 1;
+}
+.picture-text:hover ~ .movie-picture {
+  filter: blur(2px) brightness(60%);
+  box-shadow: 0 0 16px #cc1d1d;
+}
+
+.profile-movie-picture {
+  position: relative;
+  width: 143px;
+  height: 218px;
+}
+.profile-movie-picture:hover {
+  filter: blur(2px) brightness(60%);
+  box-shadow: 0 0 16px #cc1d1d;
+}
+
+.container:hover .picture-text {
+  opacity: 1;
+}
+.picture-text:hover ~ .profile-movie-picture {
+  filter: blur(2px) brightness(60%);
+  box-shadow: 0 0 16px #cc1d1d;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+.container:hover .movie-picture {
+  filter: blur(2px) brightness(60%);
+  box-shadow: 0 0 16px #cc1d1d;
+}
+
+.container:hover .profile-movie-picture {
+  filter: blur(2px) brightness(60%);
+  box-shadow: 0 0 16px #cc1d1d;
+}
+
+.picture-text {
+  font-size: 18px;
+  font-weight: bold;
+  position: absolute;
+  top: 45%;
+  left: 52%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+.picture-text:hover {
+  opacity: 1;
+}
+.mobile-poster {
+  visibility: hidden;
+}
+
+.photo-container {
+  width: 180px;
+  img {
+    border-radius: 50%;
+    width: 100%;
+  }
+}
+
+@media (max-width: 550px) {
+  .movie-picture {
+    width: 400px;
+    height: 300px;
+  }
+  .profile-movie-picture {
+    width: 400px;
+    height: 300px;
+  }
+}
+
+@media (max-width: 470px) {
+  .movie-picture {
+    height: 250px;
+  }
+  .profile-movie-picture {
+    height: 250px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
