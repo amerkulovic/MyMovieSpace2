@@ -92,6 +92,7 @@ const HomePage = () => {
               rating={review.movieRating || 0}
               text={review.description}
               username={review.username}
+              profilePhoto={review.profilePhoto}
             />
           ))}
         {reviewCap < recentReviews.length && (

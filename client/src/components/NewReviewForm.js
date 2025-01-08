@@ -10,9 +10,9 @@ const NewReviewForm = ({ id, addNewReview, poster }) => {
   let [rating, setRating] = useState(null);
   let [hover, setHover] = useState(null);
   const { user } = useAuth();
+  console.log(user);
 
   const [formData, setFormData] = useState({
-    userName: "",
     message: "",
     title: "",
   });
@@ -28,7 +28,7 @@ const NewReviewForm = ({ id, addNewReview, poster }) => {
   let submitHandler = (e) => {
     e.preventDefault();
 
-    const review = { title: formData.title, description: formData.message, username: user.username, movieId: id, movieRating: rating, poster: poster };
+    const review = { title: formData.title, description: formData.message, username: user.username, movieId: id, movieRating: rating, poster: poster, profilePhoto: user.profilePhoto };
 
     fetch(`/create-review`, {
       method: "POST",

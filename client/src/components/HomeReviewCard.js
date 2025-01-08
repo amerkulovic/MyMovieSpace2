@@ -1,5 +1,6 @@
 import StarRating from "./StarRating";
 import { useEffect } from "react";
+import defaultPhoto from "../images/default.jpg";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -23,10 +24,9 @@ const HomeReviewCard = (props) => {
           <p className="text-white font-bold pt-3 text-start min-w-[500px] max-lg:min-w-0">{props.text}</p>
         </div>
       </section>
-      {/* <section className="absolute bottom-3 right-3 text-white font-bold max-sm:static max-sm:flex max-sm:justify-end">
-        <p>{props?.date}</p>
-        <h1 className="text-xl">{props.username}</h1>
-      </section> */}
+      <span className="review-photo-container flex items-center absolute bottom-4 right-4">
+        <img src={props.profilePhoto ? props.profilePhoto : defaultPhoto} className="h-[40px]" />
+      </span>
     </div>
   );
 };

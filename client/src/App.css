@@ -138,6 +138,14 @@
   }
 }
 
+.review-photo-container {
+  width: 40px;
+  img {
+    border-radius: 50%;
+    width: 100%;
+  }
+}
+
 @media (max-width: 550px) {
   .movie-picture {
     width: 400px;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import defaultPhoto from "../images/default.jpg";
 import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -22,6 +22,7 @@ const ProfilePage = () => {
   const [error, setError] = useState(null);
   let { user } = useAuth();
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     if (!user) {
@@ -161,6 +162,33 @@ const ProfilePage = () => {
     }
   };
 
+  const addPhotoHandler = (e) => {
+    e.preventDefault();
+
+    const file = fileInputRef.current.files[0];
+    if (!file) {
+      console.error("No file selected!");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("profilePhoto", file);
+    formData.append("username", user.username);
+    console.log(formData);
+
+    fetch(`/upload-profile-photo`, {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Photo uploaded successfully:", data);
+      })
+      .catch((error) => {
+        console.error("Error uploading photo:", error);
+      });
+  };
+
   if (error) {
     return <div>{error}</div>;
   }
@@ -176,34 +204,31 @@ const ProfilePage = () => {
           <section className="flex items-center">
             <span className="photo-container flex items-center relative">
               <img src={userData.profilePhoto ? userData.profilePhoto : defaultPhoto} className="w-[180px] h-[180px] min-w-[180px]" />
-              {!userData.profilePhoto && <button className="bg-red-800 font-bold absolute top-1 right-2  py-[6px] px-[15px] rounded-full text-white text-xl">+</button>}
+              {!userData.profilePhoto && (
+                <>
+                  <input className="hidden" ref={fileInputRef} type="file" accept="image/*" id="file-input" onChange={addPhotoHandler} />
+                  <label htmlFor="file-input">
+                    <button className="bg-red-800 font-bold absolute top-1 right-2  py-[6px] px-[15px] rounded-full text-white text-xl" onClick={() => fileInputRef.current.click()}>
+                      +
+                    </button>
+                  </label>
+                </>
+              )}
             </span>
             <h1 className="movie-header text-white text-4xl pl-5">{userData.firstName}</h1>
           </section>
           <div className="flex">
             <section className="flex mx-5">
               <h1 className="movie-header text-white mr-1">Reviews: </h1>
-              <h1 className="movie-header text-white">
-                {reviews.reduce((currNumber, review) => {
-                  return currNumber + 1;
-                }, 0)}
-              </h1>
+              <h1 className="movie-header text-white">{reviews.length}</h1>
             </section>
             <section className="flex mx-5">
               <h1 className="movie-header text-white mr-1">Bookmarks: </h1>
-              <h1 className="movie-header text-white">
-                {bookmarks.reduce((currNumber, review) => {
-                  return currNumber + 1;
-                }, 0)}
-              </h1>
+              <h1 className="movie-header text-white">{bookmarks.length}</h1>
             </section>
             <section className="flex mx-5">
               <h1 className="movie-header text-white mr-1">Watched Movies: </h1>
-              <h1 className="movie-header text-white">
-                {watchedMovies.reduce((currNumber, review) => {
-                  return currNumber + 1;
-                }, 0)}
-              </h1>
+              <h1 className="movie-header text-white">{watchedMovies.length}</h1>
             </section>
           </div>
         </section>
