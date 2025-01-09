@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import StarRating from "./StarRating";
+import defaultPhoto from "../images/default.jpg";
 import AOS from "aos";
 
 const ReviewCard = (props) => {
@@ -19,7 +20,12 @@ const ReviewCard = (props) => {
         <p className="text-center my-5 mx-5 text-lg font-bold">{props.text}</p>
         <section className="flex flex-row justify-between items-center">
           <p>{props?.date}</p>
-          <h1 className="flex justify-end mr-5 movie-header text-xl max-sm:text-lg">-{props.username}</h1>
+          <div className="flex items-center">
+            <h1 className="flex justify-end mr-2 movie-header text-xl max-sm:text-lg">{props.username}</h1>
+            <span className="review-photo-container flex items-center">
+              <img src={props.profilePhoto ? props.profilePhoto : defaultPhoto} className="h-[40px]" />
+            </span>
+          </div>
         </section>
       </section>
     </div>

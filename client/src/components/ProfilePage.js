@@ -174,7 +174,6 @@ const ProfilePage = () => {
     const formData = new FormData();
     formData.append("profilePhoto", file);
     formData.append("username", user.username);
-    console.log(formData);
 
     fetch(`/upload-profile-photo`, {
       method: "POST",
@@ -200,10 +199,10 @@ const ProfilePage = () => {
   return (
     <div className="p-2 py-10">
       <section className="flex flex-col items-center">
-        <section className="flex w-[90%] items-center justify-between py-10">
+        <section className="flex w-[90%] items-center justify-between py-10 max-md:flex-col bg-gradient-to-r from-red-900 via-red-600 to-red-900 rounded-lg px-5">
           <section className="flex items-center">
-            <span className="photo-container flex items-center relative">
-              <img src={userData.profilePhoto ? userData.profilePhoto : defaultPhoto} className="w-[180px] h-[180px] min-w-[180px]" />
+            <span className="photo-container flex items-center relative max-md:flex-col max-md:justify-center">
+              <img src={userData.profilePhoto ? userData.profilePhoto : defaultPhoto} className="w-[180px] h-[180px] min-w-[180px] max-md:border-2 max-md:border-black" />
               {!userData.profilePhoto && (
                 <>
                   <input className="hidden" ref={fileInputRef} type="file" accept="image/*" id="file-input" onChange={addPhotoHandler} />
@@ -214,19 +213,19 @@ const ProfilePage = () => {
                   </label>
                 </>
               )}
+              <h1 className="movie-header text-white text-4xl pl-5 max-md:my-4">{userData.username}</h1>
             </span>
-            <h1 className="movie-header text-white text-4xl pl-5">{userData.firstName}</h1>
           </section>
-          <div className="flex">
-            <section className="flex mx-5">
+          <div className="flex max-lg:flex-col max-md:items-center">
+            <section className="flex mx-5 max-md:my-1">
               <h1 className="movie-header text-white mr-1">Reviews: </h1>
               <h1 className="movie-header text-white">{reviews.length}</h1>
             </section>
-            <section className="flex mx-5">
+            <section className="flex mx-5 max-md:my-1">
               <h1 className="movie-header text-white mr-1">Bookmarks: </h1>
               <h1 className="movie-header text-white">{bookmarks.length}</h1>
             </section>
-            <section className="flex mx-5">
+            <section className="flex mx-5 max-md:my-1">
               <h1 className="movie-header text-white mr-1">Watched Movies: </h1>
               <h1 className="movie-header text-white">{watchedMovies.length}</h1>
             </section>
@@ -276,6 +275,7 @@ const ProfilePage = () => {
               rating={review.movieRating || 0}
               text={review.description}
               username={review.username}
+              profilePhoto={review.profilePhoto}
             />
           ))
         )}
