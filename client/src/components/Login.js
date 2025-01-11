@@ -37,8 +37,12 @@ const Login = ({ onLogin }) => {
   return (
     <div className="h-[650px] flex justify-center items-center w-full">
       <section className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 w-1/3 max-xl:w-1/2 max-md:w-10/12 max-sm:w-11/12  p-3">
-        <p>{errMsg}</p>
         <h1 className="movie-header text-5xl pb-5">Login</h1>
+        {errMsg && (
+          <div className="p-3 border border-red-600 bg-red-400 rounded-lg">
+            <p className="text-white">{errMsg}</p>
+          </div>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="my-4 pb-5">
             <label className="text-white" htmlFor="username">

@@ -151,7 +151,7 @@ const SignUp = () => {
               Must match the first password input field.
             </p>
           </div>
-          <button className="bg-red-800 movie-header text-2xl py-3 rounded-lg mb-10 border border-white" disabled={!validName || !validPwd || !validMatch ? true : false}>
+          <button className={`movie-header ${!validName || !validPwd || !validMatch ? "bg-gray-500 text-gray-700 border-gray-800 cursor-not-allowed" : "bg-red-800"} text-2xl py-3 rounded-lg mb-10 border border-white`} disabled={!validName || !validPwd || !validMatch ? true : false}>
             Sign Up
           </button>
         </form>
