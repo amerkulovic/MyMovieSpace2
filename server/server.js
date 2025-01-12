@@ -183,17 +183,32 @@ app.get("/user-watched/:username", async (req, res) => {
 });
 
 const upload = multer({ storage });
+const fs = require("fs");
 
 app.post("/upload-profile-photo", upload.single("profilePhoto"), async (req, res) => {
   try {
     const { username } = req.body;
     const filePath = `/uploads/${req.file.filename}`;
+    const absoluteFilePath = path.join(__dirname, filePath);
 
-    const user = await User.findOneAndUpdate({ username: username }, { profilePhoto: filePath }, { new: true });
+    const user = await User.findOne({ username: username });
 
     if (!user) {
+      fs.unlinkSync(path.join(__dirname, filePath));
       return res.status(404).json({ message: "User not found" });
     }
+
+    if (user.profilePhoto) {
+      const oldFilePath = path.join(__dirname, user.profilePhoto);
+      try {
+        fs.unlinkSync(oldFilePath);
+      } catch (error) {
+        console.error(`Error deleting old profile photo: ${error.message}`);
+      }
+    }
+
+    user.profilePhoto = filePath;
+    await user.save();
 
     res.status(200).json({ message: "Profile photo updated successfully", user });
   } catch (error) {

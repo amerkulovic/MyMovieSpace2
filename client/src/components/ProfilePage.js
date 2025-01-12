@@ -7,6 +7,8 @@ import notFoundImg from "../images/notfoundimg.png";
 import HomeReviewCard from "./HomeReviewCard";
 import LoadingSpinner from "./LoadingSpinner";
 import LoadingPage from "./LoadingPage";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState(null);
@@ -20,6 +22,7 @@ const ProfilePage = () => {
   const [reviewsCap, setReviewsCap] = useState(3);
   const [watchedMovies, setWatchedMovies] = useState([]);
   const [error, setError] = useState(null);
+  const [profilePhoto, setProfilePhoto] = useState(null);
   let { user } = useAuth();
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
@@ -51,6 +54,7 @@ const ProfilePage = () => {
 
         const data = await response.json();
         setUserData(data);
+        setProfilePhoto(data.profilePhoto);
       } catch (error) {
         setError("Error fetching user data.");
       }
@@ -143,6 +147,12 @@ const ProfilePage = () => {
     fetchWatchedMovies();
   }, [user]);
 
+  useEffect(() => {
+    if (profilePhoto) {
+      console.log("Profile photo updated:", user.profilePhoto);
+    }
+  }, [profilePhoto]);
+
   let showMoreHandler = (name, array) => {
     if (name === "watched") {
       setWatchedCap(array.length);
@@ -181,6 +191,7 @@ const ProfilePage = () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        setProfilePhoto(data.profilePhoto);
         console.log("Photo uploaded successfully:", data);
       })
       .catch((error) => {
@@ -202,13 +213,23 @@ const ProfilePage = () => {
         <section className="flex w-[90%] items-center justify-between py-10 max-md:flex-col bg-gradient-to-r from-red-900 via-red-600 to-red-900 rounded-lg px-5">
           <section className="flex items-center">
             <span className="photo-container flex items-center relative max-md:flex-col max-md:justify-center">
-              <img src={userData.profilePhoto ? userData.profilePhoto : defaultPhoto} className="w-[180px] h-[180px] min-w-[180px] max-md:border-2 max-md:border-black" />
-              {!userData.profilePhoto && (
+              <img src={profilePhoto ? profilePhoto : defaultPhoto} className="w-[180px] h-[180px] min-w-[180px] max-md:border-2 max-md:border-black" />
+              {!profilePhoto && (
                 <>
                   <input className="hidden" ref={fileInputRef} type="file" accept="image/*" id="file-input" onChange={addPhotoHandler} />
                   <label htmlFor="file-input">
-                    <button className="bg-red-800 font-bold absolute top-1 right-2  py-[6px] px-[15px] rounded-full text-white text-xl" onClick={() => fileInputRef.current.click()}>
+                    <button className="bg-red-900 font-bold absolute top-1 right-2  py-[6px] px-[15px] rounded-full text-white text-xl" onClick={() => fileInputRef.current.click()}>
                       +
+                    </button>
+                  </label>
+                </>
+              )}
+              {profilePhoto && (
+                <>
+                  <input className="hidden" ref={fileInputRef} type="file" accept="image/*" id="file-input" onChange={addPhotoHandler} />
+                  <label htmlFor="file-input">
+                    <button className="bg-gray-800 font-bold absolute bottom-1 right-1  py-[6px] px-[15px] rounded-full text-white text-xl" onClick={() => fileInputRef.current.click()}>
+                      <FontAwesomeIcon icon={faPen} className="w-4 h-4" />
                     </button>
                   </label>
                 </>
