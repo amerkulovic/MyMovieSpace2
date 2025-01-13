@@ -23,7 +23,7 @@ const ProfilePage = () => {
   const [watchedMovies, setWatchedMovies] = useState([]);
   const [error, setError] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState(null);
-  let { user } = useAuth();
+  let { user, updateUser } = useAuth();
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
@@ -61,7 +61,7 @@ const ProfilePage = () => {
     };
 
     fetchUserProfile();
-  }, [user, navigate]);
+  }, [user, navigate, profilePhoto]);
 
   useEffect(() => {
     if (!user) return;
@@ -147,12 +147,6 @@ const ProfilePage = () => {
     fetchWatchedMovies();
   }, [user]);
 
-  useEffect(() => {
-    if (profilePhoto) {
-      console.log("Profile photo updated:", user.profilePhoto);
-    }
-  }, [profilePhoto]);
-
   let showMoreHandler = (name, array) => {
     if (name === "watched") {
       setWatchedCap(array.length);
@@ -192,6 +186,7 @@ const ProfilePage = () => {
       .then((response) => response.json())
       .then((data) => {
         setProfilePhoto(data.profilePhoto);
+        updateUser({ ...user, profilePhoto: data.profilePhoto });
         console.log("Photo uploaded successfully:", data);
       })
       .catch((error) => {
@@ -218,7 +213,7 @@ const ProfilePage = () => {
                 <>
                   <input className="hidden" ref={fileInputRef} type="file" accept="image/*" id="file-input" onChange={addPhotoHandler} />
                   <label htmlFor="file-input">
-                    <button className="bg-red-900 font-bold absolute top-1 right-2  py-[6px] px-[15px] rounded-full text-white text-xl" onClick={() => fileInputRef.current.click()}>
+                    <button className="bg-red-900 font-bold absolute top-1 right-2  py-[5px] px-[13px] rounded-full text-white text-xl" onClick={() => fileInputRef.current.click()}>
                       +
                     </button>
                   </label>
@@ -228,8 +223,8 @@ const ProfilePage = () => {
                 <>
                   <input className="hidden" ref={fileInputRef} type="file" accept="image/*" id="file-input" onChange={addPhotoHandler} />
                   <label htmlFor="file-input">
-                    <button className="bg-gray-800 font-bold absolute bottom-1 right-1  py-[6px] px-[15px] rounded-full text-white text-xl" onClick={() => fileInputRef.current.click()}>
-                      <FontAwesomeIcon icon={faPen} className="w-4 h-4" />
+                    <button className="bg-gray-800 font-bold absolute bottom-1 right-1  py-[6px] px-[12px] rounded-full text-white text-xl" onClick={() => fileInputRef.current.click()}>
+                      <FontAwesomeIcon icon={faPen} className="h-4" />
                     </button>
                   </label>
                 </>

@@ -14,19 +14,20 @@ const FooterSection = (props) => {
           <li className="py-0.5">{props.item2}</li>
         </Link>
         {isLoggedIn && (
-          <Link to={props.item3link}>
-            <li className="py-0.5">{props.item3}</li>
-          </Link>
-        )}
-        {!isLoggedIn && (
           <>
+            <Link to={props.item3link}>
+              <li className="py-0.5">{props.item3}</li>
+            </Link>
+
             <Link to={props.item4link}>
               <li className="py-0.5">{props.item4}</li>
             </Link>
-            <Link to={props.item5link}>
-              <li className="py-0.5">{props.item5}</li>
-            </Link>
           </>
+        )}
+        {!isLoggedIn && (
+          <Link to={props.item5link}>
+            <li className="py-0.5">{props.item5}</li>
+          </Link>
         )}
       </ul>
     </div>

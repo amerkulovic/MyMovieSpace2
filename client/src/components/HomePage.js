@@ -75,6 +75,7 @@ const HomePage = () => {
       <section className="flex flex-col items-center w-full bg-gradient-to-b from-transparent via-black to-black">
         <h1 className="text-white text-3xl movie-header py-4 text-center">Popular reviews this week</h1>
         <div className="w-[80%] h-px bg-white mx-auto"></div>
+        {recentReviews.length === 0 && <h1 className="text-2xl movie-header pt-10">No reviews yet this past week</h1>}
         {recentReviews
           .reverse()
           .slice(0, reviewCap)
@@ -100,7 +101,7 @@ const HomePage = () => {
             Show more
           </button>
         )}
-        {reviewCap === recentReviews.length && (
+        {reviewCap === recentReviews.length && recentReviews.length > 3 && (
           <button onClick={showLessHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-4/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
             Show less
           </button>

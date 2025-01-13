@@ -189,7 +189,6 @@ app.post("/upload-profile-photo", upload.single("profilePhoto"), async (req, res
   try {
     const { username } = req.body;
     const filePath = `/uploads/${req.file.filename}`;
-    const absoluteFilePath = path.join(__dirname, filePath);
 
     const user = await User.findOne({ username: username });
 
@@ -209,6 +208,8 @@ app.post("/upload-profile-photo", upload.single("profilePhoto"), async (req, res
 
     user.profilePhoto = filePath;
     await user.save();
+
+    await Review.updateMany({ username: username }, { $set: { profilePhoto: filePath } });
 
     res.status(200).json({ message: "Profile photo updated successfully", user });
   } catch (error) {

@@ -7,6 +7,10 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [success, setSuccess] = useState(false);
 
+  const updateUser = (updatedUser) => {
+    setUser(updatedUser);
+  };
+
   const login = async (username, password) => {
     try {
       const response = await fetch("/login", {
@@ -61,7 +65,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  return <AuthContext.Provider value={{ user, login, logout, isLoggedIn, success, setSuccess }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ user, login, logout, isLoggedIn, success, updateUser, setSuccess }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => useContext(AuthContext);
