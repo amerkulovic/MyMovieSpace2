@@ -213,7 +213,7 @@ const ProfilePage = () => {
                 <>
                   <input className="hidden" ref={fileInputRef} type="file" accept="image/*" id="file-input" onChange={addPhotoHandler} />
                   <label htmlFor="file-input">
-                    <button className="bg-red-900 font-bold absolute top-1 right-2  py-[5px] px-[13px] rounded-full text-white text-xl" onClick={() => fileInputRef.current.click()}>
+                    <button className="bg-red-900 font-bold absolute top-1 right-2  py-[5px] px-[13px] rounded-full text-white text-xl max-md:bottom-[4.5rem] max-md:right-2" onClick={() => fileInputRef.current.click()}>
                       +
                     </button>
                   </label>
@@ -223,7 +223,7 @@ const ProfilePage = () => {
                 <>
                   <input className="hidden" ref={fileInputRef} type="file" accept="image/*" id="file-input" onChange={addPhotoHandler} />
                   <label htmlFor="file-input">
-                    <button className="bg-gray-800 font-bold absolute bottom-1 right-1  py-[6px] px-[12px] rounded-full text-white text-xl" onClick={() => fileInputRef.current.click()}>
+                    <button className="bg-gray-800 font-bold absolute bottom-1 right-1  py-[6px] px-[12px] rounded-full text-white text-xl max-md:bottom-[4.5rem] max-md:right-2" onClick={() => fileInputRef.current.click()}>
                       <FontAwesomeIcon icon={faPen} className="h-4" />
                     </button>
                   </label>
