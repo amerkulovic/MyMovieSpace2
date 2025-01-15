@@ -209,26 +209,12 @@ const ProfilePage = () => {
           <section className="flex items-center">
             <span className="photo-container flex items-center relative max-md:flex-col max-md:justify-center">
               <img src={profilePhoto ? profilePhoto : defaultPhoto} className="w-[180px] h-[180px] min-w-[180px] max-md:border-2 max-md:border-black" />
-              {!profilePhoto && (
-                <>
-                  <input className="hidden" ref={fileInputRef} type="file" accept="image/*" id="file-input" onChange={addPhotoHandler} />
-                  <label htmlFor="file-input">
-                    <button className="bg-red-900 font-bold absolute top-1 right-2  py-[5px] px-[13px] rounded-full text-white text-xl max-md:bottom-[4.5rem] max-md:right-2" onClick={() => fileInputRef.current.click()}>
-                      +
-                    </button>
-                  </label>
-                </>
-              )}
-              {profilePhoto && (
-                <>
-                  <input className="hidden" ref={fileInputRef} type="file" accept="image/*" id="file-input" onChange={addPhotoHandler} />
-                  <label htmlFor="file-input">
-                    <button className="bg-gray-800 font-bold absolute bottom-1 right-1  py-[6px] px-[12px] rounded-full text-white text-xl max-md:bottom-[4.5rem] max-md:right-2" onClick={() => fileInputRef.current.click()}>
-                      <FontAwesomeIcon icon={faPen} className="h-4" />
-                    </button>
-                  </label>
-                </>
-              )}
+              {/* <input className="hidden" ref={fileInputRef} type="file" accept="image/*" id="file-input" onChange={addPhotoHandler} />
+              <label htmlFor="file-input">
+                <button className={`${!profilePhoto ? "bg-red-900 top-1 right-2" : "bg-gray-800 bottom-1 right-1 "} font-bold absolute  py-[5px] px-[13px] rounded-full text-white text-xl max-md:bottom-[4.5rem] max-md:right-2`} onClick={() => fileInputRef.current.click()}>
+                  {!profilePhoto ? "+" : <FontAwesomeIcon icon={faPen} className="h-4" />}
+                </button>
+              </label> */}
               <h1 className="movie-header text-white text-4xl pl-5 max-md:my-4">{userData.username}</h1>
             </span>
           </section>
