@@ -4,6 +4,7 @@ const multer = require("multer");
 const path = require("path");
 const Review = require("./models/Review");
 const Message = require("./models/Message");
+const Comment = require("./models/Comment");
 const Bookmark = require("./models/Bookmark");
 const WatchedMovie = require("./models/WatchedMovie");
 const User = require("./models/User");
@@ -120,7 +121,7 @@ app.get("/profile", authMiddleware, async (req, res) => {
 
 app.get("/message/:id", async (req, res) => {
   try {
-    const message = await Message.findById(req.params.id);
+    const message = await Message.findById(req.params.id).populate("comments");
     if (!message) {
       return res.status(404).json({ error: "Message not found" });
     }
@@ -337,14 +338,46 @@ app.post("/message/:id/comment", async (req, res) => {
     if (!comment || !comment.username || !comment.description) {
       return res.status(400).json({ error: "Incomplete comment data" });
     }
+
     const message = await Message.findById(messageId);
     if (!message) {
       return res.status(404).json({ error: "Message not found" });
     }
-    message.comments.push(comment);
+
+    const newComment = new Comment({
+      username: comment.username,
+      description: comment.description,
+    });
+    await newComment.save();
+
+    message.comments.push(newComment._id);
     await message.save();
 
-    res.status(200).json(message);
+    const updatedMessage = await Message.findById(messageId).populate("comments");
+
+    res.status(200).json(updatedMessage);
+  } catch (error) {
+    console.error("Error adding comment:", error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
+app.post("/comment/:id/reply", async (req, res) => {
+  try {
+    const { username, description } = req.body;
+    const commentId = req.params.id;
+
+    if (!username || !description) {
+      return res.status(400).json({ error: "Incomplete reply data" });
+    }
+    const comment = await Comment.findById(commentId);
+    if (!comment) {
+      return res.status(404).json({ error: "Comment not found" });
+    }
+    comment.replies.push({ username, description });
+    await comment.save();
+
+    res.status(200).json(comment);
   } catch (error) {
     console.error("Error adding comment:", error);
     res.status(500).json({ error: "Something went wrong" });

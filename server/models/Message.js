@@ -5,14 +5,7 @@ const messageSchema = new mongoose.Schema({
   description: { type: String, required: true },
   username: { type: String, required: true },
   comments: {
-    type: [
-      {
-        username: { type: String, required: true },
-        // title: { type: String, required: true },
-        description: { type: String, required: true },
-        date: { type: Date, default: Date.now },
-      },
-    ],
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
     default: [],
   },
   lastAccessed: { type: Date, default: Date.now },

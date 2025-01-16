@@ -26,6 +26,7 @@ const PostPage = () => {
         const response = await fetch(`/message/${id}`);
         const post = await response.json();
         setPost(post);
+        console.log(post.comments);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -33,6 +34,32 @@ const PostPage = () => {
     }
     fetchData();
   }, [id]);
+
+  // let submitHandler = (e) => {
+  //   e.preventDefault();
+
+  //   const comment = {
+  //     description: formData.message,
+  //     username: user.username,
+  //   };
+  //   fetch(`/message/${id}/comment`, {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({ comment }),
+  //   })
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error("Failed to add comment");
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((updatedMessage) => {
+  //       addNewComment(comment);
+  //       setIsOpen(false);
+  //       setFormData({ message: "" });
+  //     })
+  //     .catch((error) => console.error("Error creating comment:", error));
+  // };
 
   const showMoreHandler = () => {
     setCommentCap(post.comments.length);
@@ -69,17 +96,25 @@ const PostPage = () => {
         </div>
         <div className="flex flex-col w-full items-end">
           {post.comments.slice(0, commentCap).map((comment, index) => (
-            <div className="flex flex-col bg-gradient-to-r from-slate-800 via-slate-600 to-slate-800 w-full p-3 my-2 relative rounded-lg border border-slate-400 max-sm:w-full max-sm:flex-col max-sm:rounded-tr-lg max-sm:rounded-br-lg max-sm:my-1">
-              <section className="flex flex-row p-2">
-                <div className="flex flex-col items-start justify-start max-sm:w-full">
-                  <p className="text-white font-bold text-start">{comment.description}</p>
+            <>
+              <div key={index} className="flex flex-col bg-gradient-to-r from-slate-800 via-slate-600 to-slate-800 w-full p-3 my-2 relative rounded-lg border border-slate-400 max-sm:w-full max-sm:flex-col max-sm:rounded-tr-lg max-sm:rounded-br-lg max-sm:my-1">
+                <section className="flex flex-row p-2">
+                  <div className="flex flex-col items-start justify-start max-sm:w-full">
+                    <p className="text-white font-bold text-start">{comment.description}</p>
+                  </div>
+                </section>
+                <section className="flex justify-end text-white font-bold max-sm:static max-sm:flex max-sm:justify-end">
+                  {/* <p>{comment?.date}</p> */}
+                  <h1 className="text-xl max-sm:text-sm">{comment.username}</h1>
+                </section>
+                <button className="flex w-fit bg-white">Reply</button>
+              </div>
+              {comment.replies.map((reply) => (
+                <div className="bg-white">
+                  <p>{reply.description}</p>
                 </div>
-              </section>
-              <section className="flex justify-end text-white font-bold max-sm:static max-sm:flex max-sm:justify-end">
-                {/* <p>{comment?.date}</p> */}
-                <h1 className="text-xl max-sm:text-sm">{comment.username}</h1>
-              </section>
-            </div>
+              ))}
+            </>
           ))}
           {commentCap < post.comments.length && (
             <button onClick={showMoreHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-full p-3 my-3 border-2 border-black text-center text-xl movie-header">

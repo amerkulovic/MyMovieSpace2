@@ -35,6 +35,10 @@ const MessagesPage = () => {
     setMessageCap(5);
   };
 
+  const addNewMessage = (newMessage) => {
+    setMessages((prevMessages) => [newMessage, ...prevMessages]);
+  };
+
   if (isLoading) {
     return <LoadingPage />;
   }
@@ -57,7 +61,7 @@ const MessagesPage = () => {
           </section>
           {isLoggedIn ? (
             <>
-              <NewMessageForm />
+              <NewMessageForm addNewMessage={addNewMessage} />
               {messageCap < messages.length && (
                 <button onClick={showMoreHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
                   Show more
