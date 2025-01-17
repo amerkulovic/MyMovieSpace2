@@ -362,12 +362,11 @@ app.post("/message/:id/comment", async (req, res) => {
   }
 });
 
-app.post("/comment/:id/reply", async (req, res) => {
+app.post("/comment/reply", async (req, res) => {
   try {
-    const { username, description } = req.body;
-    const commentId = req.params.id;
+    const { username, description, commentId } = req.body;
 
-    if (!username || !description) {
+    if (!username || !description || !commentId) {
       return res.status(400).json({ error: "Incomplete reply data" });
     }
     const comment = await Comment.findById(commentId);
