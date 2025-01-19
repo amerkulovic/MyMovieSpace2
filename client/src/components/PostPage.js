@@ -11,7 +11,7 @@ const PostPage = () => {
   const [post, setPost] = useState("");
   const [commentCap, setCommentCap] = useState(5);
   const [isLoading, setIsLoading] = useState(true);
-  const [isReplyFormOpen, setIsReplyFormOpen] = useState(false);
+  const [isReplyFormOpenFor, setIsReplyFormOpenFor] = useState(null);
   const [replies, setReplies] = useState([]);
   const [formData, setFormData] = useState({
     message: "",
@@ -34,7 +34,6 @@ const PostPage = () => {
         const response = await fetch(`/message/${id}`);
         const post = await response.json();
         setPost(post);
-        console.log(post.comments);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -71,10 +70,16 @@ const PostPage = () => {
         }
         return response.json();
       })
-      .then((updatedMessage) => {
-        setIsReplyFormOpen(false);
+      .then((updatedComment) => {
+        setPost((prevPost) => {
+          console.log(updatedComment.replies);
+          return {
+            ...prevPost,
+            comments: prevPost.comments.map((comment) => (comment._id === commentId ? { ...comment, replies: updatedComment.replies } : comment)),
+          };
+        });
+        setIsReplyFormOpenFor(false);
         setFormData({ message: "" });
-        console.log("Reply added:", updatedMessage);
       })
       .catch((error) => console.error("Error creating reply:", error));
   };
@@ -115,19 +120,21 @@ const PostPage = () => {
         <div className="flex flex-col w-full">
           {post.comments.slice(0, commentCap).map((comment, index) => (
             <>
-              <div key={index} className="flex flex-col bg-gradient-to-r from-slate-800 via-slate-600 to-slate-800 w-10/12 p-3 my-2 relative rounded-lg border border-slate-400 max-sm:w-full max-sm:flex-col max-sm:rounded-tr-lg max-sm:rounded-br-lg max-sm:my-1">
-                <section className="flex flex-row p-2">
-                  <div className="flex flex-col items-start justify-start max-sm:w-full">
-                    <p className="text-white font-bold text-start">{comment.description}</p>
-                  </div>
-                </section>
-                <section className="flex justify-end items-center text-white font-bold max-sm:static max-sm:flex max-sm:justify-end">
-                  {/* <p>{comment?.date}</p> */}
-                  <h1 className="text-xl max-sm:text-sm">{comment.username}</h1>
-                  <FontAwesomeIcon className={`ml-5 text-2xl cursor-pointer hover:text-red-700`} icon={faReply} onClick={() => setIsReplyFormOpen(!isReplyFormOpen)} />
-                </section>
+              <div className="flex justify-end">
+                <div key={index} className="flex flex-col bg-gradient-to-r from-slate-800 via-slate-600 to-slate-800 w-10/12 p-3 my-2 relative rounded-lg border border-slate-400 max-sm:w-full max-sm:flex-col max-sm:rounded-tr-lg max-sm:rounded-br-lg max-sm:my-1">
+                  <section className="flex flex-row p-2">
+                    <div className="flex flex-col max-sm:w-full">
+                      <p className="text-white font-bold text-start">{comment.description}</p>
+                    </div>
+                  </section>
+                  <section className="flex justify-end items-center text-white font-bold max-sm:static max-sm:flex max-sm:justify-end">
+                    {/* <p>{comment?.date}</p> */}
+                    <h1 className="text-xl max-sm:text-sm">{comment.username}</h1>
+                    <FontAwesomeIcon className={`ml-5 text-2xl cursor-pointer hover:text-red-700`} icon={faReply} onClick={() => setIsReplyFormOpenFor(isReplyFormOpenFor === comment._id ? null : comment._id)} />
+                  </section>
+                </div>
               </div>
-              {isReplyFormOpen && (
+              {isReplyFormOpenFor === comment._id && (
                 <div className="flex flex-col items-end bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg p-5">
                   <textarea className="w-full rounded-lg p-2 text-black" name="message" placeholder={`reply as ${user.username}...`} value={formData.message} onChange={handleChange} />
                   <button className="border border-white bg-red-900 movie-header text-xl p-2 rounded-lg mt-3" onClick={(e) => submitHandler(e, comment._id)}>
@@ -135,11 +142,12 @@ const PostPage = () => {
                   </button>
                 </div>
               )}
-              {comment.replies.map((reply) => (
-                <div className="flex items-start flex-col bg-gradient-to-r from-slate-700 via-slate-500 to-slate-700 w-3/4 p-3 my-2 relative rounded-lg border border-slate-400 max-sm:w-full max-sm:flex-col max-sm:rounded-tr-lg max-sm:rounded-br-lg max-sm:my-1">
-                  <p>{reply.description}</p>
-                </div>
-              ))}
+              {comment.replies &&
+                comment.replies.map((reply) => (
+                  <div className="flex items-start flex-col bg-[#f0dcdb] w-3/4 p-3 my-2 relative rounded-lg border border-slate-400 max-sm:w-full max-sm:flex-col max-sm:rounded-tr-lg max-sm:rounded-br-lg max-sm:my-1">
+                    <p>{reply.description}</p>
+                  </div>
+                ))}
             </>
           ))}
           {commentCap < post.comments.length && (
