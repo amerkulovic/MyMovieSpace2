@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "./AuthContext";
 import { useParams } from "react-router-dom";
-import { faReply } from "@fortawesome/free-solid-svg-icons";
+import { faReply, faArrowTurnDown, faArrowTurnUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CommentForm from "./CommentForm";
 import LoadingPage from "./LoadingPage";
@@ -12,7 +12,7 @@ const PostPage = () => {
   const [commentCap, setCommentCap] = useState(5);
   const [isLoading, setIsLoading] = useState(true);
   const [isReplyFormOpenFor, setIsReplyFormOpenFor] = useState(null);
-  const [replies, setReplies] = useState([]);
+  const [isRepliesOpenFor, setIsRepliesOpenFor] = useState(null);
   const [formData, setFormData] = useState({
     message: "",
   });
@@ -34,6 +34,7 @@ const PostPage = () => {
         const response = await fetch(`/message/${id}`);
         const post = await response.json();
         setPost(post);
+        console.log(post);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -92,6 +93,8 @@ const PostPage = () => {
     setCommentCap(5);
   };
 
+  const showRepliesHandler = (commentId) => {};
+
   const addNewComment = (newComment) => {
     setPost((prevPost) => ({
       ...prevPost,
@@ -121,7 +124,7 @@ const PostPage = () => {
           {post.comments.slice(0, commentCap).map((comment, index) => (
             <>
               <div className="flex justify-end">
-                <div key={index} className="flex flex-col bg-gradient-to-r from-slate-800 via-slate-600 to-slate-800 w-10/12 p-3 my-2 relative rounded-lg border border-slate-400 max-sm:w-full max-sm:flex-col max-sm:rounded-tr-lg max-sm:rounded-br-lg max-sm:my-1">
+                <div key={index} className="flex flex-col bg-gradient-to-r from-slate-800 via-slate-600 to-slate-800 w-full p-3 my-2 relative rounded-lg border border-slate-400 max-sm:w-full max-sm:flex-col max-sm:rounded-tr-lg max-sm:rounded-br-lg max-sm:my-1">
                   <section className="flex flex-row p-2">
                     <div className="flex flex-col max-sm:w-full">
                       <p className="text-white font-bold text-start">{comment.description}</p>
@@ -131,6 +134,7 @@ const PostPage = () => {
                     {/* <p>{comment?.date}</p> */}
                     <h1 className="text-xl max-sm:text-sm">{comment.username}</h1>
                     <FontAwesomeIcon className={`ml-5 text-2xl cursor-pointer hover:text-red-700`} icon={faReply} onClick={() => setIsReplyFormOpenFor(isReplyFormOpenFor === comment._id ? null : comment._id)} />
+                    {comment.replies.length ? <FontAwesomeIcon className={`ml-5 text-2xl cursor-pointer hover:text-red-700`} icon={isRepliesOpenFor === comment._id ? faArrowTurnUp : faArrowTurnDown} onClick={() => setIsRepliesOpenFor(isRepliesOpenFor === comment._id ? null : comment._id)} /> : ""}
                   </section>
                 </div>
               </div>
@@ -142,12 +146,19 @@ const PostPage = () => {
                   </button>
                 </div>
               )}
-              {comment.replies &&
-                comment.replies.map((reply) => (
-                  <div className="flex items-start flex-col bg-[#f0dcdb] w-3/4 p-3 my-2 relative rounded-lg border border-slate-400 max-sm:w-full max-sm:flex-col max-sm:rounded-tr-lg max-sm:rounded-br-lg max-sm:my-1">
-                    <p>{reply.description}</p>
-                  </div>
-                ))}
+              {isRepliesOpenFor === comment._id && (
+                <>
+                  {comment.replies &&
+                    comment.replies.map((reply) => (
+                      <div className="flex items-start flex-col bg-white w-full p-3 my-2 relative rounded-lg border border-red-700 max-sm:w-full max-sm:flex-col max-sm:rounded-tr-lg max-sm:rounded-br-lg max-sm:my-1">
+                        <p>{reply.description}</p>
+                        <div className="flex w-full justify-end">
+                          <h1 className="text-end">{reply.username}</h1>
+                        </div>
+                      </div>
+                    ))}
+                </>
+              )}
             </>
           ))}
           {commentCap < post.comments.length && (
