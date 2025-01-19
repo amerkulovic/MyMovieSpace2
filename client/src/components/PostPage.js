@@ -93,8 +93,6 @@ const PostPage = () => {
     setCommentCap(5);
   };
 
-  const showRepliesHandler = (commentId) => {};
-
   const addNewComment = (newComment) => {
     setPost((prevPost) => ({
       ...prevPost,
