@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "./AuthContext";
 import { useParams } from "react-router-dom";
-import { faReply, faArrowTurnDown, faArrowTurnUp } from "@fortawesome/free-solid-svg-icons";
+import { faReply, faAngleDown, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CommentForm from "./CommentForm";
 import LoadingPage from "./LoadingPage";
@@ -118,7 +118,7 @@ const PostPage = () => {
             <h1 className="text-md max-sm:text-sm">Post by {post.username}</h1>
           </section>
         </div>
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col w-full transition ease-in-out">
           {post.comments.slice(0, commentCap).map((comment, index) => (
             <>
               <div className="flex justify-end">
@@ -131,31 +131,31 @@ const PostPage = () => {
                   <section className="flex justify-end items-center text-white font-bold max-sm:static max-sm:flex max-sm:justify-end">
                     {/* <p>{comment?.date}</p> */}
                     <h1 className="text-xl max-sm:text-sm">{comment.username}</h1>
-                    <FontAwesomeIcon className={`ml-5 text-2xl cursor-pointer hover:text-red-700`} icon={faReply} onClick={() => setIsReplyFormOpenFor(isReplyFormOpenFor === comment._id ? null : comment._id)} />
-                    {comment.replies.length ? <FontAwesomeIcon className={`ml-5 text-2xl cursor-pointer hover:text-red-700`} icon={isRepliesOpenFor === comment._id ? faArrowTurnUp : faArrowTurnDown} onClick={() => setIsRepliesOpenFor(isRepliesOpenFor === comment._id ? null : comment._id)} /> : ""}
+                    {isLoggedIn && <FontAwesomeIcon className={`ml-5 text-2xl cursor-pointer hover:text-red-500`} icon={faReply} onClick={() => setIsReplyFormOpenFor(isReplyFormOpenFor === comment._id ? null : comment._id)} />}
+                    {comment.replies.length ? <FontAwesomeIcon className={`ml-5 text-2xl cursor-pointer hover:text-red-500`} icon={isRepliesOpenFor === comment._id ? faAngleDown : faAngleRight} onClick={() => setIsRepliesOpenFor(isRepliesOpenFor === comment._id ? null : comment._id)} /> : ""}
                   </section>
                 </div>
               </div>
               {isReplyFormOpenFor === comment._id && (
                 <div className="flex flex-col items-end bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg p-5">
                   <textarea className="w-full rounded-lg p-2 text-black" name="message" placeholder={`reply as ${user.username}...`} value={formData.message} onChange={handleChange} />
-                  <button className="border border-white bg-red-900 movie-header text-xl p-2 rounded-lg mt-3" onClick={(e) => submitHandler(e, comment._id)}>
+                  <button className="border border-white bg-red-700 movie-header text-xl p-2 rounded-lg mt-3" onClick={(e) => submitHandler(e, comment._id)}>
                     Reply
                   </button>
                 </div>
               )}
               {isRepliesOpenFor === comment._id && (
-                <>
+                <div>
                   {comment.replies &&
                     comment.replies.map((reply) => (
-                      <div className="flex items-start flex-col bg-white w-full p-3 my-2 relative rounded-lg border border-red-700 max-sm:w-full max-sm:flex-col max-sm:rounded-tr-lg max-sm:rounded-br-lg max-sm:my-1">
+                      <div data-aos="flip-down" className="flex items-start flex-col bg-gray-100 w-full p-3 my-2 relative rounded-lg max-sm:w-full max-sm:flex-col max-sm:rounded-tr-lg max-sm:rounded-br-lg max-sm:my-1">
                         <p>{reply.description}</p>
                         <div className="flex w-full justify-end">
                           <h1 className="text-end">{reply.username}</h1>
                         </div>
                       </div>
                     ))}
-                </>
+                </div>
               )}
             </>
           ))}

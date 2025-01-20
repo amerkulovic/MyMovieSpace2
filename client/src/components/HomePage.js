@@ -72,7 +72,7 @@ const HomePage = () => {
         <HomeCard img={bar} text={"Leave written reviews to provide your in-depth analysis of the movies you've watched."} />
         <HomeCard img={filmreel} text={"Expand your love for movies and talk with others who share your passion!"} />
       </section>
-      <section className="flex flex-col items-center w-full bg-gradient-to-b from-transparent via-black to-black">
+      <section className="flex flex-col items-center w-full bg-gradient-to-b from-transparent via-black to-black pb-20">
         <h1 className="text-white text-3xl movie-header py-4 text-center">Popular reviews this week</h1>
         <div className="w-[80%] h-px bg-white mx-auto"></div>
         {recentReviews.length === 0 && <h1 className="text-2xl movie-header pt-10">No reviews yet this past week</h1>}
