@@ -24,6 +24,7 @@ import ProfilePage from "./components/ProfilePage";
 function App() {
   let { logout } = useAuth();
   let [movies, setMovies] = useState(null);
+  let [currPage, setCurrPage] = useState(1);
   let [name, setName] = useState("");
   let [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -53,6 +54,40 @@ function App() {
     setName(event.target.value);
   };
 
+  const prevPageBtn = async () => {
+    setCurrPage(currPage - 1);
+    let nextPage = currPage - 1;
+    try {
+      const response = await fetch(`http://www.omdbapi.com/?apikey=f14ca85d&s=${name}&page=${nextPage}`);
+      const data = await response.json();
+
+      if (data.Response === "False" || !data.Search) {
+        setMovies([{ title: "No movies found", isError: true }]);
+      } else {
+        setMovies(data.Search);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const nextPageBtn = async () => {
+    setCurrPage(currPage + 1);
+    let nextPage = currPage + 1;
+    try {
+      const response = await fetch(`http://www.omdbapi.com/?apikey=f14ca85d&s=${name}&page=${nextPage}`);
+      const data = await response.json();
+
+      if (data.Response === "False" || !data.Search) {
+        setMovies([{ title: "No movies found", isError: true }]);
+      } else {
+        setMovies(data.Search);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   const searchHandler = async () => {
     try {
       const response = await fetch(`https://www.omdbapi.com/?apikey=f14ca85d&s=${name}`);
@@ -62,6 +97,7 @@ function App() {
         setMovies([{ title: "No movies found", isError: true }]);
       } else {
         setMovies(data.Search);
+        setCurrPage(1);
       }
 
       if (isOpen) toggleMenu();
@@ -79,7 +115,24 @@ function App() {
         <div className="background-image">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/search" element={<div className="flex flex-wrap justify-center">{movies ? movies[0]?.isError ? <ErrorPage /> : movies.map((movie) => <MovieCard key={movie.imdbID} moviePoster={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} movieTitle={movie.Title} imdbID={movie.imdbID} />) : <LoadingPage />}</div>} />
+            <Route
+              path="/search"
+              element={
+                <div className="flex flex-col items-center">
+                  <div className="flex flex-wrap justify-center">{movies ? movies[0]?.isError ? <ErrorPage /> : movies.map((movie) => <MovieCard key={movie.imdbID} moviePoster={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} movieTitle={movie.Title} imdbID={movie.imdbID} />) : <LoadingPage />}</div>
+                  <div className="my-4">
+                    {currPage > 1 && (
+                      <button className="bg-red-700 text-white px-4 py-2 rounded movie-header text-2xl mr-2" onClick={prevPageBtn}>
+                        Back
+                      </button>
+                    )}
+                    <button className="bg-red-700 text-white px-4 py-2 rounded movie-header text-2xl" onClick={nextPageBtn}>
+                      Next
+                    </button>
+                  </div>
+                </div>
+              }
+            />
             <Route path="/:search/:id" element={<MoviePage />} />
             <Route path="/messages" element={<MessagesPage />} />
             <Route path="/message/:id" element={<PostPage />} />
