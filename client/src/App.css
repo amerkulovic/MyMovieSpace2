@@ -56,6 +56,7 @@
   position: relative;
   width: 270px;
   height: 370px;
+  border-radius: 40px;
 }
 .movie-picture:hover {
   filter: blur(2px) brightness(60%);
@@ -150,6 +151,7 @@
   .movie-picture {
     width: 400px;
     height: 300px;
+    border-radius: 0;
   }
   .profile-movie-picture {
     width: 400px;

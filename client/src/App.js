@@ -27,6 +27,7 @@ function App() {
   let [currPage, setCurrPage] = useState(1);
   let [name, setName] = useState("");
   let [isLoggedIn, setIsLoggedIn] = useState(false);
+  let [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -57,14 +58,19 @@ function App() {
   const prevPageBtn = async () => {
     setCurrPage(currPage - 1);
     let nextPage = currPage - 1;
+    setIsLoading(true);
     try {
       const response = await fetch(`http://www.omdbapi.com/?apikey=f14ca85d&s=${name}&page=${nextPage}`);
       const data = await response.json();
 
       if (data.Response === "False" || !data.Search) {
         setMovies([{ title: "No movies found", isError: true }]);
+        setIsLoading(false);
+        window.scrollTo(0, 0);
       } else {
         setMovies(data.Search);
+        setIsLoading(false);
+        window.scrollTo(0, 0);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -74,14 +80,19 @@ function App() {
   const nextPageBtn = async () => {
     setCurrPage(currPage + 1);
     let nextPage = currPage + 1;
+    setIsLoading(true);
     try {
       const response = await fetch(`http://www.omdbapi.com/?apikey=f14ca85d&s=${name}&page=${nextPage}`);
       const data = await response.json();
 
       if (data.Response === "False" || !data.Search) {
         setMovies([{ title: "No movies found", isError: true }]);
+        setIsLoading(false);
+        window.scrollTo(0, 0);
       } else {
         setMovies(data.Search);
+        setIsLoading(false);
+        window.scrollTo(0, 0);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -89,15 +100,18 @@ function App() {
   };
 
   const searchHandler = async () => {
+    setIsLoading(true);
     try {
       const response = await fetch(`https://www.omdbapi.com/?apikey=f14ca85d&s=${name}`);
       const data = await response.json();
 
       if (data.Response === "False" || !data.Search) {
         setMovies([{ title: "No movies found", isError: true }]);
+        setIsLoading(false);
       } else {
         setMovies(data.Search);
         setCurrPage(1);
+        setIsLoading(false);
       }
 
       if (isOpen) toggleMenu();
@@ -105,7 +119,6 @@ function App() {
       console.error("Error fetching data:", error);
     }
   };
-
   return (
     <Router>
       <>
@@ -119,17 +132,19 @@ function App() {
               path="/search"
               element={
                 <div className="flex flex-col items-center">
-                  <div className="flex flex-wrap justify-center">{movies ? movies[0]?.isError ? <ErrorPage /> : movies.map((movie) => <MovieCard key={movie.imdbID} moviePoster={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} movieTitle={movie.Title} imdbID={movie.imdbID} />) : <LoadingPage />}</div>
-                  <div className="my-4">
-                    {currPage > 1 && (
-                      <button className="bg-red-700 text-white px-4 py-2 rounded movie-header text-2xl mr-2" onClick={prevPageBtn}>
-                        Back
+                  <div className="flex flex-wrap justify-center">{movies && !isLoading ? movies[0]?.isError ? <ErrorPage /> : movies.map((movie) => <MovieCard key={movie.imdbID} moviePoster={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} movieTitle={movie.Title} imdbID={movie.imdbID} />) : <LoadingPage />}</div>
+                  {movies && !isLoading && (
+                    <div className="my-4">
+                      {currPage > 1 && (
+                        <button className="bg-red-700 text-white px-4 py-2 rounded movie-header text-2xl mr-2" onClick={prevPageBtn}>
+                          Back
+                        </button>
+                      )}
+                      <button className="bg-red-700 text-white px-4 py-2 rounded movie-header text-2xl" onClick={nextPageBtn}>
+                        Next
                       </button>
-                    )}
-                    <button className="bg-red-700 text-white px-4 py-2 rounded movie-header text-2xl" onClick={nextPageBtn}>
-                      Next
-                    </button>
-                  </div>
+                    </div>
+                  )}
                 </div>
               }
             />
