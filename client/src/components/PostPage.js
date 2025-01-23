@@ -8,7 +8,7 @@ import LoadingPage from "./LoadingPage";
 import AOS from "aos";
 
 const PostPage = () => {
-  const [post, setPost] = useState("");
+  const [post, setPost] = useState([]);
   const [commentCap, setCommentCap] = useState(5);
   const [isLoading, setIsLoading] = useState(true);
   const [isReplyFormOpenFor, setIsReplyFormOpenFor] = useState(null);
@@ -34,7 +34,6 @@ const PostPage = () => {
         const response = await fetch(`/message/${id}`);
         const post = await response.json();
         setPost(post);
-        console.log(post);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -76,7 +75,7 @@ const PostPage = () => {
           console.log(updatedComment.replies);
           return {
             ...prevPost,
-            comments: prevPost.comments.map((comment) => (comment._id === commentId ? { ...comment, replies: updatedComment.replies } : comment)),
+            comments: prevPost.comments.map((comment) => (comment._id === commentId ? { ...comment, replies: updatedComment.replies } : comment)) || [],
           };
         });
         setIsReplyFormOpenFor(false);
@@ -86,7 +85,7 @@ const PostPage = () => {
   };
 
   const showMoreHandler = () => {
-    setCommentCap(post.comments.length);
+    setCommentCap(post.comments?.length);
   };
 
   const showLessHandler = () => {
@@ -119,7 +118,7 @@ const PostPage = () => {
           </section>
         </div>
         <div className="flex flex-col w-full transition ease-in-out">
-          {post.comments.slice(0, commentCap).map((comment, index) => (
+          {post.comments?.slice(0, commentCap).map((comment, index) => (
             <>
               <div className="flex justify-end">
                 <div key={index} className="flex flex-col bg-gradient-to-r from-slate-800 via-slate-600 to-slate-800 w-full p-3 my-2 relative rounded-lg border border-slate-400 max-sm:w-full max-sm:flex-col max-sm:rounded-tr-lg max-sm:rounded-br-lg max-sm:my-1">
@@ -132,7 +131,7 @@ const PostPage = () => {
                     {/* <p>{comment?.date}</p> */}
                     <h1 className="text-xl max-sm:text-sm">{comment.username}</h1>
                     {isLoggedIn && <FontAwesomeIcon className={`ml-5 text-2xl cursor-pointer hover:text-red-500`} icon={faReply} onClick={() => setIsReplyFormOpenFor(isReplyFormOpenFor === comment._id ? null : comment._id)} />}
-                    {comment.replies.length ? <FontAwesomeIcon className={`ml-5 text-2xl cursor-pointer hover:text-red-500`} icon={isRepliesOpenFor === comment._id ? faAngleDown : faAngleRight} onClick={() => setIsRepliesOpenFor(isRepliesOpenFor === comment._id ? null : comment._id)} /> : ""}
+                    {comment.replies?.length ? <FontAwesomeIcon className={`ml-5 text-2xl cursor-pointer hover:text-red-500`} icon={isRepliesOpenFor === comment._id ? faAngleDown : faAngleRight} onClick={() => setIsRepliesOpenFor(isRepliesOpenFor === comment._id ? null : comment._id)} /> : ""}
                   </section>
                 </div>
               </div>
@@ -146,8 +145,8 @@ const PostPage = () => {
               )}
               {isRepliesOpenFor === comment._id && (
                 <div>
-                  {comment.replies &&
-                    comment.replies.map((reply) => (
+                  {comment?.replies &&
+                    comment?.replies.map((reply) => (
                       <div data-aos="flip-down" className="flex items-start flex-col bg-gray-100 w-full p-3 my-2 relative rounded-lg max-sm:w-full max-sm:flex-col max-sm:rounded-tr-lg max-sm:rounded-br-lg max-sm:my-1">
                         <p>{reply.description}</p>
                         <div className="flex w-full justify-end">
@@ -159,12 +158,12 @@ const PostPage = () => {
               )}
             </>
           ))}
-          {commentCap < post.comments.length && (
+          {commentCap < (post.comments?.length || 0) && (
             <button onClick={showMoreHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-full p-3 my-3 border-2 border-black text-center text-xl movie-header">
               Show more
             </button>
           )}
-          {commentCap === post.comments.length && post.comments.length > 5 && (
+          {commentCap === (post.comments?.length || 0) && post.comments?.length > 5 && (
             <button onClick={showLessHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-full p-3 my-3 border-2 border-black text-center text-xl movie-header">
               Show less
             </button>
