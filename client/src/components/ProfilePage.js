@@ -28,11 +28,6 @@ const ProfilePage = () => {
   const fileInputRef = useRef(null);
 
   useEffect(() => {
-    if (!user) {
-      navigate("/login");
-      return;
-    }
-
     const fetchUserProfile = async () => {
       try {
         const token = localStorage.getItem("token");
@@ -57,6 +52,7 @@ const ProfilePage = () => {
         setProfilePhoto(data.profilePhoto);
       } catch (error) {
         setError("Error fetching user data.");
+        navigate("/login");
       }
     };
 

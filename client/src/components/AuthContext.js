@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
           if (response.ok) {
             const data = await response.json();
             setIsLoggedIn(true);
-            setUser({ username: data.username, profilePhoto: user.profilePhoto });
+            setUser({ username: data.username, profilePhoto: data.profilePhoto });
           } else {
             logout();
           }
