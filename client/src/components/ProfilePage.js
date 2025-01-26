@@ -8,15 +8,18 @@ import HomeReviewCard from "./HomeReviewCard";
 import LoadingSpinner from "./LoadingSpinner";
 import LoadingPage from "./LoadingPage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faAngleDown, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
   const [isWatchedLoading, setIsWatchedLoading] = useState(false);
+  const [isWatchedOpen, setIsWatchedOpen] = useState(true);
   const [isBookmarksLoading, setIsBookmarksLoading] = useState(false);
+  const [isBookmarksOpen, setIsBookmarksOpen] = useState(true);
   const [isReviewsLoading, setIsReviwsLoading] = useState(false);
+  const [isReviewsOpen, setIsReviewsOpen] = useState(true);
   const [watchedCap, setWatchedCap] = useState(6);
   const [bookmarksCap, setBookmarksCap] = useState(6);
   const [reviewsCap, setReviewsCap] = useState(3);
@@ -229,64 +232,85 @@ const ProfilePage = () => {
             </section>
           </div>
         </section>
-        <h1 className="flex justify-center movie-header text-4xl border-b-[0.5px] border-white w-11/12 mb-4 pt-10"> Your Watched Movies</h1>
-        <section className="flex flex-wrap justify-center">{isWatchedLoading ? <LoadingSpinner /> : watchedMovies.slice(0, watchedCap).map((movie) => <ProfileCard moviePoster={movie.poster !== "N/A" ? movie.poster : notFoundImg} movieTitle={movie.title} imdbID={movie.id} />)}</section>
-        {watchedMovies.length === 0 && <p className="movie-header text-xl py-10">No watched movies</p>}
-        {watchedCap < watchedMovies.length && (
-          <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showMoreHandler("watched", watchedMovies)}>
-            Show More
-          </button>
+        <div className="flex items-center justify-center relative border-b-[0.5px] border-white bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 my-4 rounded-lg w-[90%]">
+          <FontAwesomeIcon className="absolute left-6 top-[37%] text-3xl cursor-pointer text-white hover:text-red-500" icon={isWatchedOpen ? faAngleDown : faAngleRight} onClick={() => setIsWatchedOpen(!isWatchedOpen)} />
+          <h1 className="flex justify-center movie-header text-4xl py-5"> Your Watched Movies</h1>
+        </div>
+        {isWatchedOpen && (
+          <>
+            <section className="flex flex-wrap justify-center">{isWatchedLoading ? <LoadingSpinner /> : watchedMovies.slice(0, watchedCap).map((movie) => <ProfileCard moviePoster={movie.poster !== "N/A" ? movie.poster : notFoundImg} movieTitle={movie.title} imdbID={movie.id} />)}</section>
+            {watchedCap < watchedMovies.length && (
+              <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showMoreHandler("watched", watchedMovies)}>
+                Show More
+              </button>
+            )}
+            {watchedCap > 6 && (
+              <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showLessHandler("watched")}>
+                Show Less
+              </button>
+            )}
+            {watchedMovies.length === 0 && <p className="movie-header text-xl py-10">No watched movies</p>}
+          </>
         )}
-        {watchedCap > 6 && (
-          <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showLessHandler("watched")}>
-            Show Less
-          </button>
+        <div className="flex items-center justify-center relative border-b-[0.5px] border-white bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 rounded-lg w-[90%]">
+          <FontAwesomeIcon className="absolute left-6 top-[37%] text-3xl cursor-pointer text-white hover:text-red-500" icon={isBookmarksOpen ? faAngleDown : faAngleRight} onClick={() => setIsBookmarksOpen(!isBookmarksOpen)} />
+          <h1 className="flex justify-center movie-header text-4xl py-5"> Your Bookmarks</h1>
+        </div>
+        {isBookmarksOpen && (
+          <>
+            <section className="flex flex-wrap justify-center">{isBookmarksLoading ? <LoadingSpinner /> : bookmarks.slice(0, bookmarksCap).map((movie) => <ProfileCard moviePoster={movie.poster !== "N/A" ? movie.poster : notFoundImg} movieTitle={movie.title} imdbID={movie.id} />)}</section>
+            {bookmarks.length === 0 && <p className="movie-header text-xl py-10">No bookmark</p>}
+            {bookmarksCap < bookmarks.length && (
+              <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showMoreHandler("bookmarks", watchedMovies)}>
+                Show More
+              </button>
+            )}
+            {bookmarksCap > 6 && (
+              <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showLessHandler("bookmarks")}>
+                Show Less
+              </button>
+            )}
+          </>
         )}
-        <h1 className="flex justify-center movie-header text-4xl border-b-[0.5px] border-white w-11/12 mb-4"> Your Bookmarks</h1>
-        <section className="flex flex-wrap justify-center">{isBookmarksLoading ? <LoadingSpinner /> : bookmarks.slice(0, bookmarksCap).map((movie) => <ProfileCard moviePoster={movie.poster !== "N/A" ? movie.poster : notFoundImg} movieTitle={movie.title} imdbID={movie.id} />)}</section>
-        {bookmarks.length === 0 && <p className="movie-header text-xl py-10">No bookmark</p>}
-        {bookmarksCap < bookmarks.length && (
-          <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showMoreHandler("bookmarks", watchedMovies)}>
-            Show More
-          </button>
-        )}
-        {bookmarksCap > 6 && (
-          <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showLessHandler("bookmarks")}>
-            Show Less
-          </button>
-        )}
-        <h1 className="flex justify-center movie-header text-4xl border-b-[0.5px] border-white w-11/12 mb-4"> Your Reviews</h1>
-        {isReviewsLoading ? (
-          <LoadingSpinner />
-        ) : (
-          reviews.slice(0, reviewsCap).map((review) => (
-            <HomeReviewCard
-              key={review._id}
-              title={review.title}
-              link={review.movieId}
-              // date={new Date(review.lastAccessed).toLocaleDateString("en-US", {
-              //   year: "numeric",
-              //   month: "long",
-              //   day: "numeric",
-              // })}
-              poster={review.poster}
-              rating={review.movieRating || 0}
-              text={review.description}
-              username={review.username}
-              profilePhoto={review.profilePhoto}
-            />
-          ))
-        )}
-        {reviews.length === 0 && <p className="movie-header text-xl py-10">No reviews</p>}
-        {reviewsCap < reviews.length && (
-          <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showMoreHandler("reviews", reviews)}>
-            Show More
-          </button>
-        )}
-        {reviewsCap > 3 && (
-          <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showLessHandler("reviews")}>
-            Show Less
-          </button>
+        <div className="flex items-center justify-center relative border-b-[0.5px] border-white bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 my-4 rounded-lg w-[90%]">
+          <FontAwesomeIcon className="absolute left-6 top-[37%] text-3xl cursor-pointer text-white hover:text-red-500" icon={isReviewsOpen ? faAngleDown : faAngleRight} onClick={() => setIsReviewsOpen(!isReviewsOpen)} />
+          <h1 className="flex justify-center movie-header text-4xl py-5"> Your Reviews</h1>
+        </div>
+        {isReviewsOpen && (
+          <>
+            {isReviewsLoading ? (
+              <LoadingSpinner />
+            ) : (
+              reviews.slice(0, reviewsCap).map((review) => (
+                <HomeReviewCard
+                  key={review._id}
+                  title={review.title}
+                  link={review.movieId}
+                  // date={new Date(review.lastAccessed).toLocaleDateString("en-US", {
+                  //   year: "numeric",
+                  //   month: "long",
+                  //   day: "numeric",
+                  // })}
+                  poster={review.poster}
+                  rating={review.movieRating || 0}
+                  text={review.description}
+                  username={review.username}
+                  profilePhoto={review.profilePhoto}
+                />
+              ))
+            )}
+            {reviews.length === 0 && <p className="movie-header text-xl py-10">No reviews</p>}
+            {reviewsCap < reviews.length && (
+              <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showMoreHandler("reviews", reviews)}>
+                Show More
+              </button>
+            )}
+            {reviewsCap > 3 && (
+              <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showLessHandler("reviews")}>
+                Show Less
+              </button>
+            )}
+          </>
         )}
       </section>
     </div>

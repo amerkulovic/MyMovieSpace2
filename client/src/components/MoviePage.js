@@ -194,9 +194,7 @@ const MoviePage = () => {
             <div data-aos="fade-left" className="text-white mt-10 max-xl:w-1/2 max-xl:ml-5 max-md:ml-0 max-md:bg-gradient-to-r from-red-900 via-red-600 to-red-900 w-3/5 max-md:p-5 max-md:rounded-lg max-md:mt-0 max-md:mb-3 max-md:w-11/12">
               <section className="border-b-[0.5px] border-white mb-5">
                 <h1 className="movie-header text-5xl w-full max-sm:text-3xl">{movie.Title}</h1>
-                <p>
-                  {movie.Year} directed by {movie.Director}
-                </p>
+                <p>{`${movie.Year} ${movie.Director !== "N/A" ? `directed by ${movie.Director}` : ""}`}</p>
               </section>
               <p className="w-[750px] max-xl:w-full mt-4">{movie.Plot}</p>
               <section>
