@@ -195,6 +195,7 @@ const MoviePage = () => {
               <section className="border-b-[0.5px] border-white mb-5">
                 <h1 className="movie-header text-5xl w-full max-sm:text-3xl">{movie.Title}</h1>
                 <p>{`${movie.Year} ${movie.Director !== "N/A" ? `directed by ${movie.Director}` : ""}`}</p>
+                {movie.Runtime !== "N/A" ? <p>Runtime: {movie.Runtime}</p> : null}
               </section>
               <p className="w-[750px] max-xl:w-full mt-4">{movie.Plot}</p>
               <section>
@@ -205,11 +206,11 @@ const MoviePage = () => {
                 <h2 className="movie-header text-xl mt-5 mb-5 border-b-[0.5px] border-white">Reviews</h2>
                 {movie.Ratings.map((rating, i) => (
                   <p key={i}>
-                    {rating.Source} {rating.Value}
+                    {rating.Source}: {rating.Value}
                   </p>
                 ))}
                 <p className="flex flex-row items-center">
-                  MyMovieSpace{" "}
+                  MyMovieSpace:{" "}
                   {averageReview <= 0 ? (
                     "N/A"
                   ) : (

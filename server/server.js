@@ -183,39 +183,25 @@ app.get("/user-watched/:username", async (req, res) => {
   }
 });
 
-const upload = multer({ storage });
-const fs = require("fs");
-
-app.post("/upload-profile-photo", upload.single("profilePhoto"), async (req, res) => {
+app.post("/upload-profile-photo", authMiddleware, async (req, res) => {
   try {
-    const { username } = req.body;
-    const filePath = `/uploads/${req.file.filename}`;
+    const { image } = req.body;
 
-    const user = await User.findOne({ username: username });
+    if (!image) {
+      return res.status(400).json({ error: "No image provided" });
+    }
 
-    if (!user) {
-      fs.unlinkSync(path.join(__dirname, filePath));
+    const userId = req.user.id;
+    const updatedUser = await User.findByIdAndUpdate(userId, { profilePhoto: image }, { new: true });
+
+    if (!updatedUser) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    if (user.profilePhoto) {
-      const oldFilePath = path.join(__dirname, user.profilePhoto);
-      try {
-        fs.unlinkSync(oldFilePath);
-      } catch (error) {
-        console.error(`Error deleting old profile photo: ${error.message}`);
-      }
-    }
-
-    user.profilePhoto = filePath;
-    await user.save();
-
-    await Review.updateMany({ username: username }, { $set: { profilePhoto: filePath } });
-
-    res.status(200).json({ message: "Profile photo updated successfully", user });
-  } catch (error) {
-    console.error("Error updating profile photo:", error);
-    res.status(500).json({ error: "Something went wrong" });
+    res.status(200).json({ message: "Profile photo updated successfully", user: updatedUser });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
   }
 });
 
@@ -417,7 +403,6 @@ app.post("/login", async (req, res) => {
     }
 
     const token = jwt.sign({ id: user._id, username: user.username }, SECRET, { expiresIn: "1h" });
-
     res.json({
       token,
       username: user.username,

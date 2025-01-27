@@ -166,31 +166,36 @@ const ProfilePage = () => {
   };
 
   const addPhotoHandler = (e) => {
-    e.preventDefault();
+    const file = e.target.files[0];
+    const reader = new FileReader();
 
-    const file = fileInputRef.current.files[0];
-    if (!file) {
-      console.error("No file selected!");
-      return;
-    }
+    reader.onloadend = async () => {
+      const base64String = reader.result.split(",")[1];
 
-    const formData = new FormData();
-    formData.append("profilePhoto", file);
-    formData.append("username", user.username);
+      const token = localStorage.getItem("token");
 
-    fetch(`/upload-profile-photo`, {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setProfilePhoto(data.profilePhoto);
-        updateUser({ ...user, profilePhoto: data.profilePhoto });
-        console.log("Photo uploaded successfully:", data);
-      })
-      .catch((error) => {
-        console.error("Error uploading photo:", error);
+      if (!token) {
+        console.error("No token found, please log in.");
+        return;
+      }
+
+      const response = await fetch("/upload-profile-photo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ image: base64String }),
       });
+
+      if (response.ok) {
+        console.log("Image uploaded successfully!");
+      } else {
+        console.error("Image upload failed!");
+      }
+    };
+
+    reader.readAsDataURL(file);
   };
 
   if (error) {
