@@ -110,6 +110,7 @@ function App() {
         setIsLoading(false);
       } else {
         setMovies(data.Search);
+        console.log(data.Search);
         setCurrPage(1);
         setIsLoading(false);
       }
@@ -140,9 +141,11 @@ function App() {
                           Back
                         </button>
                       )}
-                      <button className="bg-red-700 text-white px-4 py-2 rounded movie-header text-2xl" onClick={nextPageBtn}>
-                        Next
-                      </button>
+                      {movies?.length === 10 && (
+                        <button className="bg-red-700 text-white px-4 py-2 rounded movie-header text-2xl" onClick={nextPageBtn}>
+                          Next
+                        </button>
+                      )}
                     </div>
                   )}
                 </div>
