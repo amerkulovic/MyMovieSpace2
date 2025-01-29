@@ -24,9 +24,11 @@ const ProfilePage = () => {
   const [bookmarksCap, setBookmarksCap] = useState(6);
   const [reviewsCap, setReviewsCap] = useState(3);
   const [watchedMovies, setWatchedMovies] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState(null);
-  let { user, updateUser } = useAuth();
+  const [photoOptions, setPhotoOptions] = useState([]);
+  let { user } = useAuth();
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
@@ -146,6 +148,22 @@ const ProfilePage = () => {
     fetchWatchedMovies();
   }, [user]);
 
+  useEffect(() => {
+    const fetchPhotos = async () => {
+      try {
+        const response = await fetch("/profile-photos/list");
+        if (!response.ok) throw new Error("Failed to fetch photos");
+
+        const { photos } = await response.json();
+        setPhotoOptions([...photos]);
+      } catch (error) {
+        console.error("Error fetching photos:", error);
+      }
+    };
+
+    fetchPhotos();
+  }, []);
+
   let showMoreHandler = (name, array) => {
     if (name === "watched") {
       setWatchedCap(array.length);
@@ -208,17 +226,32 @@ const ProfilePage = () => {
 
   return (
     <div className="p-2 py-10">
+      {isModalOpen && (
+        <div className="backdrop">
+          <section className="modal bg-gradient-to-r from-red-900 via-red-600 to-red-900 rounded-lg p-5 w-[75%]">
+            <button onClick={() => setIsModalOpen(false)}>X</button>
+            <h1 className="movie-header text-2xl text-center">Select your profile photo</h1>
+            <div className="flex flex-row justify-around pt-5">
+              {photoOptions.map((photo) => (
+                <span className="photo-selector-container flex items-center max-md:flex-col max-md:justify-center">
+                  <img className="w-[100px] h-[100px] min-w-[100px] max-md:border-2 max-md:border-black" src={photo} />
+                </span>
+              ))}
+            </div>
+          </section>
+        </div>
+      )}
       <section className="flex flex-col items-center">
         <section className="flex w-[90%] items-center justify-between py-10 max-md:flex-col bg-gradient-to-r from-red-900 via-red-600 to-red-900 rounded-lg px-5">
           <section className="flex items-center">
             <span className="photo-container flex items-center relative max-md:flex-col max-md:justify-center">
               <img src={profilePhoto ? profilePhoto : defaultPhoto} className="w-[180px] h-[180px] min-w-[180px] max-md:border-2 max-md:border-black" />
-              {/* <input className="hidden" ref={fileInputRef} type="file" accept="image/*" id="file-input" onChange={addPhotoHandler} />
+              <input className="hidden" ref={fileInputRef} type="file" accept="image/*" id="file-input" onChange={addPhotoHandler} />
               <label htmlFor="file-input">
-                <button className={`${!profilePhoto ? "bg-red-900 top-1 right-2" : "bg-gray-800 bottom-1 right-1 "} font-bold absolute  py-[5px] px-[13px] rounded-full text-white text-xl max-md:bottom-[4.5rem] max-md:right-2`} onClick={() => fileInputRef.current.click()}>
+                <button className={`${!profilePhoto ? "bg-red-900 top-1 right-2" : "bg-gray-800 bottom-1 right-1 "} font-bold absolute  py-[5px] px-[13px] rounded-full text-white text-xl max-md:bottom-[4.5rem] max-md:right-2`} onClick={() => setIsModalOpen(true)}>
                   {!profilePhoto ? "+" : <FontAwesomeIcon icon={faPen} className="h-4" />}
                 </button>
-              </label> */}
+              </label>
               <h1 className="movie-header text-white text-4xl pl-5 max-md:my-4">{userData.username}</h1>
             </span>
           </section>

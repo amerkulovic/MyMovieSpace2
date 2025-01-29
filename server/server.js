@@ -10,6 +10,7 @@ const WatchedMovie = require("./models/WatchedMovie");
 const User = require("./models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const fs = require("fs");
 const PORT = process.env.PORT || 3001;
 const app = express();
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
@@ -57,6 +58,18 @@ const storage = multer.diskStorage({
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     cb(null, uniqueSuffix + path.extname(file.originalname));
   },
+});
+
+app.use("/profile-photos", express.static(path.join(__dirname, "uploads/profilePhotos")));
+
+app.get("/profile-photos/list", (req, res) => {
+  const directoryPath = path.join(__dirname, "uploads/profilePhotos");
+  fs.readdir(directoryPath, (err, files) => {
+    if (err) return res.status(500).json({ error: "Failed to read directory" });
+
+    const fileUrls = files.map((file) => `${req.protocol}://${req.get("host")}/profile-photos/${file}`);
+    res.status(200).json({ photos: fileUrls });
+  });
 });
 
 app.get("/all-reviews", async (req, res) => {

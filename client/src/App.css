@@ -11,6 +11,29 @@
   text-align: center;
 }
 
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.modal {
+  position: relative;
+  top: 30vh;
+  left: 5%;
+  width: 90%;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 5;
+  animation: slide-down 300ms ease-out forwards;
+}
+
 .errmsg {
   background-color: lightpink;
   color: firebrick;
@@ -139,6 +162,14 @@
   }
 }
 
+.photo-selector-container {
+  width: 100px;
+  img {
+    border-radius: 50%;
+    width: 100%;
+  }
+}
+
 .review-photo-container {
   width: 40px;
   img {
@@ -174,19 +205,22 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+@media (min-width: 768px) {
+  .modal {
+    width: 40rem;
+    left: calc(50% - 20rem);
+  }
 }
 
-.App-link {
-  color: #61dafb;
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes App-logo-spin {
