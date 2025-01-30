@@ -28,9 +28,9 @@ const ProfilePage = () => {
   const [error, setError] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [photoOptions, setPhotoOptions] = useState([]);
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
   let { user } = useAuth();
   const navigate = useNavigate();
-  const fileInputRef = useRef(null);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -183,37 +183,38 @@ const ProfilePage = () => {
     }
   };
 
-  const addPhotoHandler = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
+  const confirmPhotoHandler = async () => {
+    const token = localStorage.getItem("token");
 
-    reader.onloadend = async () => {
-      const base64String = reader.result.split(",")[1];
+    if (!token) {
+      console.error("No token found, please log in.");
+      return;
+    }
 
-      const token = localStorage.getItem("token");
-
-      if (!token) {
-        console.error("No token found, please log in.");
-        return;
-      }
-
+    try {
       const response = await fetch("/upload-profile-photo", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ image: base64String }),
+        body: JSON.stringify({ image: selectedPhoto }),
       });
 
       if (response.ok) {
-        console.log("Image uploaded successfully!");
+        console.log("Profile photo updated successfully!");
+        setIsModalOpen(false);
       } else {
-        console.error("Image upload failed!");
+        console.error("Photo upload failed.");
       }
-    };
+    } catch (err) {
+      console.error("Error uploading photo:", err);
+    }
+  };
 
-    reader.readAsDataURL(file);
+  const closeModalHandler = () => {
+    setIsModalOpen(false);
+    setSelectedPhoto("");
   };
 
   if (error) {
@@ -228,15 +229,22 @@ const ProfilePage = () => {
     <div className="p-2 py-10">
       {isModalOpen && (
         <div className="backdrop">
-          <section className="modal bg-gradient-to-r from-red-900 via-red-600 to-red-900 rounded-lg p-5 w-[75%]">
-            <button onClick={() => setIsModalOpen(false)}>X</button>
+          <section className="modal relative flex flex-col items-center bg-gradient-to-r from-red-900 via-red-600 to-red-900 rounded-lg p-5 w-[75%]">
+            <button className="absolute top-4 left-4 text-xl font-bold" onClick={closeModalHandler}>
+              X
+            </button>
             <h1 className="movie-header text-2xl text-center">Select your profile photo</h1>
-            <div className="flex flex-row justify-around pt-5">
+            <div className="flex flex-row justify-around p-5">
               {photoOptions.map((photo) => (
-                <span className="photo-selector-container flex items-center max-md:flex-col max-md:justify-center">
-                  <img className="w-[100px] h-[100px] min-w-[100px] max-md:border-2 max-md:border-black" src={photo} />
+                <span key={photo} onClick={() => setSelectedPhoto(photo)} className={`photo-selector-container flex items-center max-md:flex-col max-md:justify-center cursor-pointer mx-4 max-sm:mx-2`}>
+                  <img className={`w-[100px] h-[100px] min-w-[100px] ${selectedPhoto === photo ? "border-2 border-green-400" : ""}`} src={photo} alt="profile option" />
                 </span>
               ))}
+            </div>
+            <div className="w-full flex justify-end">
+              <button disabled={!selectedPhoto} onClick={confirmPhotoHandler} className={`${selectedPhoto ? "bg-red-900" : "bg-gray-600"} rounded-lg p-3 mt-2 border-2 border-black text-center text-xl movie-header`}>
+                Confirm
+              </button>
             </div>
           </section>
         </div>
@@ -246,12 +254,9 @@ const ProfilePage = () => {
           <section className="flex items-center">
             <span className="photo-container flex items-center relative max-md:flex-col max-md:justify-center">
               <img src={profilePhoto ? profilePhoto : defaultPhoto} className="w-[180px] h-[180px] min-w-[180px] max-md:border-2 max-md:border-black" />
-              <input className="hidden" ref={fileInputRef} type="file" accept="image/*" id="file-input" onChange={addPhotoHandler} />
-              <label htmlFor="file-input">
-                <button className={`${!profilePhoto ? "bg-red-900 top-1 right-2" : "bg-gray-800 bottom-1 right-1 "} font-bold absolute  py-[5px] px-[13px] rounded-full text-white text-xl max-md:bottom-[4.5rem] max-md:right-2`} onClick={() => setIsModalOpen(true)}>
-                  {!profilePhoto ? "+" : <FontAwesomeIcon icon={faPen} className="h-4" />}
-                </button>
-              </label>
+              <button className={`${!profilePhoto ? "bg-red-900 top-1 right-2" : "bg-gray-800 bottom-1 right-1 "} font-bold absolute  py-[5px] px-[13px] rounded-full text-white text-xl max-md:bottom-[4.5rem] max-md:right-2`} onClick={() => setIsModalOpen(true)}>
+                {!profilePhoto ? "+" : <FontAwesomeIcon icon={faPen} className="h-4" />}
+              </button>
               <h1 className="movie-header text-white text-4xl pl-5 max-md:my-4">{userData.username}</h1>
             </span>
           </section>

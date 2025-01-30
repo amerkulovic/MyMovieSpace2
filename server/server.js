@@ -199,19 +199,14 @@ app.get("/user-watched/:username", async (req, res) => {
 app.post("/upload-profile-photo", authMiddleware, async (req, res) => {
   try {
     const { image } = req.body;
-
-    if (!image) {
-      return res.status(400).json({ error: "No image provided" });
-    }
+    if (!image) return res.status(400).json({ error: "No image provided" });
 
     const userId = req.user.id;
     const updatedUser = await User.findByIdAndUpdate(userId, { profilePhoto: image }, { new: true });
 
-    if (!updatedUser) {
-      return res.status(404).json({ message: "User not found" });
-    }
+    if (!updatedUser) return res.status(404).json({ message: "User not found" });
 
-    res.status(200).json({ message: "Profile photo updated successfully", user: updatedUser });
+    res.status(200).json({ message: "Profile photo updated successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
