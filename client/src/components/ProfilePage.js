@@ -29,6 +29,7 @@ const ProfilePage = () => {
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [photoOptions, setPhotoOptions] = useState([]);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [photoUpdateKey, setPhotoUpdateKey] = useState(0);
   let { user } = useAuth();
   const navigate = useNavigate();
 
@@ -62,7 +63,7 @@ const ProfilePage = () => {
     };
 
     fetchUserProfile();
-  }, [user, navigate, profilePhoto]);
+  }, [user, navigate, photoUpdateKey]);
 
   useEffect(() => {
     if (!user) return;
@@ -204,6 +205,7 @@ const ProfilePage = () => {
       if (response.ok) {
         console.log("Profile photo updated successfully!");
         setIsModalOpen(false);
+        setPhotoUpdateKey((prev) => prev + 1);
       } else {
         console.error("Photo upload failed.");
       }
@@ -230,9 +232,6 @@ const ProfilePage = () => {
       {isModalOpen && (
         <div className="backdrop">
           <section className="modal relative flex flex-col items-center bg-gradient-to-r from-red-900 via-red-600 to-red-900 rounded-lg p-5 w-[75%]">
-            <button className="absolute top-4 left-4 text-xl font-bold" onClick={closeModalHandler}>
-              X
-            </button>
             <h1 className="movie-header text-2xl text-center">Select your profile photo</h1>
             <div className="flex flex-row justify-around p-5">
               {photoOptions.map((photo) => (
@@ -242,7 +241,10 @@ const ProfilePage = () => {
               ))}
             </div>
             <div className="w-full flex justify-end">
-              <button disabled={!selectedPhoto} onClick={confirmPhotoHandler} className={`${selectedPhoto ? "bg-red-900" : "bg-gray-600"} rounded-lg p-3 mt-2 border-2 border-black text-center text-xl movie-header`}>
+              <button className="bg-gray-500 rounded-lg px-3 py-2 mt-2 border-2 border-black text-center text-xl movie-header mr-2" onClick={closeModalHandler}>
+                Cancel
+              </button>
+              <button disabled={!selectedPhoto} onClick={confirmPhotoHandler} className={`${selectedPhoto ? "bg-red-900" : "bg-gray-600"} rounded-lg px-3 py-2 mt-2 border-2 border-black text-center text-xl movie-header`}>
                 Confirm
               </button>
             </div>
@@ -276,7 +278,7 @@ const ProfilePage = () => {
           </div>
         </section>
         <div className="flex items-center justify-center relative border-b-[0.5px] border-white bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 my-4 rounded-lg w-[90%]">
-          <FontAwesomeIcon className="absolute left-6 top-[37%] text-3xl cursor-pointer text-white hover:text-red-500" icon={isWatchedOpen ? faAngleDown : faAngleRight} onClick={() => setIsWatchedOpen(!isWatchedOpen)} />
+          <FontAwesomeIcon className="absolute left-6 top-[33%] text-3xl cursor-pointer text-white hover:text-red-500" icon={isWatchedOpen ? faAngleDown : faAngleRight} onClick={() => setIsWatchedOpen(!isWatchedOpen)} />
           <h1 className="flex justify-center movie-header text-4xl py-5"> Your Watched Movies</h1>
         </div>
         {isWatchedOpen && (
@@ -296,7 +298,7 @@ const ProfilePage = () => {
           </>
         )}
         <div className="flex items-center justify-center relative border-b-[0.5px] border-white bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 rounded-lg w-[90%]">
-          <FontAwesomeIcon className="absolute left-6 top-[37%] text-3xl cursor-pointer text-white hover:text-red-500" icon={isBookmarksOpen ? faAngleDown : faAngleRight} onClick={() => setIsBookmarksOpen(!isBookmarksOpen)} />
+          <FontAwesomeIcon className="absolute left-6 top-[33%] text-3xl cursor-pointer text-white hover:text-red-500" icon={isBookmarksOpen ? faAngleDown : faAngleRight} onClick={() => setIsBookmarksOpen(!isBookmarksOpen)} />
           <h1 className="flex justify-center movie-header text-4xl py-5"> Your Bookmarks</h1>
         </div>
         {isBookmarksOpen && (
@@ -316,7 +318,7 @@ const ProfilePage = () => {
           </>
         )}
         <div className="flex items-center justify-center relative border-b-[0.5px] border-white bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 my-4 rounded-lg w-[90%]">
-          <FontAwesomeIcon className="absolute left-6 top-[37%] text-3xl cursor-pointer text-white hover:text-red-500" icon={isReviewsOpen ? faAngleDown : faAngleRight} onClick={() => setIsReviewsOpen(!isReviewsOpen)} />
+          <FontAwesomeIcon className="absolute left-6 top-[33%] text-3xl cursor-pointer text-white hover:text-red-500" icon={isReviewsOpen ? faAngleDown : faAngleRight} onClick={() => setIsReviewsOpen(!isReviewsOpen)} />
           <h1 className="flex justify-center movie-header text-4xl py-5"> Your Reviews</h1>
         </div>
         {isReviewsOpen && (
