@@ -244,7 +244,7 @@ const ProfilePage = () => {
               <button className="bg-gray-500 rounded-lg px-3 py-2 mt-2 border-2 border-black text-center text-xl movie-header mr-2" onClick={closeModalHandler}>
                 Cancel
               </button>
-              <button disabled={!selectedPhoto} onClick={confirmPhotoHandler} className={`${selectedPhoto ? "bg-red-900" : "bg-gray-600"} rounded-lg px-3 py-2 mt-2 border-2 border-black text-center text-xl movie-header`}>
+              <button disabled={!selectedPhoto} onClick={confirmPhotoHandler} className={`${selectedPhoto ? "bg-red-900" : "bg-gray-500"} rounded-lg px-3 py-2 mt-2 border-2 border-black text-center text-xl movie-header`}>
                 Confirm
               </button>
             </div>
