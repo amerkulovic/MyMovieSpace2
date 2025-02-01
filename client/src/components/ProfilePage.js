@@ -30,7 +30,7 @@ const ProfilePage = () => {
   const [photoOptions, setPhotoOptions] = useState([]);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [photoUpdateKey, setPhotoUpdateKey] = useState(0);
-  let { user } = useAuth();
+  let { user, updateUser } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -205,6 +205,7 @@ const ProfilePage = () => {
       if (response.ok) {
         console.log("Profile photo updated successfully!");
         setIsModalOpen(false);
+        updateUser({ profilePhoto: selectedPhoto });
         setPhotoUpdateKey((prev) => prev + 1);
       } else {
         console.error("Photo upload failed.");

@@ -8,7 +8,10 @@ export const AuthProvider = ({ children }) => {
   const [success, setSuccess] = useState(false);
 
   const updateUser = (updatedUser) => {
-    setUser(updatedUser);
+    setUser((prevUser) => ({
+      ...prevUser,
+      ...updatedUser,
+    }));
   };
 
   const login = async (username, password) => {
