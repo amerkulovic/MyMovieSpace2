@@ -60,7 +60,7 @@ function App() {
     let nextPage = currPage - 1;
     setIsLoading(true);
     try {
-      const response = await fetch(`http://www.omdbapi.com/?apikey=f14ca85d&s=${name}&page=${nextPage}`);
+      const response = await fetch(`https://www.omdbapi.com/?apikey=f14ca85d&s=${name}&page=${nextPage}`);
       const data = await response.json();
 
       if (data.Response === "False" || !data.Search) {
@@ -82,7 +82,7 @@ function App() {
     let nextPage = currPage + 1;
     setIsLoading(true);
     try {
-      const response = await fetch(`http://www.omdbapi.com/?apikey=f14ca85d&s=${name}&page=${nextPage}`);
+      const response = await fetch(`https://www.omdbapi.com/?apikey=f14ca85d&s=${name}&page=${nextPage}`);
       const data = await response.json();
 
       if (data.Response === "False" || !data.Search) {

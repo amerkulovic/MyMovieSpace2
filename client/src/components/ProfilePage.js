@@ -278,7 +278,7 @@ const ProfilePage = () => {
             </section>
           </div>
         </section>
-        <div className="flex items-center justify-center relative border-b-[0.5px] border-white bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 my-4 rounded-lg w-[90%]">
+        <div className="flex items-center justify-center relative border-b-[0.5px] border-white bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 mt-4 mb-2 rounded-lg w-[90%]">
           <FontAwesomeIcon className="absolute left-6 top-[33%] text-3xl cursor-pointer text-white hover:text-red-500" icon={isWatchedOpen ? faAngleDown : faAngleRight} onClick={() => setIsWatchedOpen(!isWatchedOpen)} />
           <h1 className="flex justify-center movie-header text-4xl py-5"> Your Watched Movies</h1>
         </div>
@@ -298,7 +298,7 @@ const ProfilePage = () => {
             {watchedMovies.length === 0 && <p className="movie-header text-xl py-10">No watched movies</p>}
           </>
         )}
-        <div className="flex items-center justify-center relative border-b-[0.5px] border-white bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 rounded-lg w-[90%]">
+        <div className="flex items-center justify-center relative border-b-[0.5px] border-white bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 rounded-lg my-2 w-[90%]">
           <FontAwesomeIcon className="absolute left-6 top-[33%] text-3xl cursor-pointer text-white hover:text-red-500" icon={isBookmarksOpen ? faAngleDown : faAngleRight} onClick={() => setIsBookmarksOpen(!isBookmarksOpen)} />
           <h1 className="flex justify-center movie-header text-4xl py-5"> Your Bookmarks</h1>
         </div>
@@ -318,7 +318,7 @@ const ProfilePage = () => {
             )}
           </>
         )}
-        <div className="flex items-center justify-center relative border-b-[0.5px] border-white bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 my-4 rounded-lg w-[90%]">
+        <div className="flex items-center justify-center relative border-b-[0.5px] border-white bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 mt-2 mb-4 rounded-lg w-[90%]">
           <FontAwesomeIcon className="absolute left-6 top-[33%] text-3xl cursor-pointer text-white hover:text-red-500" icon={isReviewsOpen ? faAngleDown : faAngleRight} onClick={() => setIsReviewsOpen(!isReviewsOpen)} />
           <h1 className="flex justify-center movie-header text-4xl py-5"> Your Reviews</h1>
         </div>
