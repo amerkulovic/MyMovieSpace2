@@ -12,12 +12,12 @@ const ReviewCard = (props) => {
   }, []);
   return (
     <div data-aos="fade-up" className="flex flex-col bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-5/6 max-sm:w-11/12 p-3 my-3 border border-red-700">
-      <div className="flex justify-between">
+      <div className="flex justify-between max-sm:flex-col">
         <h1 className="movie-header text-4xl max-sm:text-2xl">{props.title}</h1>
         <StarRating rating={props.rating} />
       </div>
       <section>
-        <p className="text-center my-5 mx-5 text-lg font-bold">{props.text}</p>
+        <p className="text-center my-5 mx-5 text-lg font-bold max-sm:text-start max-sm:ml-0">{props.text}</p>
         <section className="flex flex-row justify-between items-center">
           <p>{props?.date}</p>
           <div className="flex items-center">
