@@ -133,7 +133,7 @@ function App() {
               path="/search"
               element={
                 <div className="flex flex-col items-center">
-                  <div className="flex flex-wrap justify-center">{movies && !isLoading ? movies[0]?.isError ? <ErrorPage /> : movies.map((movie) => <MovieCard key={movie.imdbID} moviePoster={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} movieTitle={movie.Title} imdbID={movie.imdbID} />) : <LoadingPage />}</div>
+                  <div className="flex flex-wrap justify-center overflow-hidden">{movies && !isLoading ? movies[0]?.isError ? <ErrorPage /> : movies.map((movie) => <MovieCard key={movie.imdbID} moviePoster={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} movieTitle={movie.Title} imdbID={movie.imdbID} />) : <LoadingPage />}</div>
                   {movies && !isLoading && (
                     <div className="my-4">
                       {currPage > 1 && (
