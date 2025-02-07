@@ -110,7 +110,6 @@ function App() {
         setIsLoading(false);
       } else {
         setMovies(data.Search);
-        console.log(data.Search);
         setCurrPage(1);
         setIsLoading(false);
       }
