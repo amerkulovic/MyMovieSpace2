@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import notFoundImg from "./../images/notfoundimg.png";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
