@@ -2,11 +2,11 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
-const LoadingSpinner = () => {
+const LoadingSpinner = ({ color, size }) => {
   return (
     <div className="flex justify-center items-center">
       <FontAwesomeIcon
-        className="text-2xl text-red-700 h-20 w-20 py-10"
+        className={`text-2xl ${color ? `text-${color}-700 ` : "text-red-700 "} ${size === "small" ? "h-8 w-8" : "h-20 w-20"} py-10`}
         icon={faCircleNotch}
         spin
         size={`text-2xl`}

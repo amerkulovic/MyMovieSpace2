@@ -1,9 +1,11 @@
 import emailjs from "emailjs-com";
 import { useState } from "react";
+import LoadingSpinner from "../LoadingSpinner";
 
 const ContactFooter = () => {
   let [email, setEmail] = useState("");
   let [wasSent, setWasSent] = useState(false);
+  let [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { value } = e.target;
@@ -12,12 +14,14 @@ const ContactFooter = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     try {
       const response = await emailjs.send("service_bj8hrq4", "template_auuau19", { user_email: email }, "VakBFA1QLBGZOMeSo");
       setWasSent(true);
       setTimeout(() => {
         setWasSent(false);
+        setIsLoading(false);
       }, 3000);
       setEmail("");
     } catch (error) {
@@ -40,8 +44,16 @@ const ContactFooter = () => {
       </section>
       <section className="flex flex-row mr-10 items-center max-sm:mt-5">
         <input placeholder="email" className="h-14 px-4 rounded-tl-xl rounded-bl-xl" value={email} onChange={handleChange} />
-        <button className="bg-red-600 p-4 h-14 rounded-tr-xl rounded-br-xl font-bold text-white" onClick={handleSubmit}>
-          Sign Up
+        <button className={`${wasSent ? "bg-green-600" : "bg-red-600"} relative min-w-[100px] p-4 h-14 rounded-tr-xl rounded-br-xl font-bold text-white`} onClick={handleSubmit}>
+          {wasSent ? (
+            "Sent!"
+          ) : isLoading ? (
+            <div className="absolute left-[32px] top-[-26px]">
+              <LoadingSpinner color="slate" size="small" />
+            </div>
+          ) : (
+            "Sign Up"
+          )}
         </button>
       </section>
     </div>
