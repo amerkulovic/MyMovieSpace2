@@ -1,7 +1,6 @@
 import notFoundImg from "./../images/notfoundimg.png";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { json, matchPath, useParams } from "react-router-dom";
 
 const FullPageUX = (props) => {
 
