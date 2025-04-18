@@ -76,7 +76,7 @@ const SignUp = () => {
 
   return (
     <div className="w-full py-10 flex justify-center">
-      <section className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 w-1/3 max-xl:w-1/2 max-md:w-10/12 max-sm:w-11/12 p-3">
+      <section className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 w-1/3 shadow-xl max-xl:w-1/2 max-md:w-10/12 max-sm:w-11/12 p-3">
         <p ref={errRef} className={errMsg ? "errmsg" : "hidden"} aria-live="assertive">
           {errMsg}
         </p>
