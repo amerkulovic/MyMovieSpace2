@@ -84,11 +84,6 @@ const HomePage = () => {
               key={index}
               title={review.title}
               link={review.movieId}
-              // date={new Date(review.lastAccessed).toLocaleDateString("en-US", {
-              //   year: "numeric",
-              //   month: "long",
-              //   day: "numeric",
-              // })}
               poster={review.poster}
               rating={review.movieRating || 0}
               text={review.description}
