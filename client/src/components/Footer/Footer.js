@@ -1,5 +1,4 @@
 import React from "react";
-// import Logo from "../../images/Logo.png";
 import ContactFooter from "./ContactFooter";
 import FooterSection from "./FooterSection";
 import { useAuth } from "../AuthContext";
