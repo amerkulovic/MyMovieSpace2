@@ -1,7 +1,6 @@
 import React from "react";
 import ContactFooter from "./ContactFooter";
 import FooterSection from "./FooterSection";
-import { useAuth } from "../AuthContext";
 
 const Footer = () => {
   return (
