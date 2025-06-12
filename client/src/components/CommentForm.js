@@ -55,10 +55,6 @@ const CommentForm = ({ id, addNewComment }) => {
       </div>
       {isOpen && (
         <form className="flex flex-col" onSubmit={submitHandler}>
-          {/* <div className="my-4">
-            <label className="text-white">Username:</label>
-            <input className="w-full rounded-lg p-2 text-black" name="userName" value={formData.userName} onChange={handleChange} />
-          </div> */}
           <div className="my-4">
             <label className="text-white">Message:</label>
             <textarea className="w-full rounded-lg p-2 text-black" name="message" value={formData.message} onChange={handleChange} />
