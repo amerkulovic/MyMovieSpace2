@@ -11,7 +11,6 @@ const Nav = (props) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
-  // unused function
   // const toggleMenu = () => {
   //   setIsOpen(!isOpen);
   // };
