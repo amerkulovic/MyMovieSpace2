@@ -11,9 +11,10 @@ const Nav = (props) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  // unused function
+  // const toggleMenu = () => {
+  //   setIsOpen(!isOpen);
+  // };
 
   const keySearchHandler = (event) => {
     if (event.key === "Enter") {
