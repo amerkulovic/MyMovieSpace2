@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { FaStar } from "react-icons/fa";
 import { faX } from "@fortawesome/free-solid-svg-icons";
