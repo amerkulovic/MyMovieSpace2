@@ -128,7 +128,6 @@ const PostPage = () => {
                     </div>
                   </section>
                   <section className="flex justify-end items-center text-white font-bold max-sm:static max-sm:flex max-sm:justify-end">
-                    {/* <p>{comment?.date}</p> */}
                     <h1 className="text-xl max-sm:text-sm">{comment.username}</h1>
                     {isLoggedIn && <FontAwesomeIcon className={`ml-5 text-2xl cursor-pointer hover:text-red-500`} icon={faReply} onClick={() => setIsReplyFormOpenFor(isReplyFormOpenFor === comment._id ? null : comment._id)} />}
                     {comment.replies?.length ? <FontAwesomeIcon className={`ml-5 text-2xl cursor-pointer hover:text-red-500`} icon={isRepliesOpenFor === comment._id ? faAngleDown : faAngleRight} onClick={() => setIsRepliesOpenFor(isRepliesOpenFor === comment._id ? null : comment._id)} /> : ""}
