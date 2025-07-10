@@ -5,6 +5,7 @@ MyMovieSpace is a website where you can search for your favorite movies, bookmar
 
 React\
 Nodejs\
+Express\
 Mongoose\
 MongoDB\
 MongoDB Atlas\
