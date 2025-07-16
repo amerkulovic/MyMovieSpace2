@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Nav = (props) => {
   let { isLoggedIn } = useAuth();
   const navigate = useNavigate();
-  // const [isOpen, setIsOpen] = useState(false);
 
   const keySearchHandler = (event) => {
     if (event.key === "Enter") {
