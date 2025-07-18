@@ -2,7 +2,7 @@ import search from "./../svgs/search.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import NavLinks from "./NavLinks";
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import { faBars, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
