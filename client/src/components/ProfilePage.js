@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import defaultPhoto from "../images/default.jpg";
 import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
