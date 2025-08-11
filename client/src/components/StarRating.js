@@ -3,7 +3,7 @@ import { FaStar } from "react-icons/fa";
 const StarRating = (props) => {
   return (
     <div className="flex flex-row">
-      {[...Array(5)].map((index) => {
+      {[...Array(5)].map((star, index) => {
         const currentRating = index + 1;
         return (
           <label key={index} className={props?.styling}>
