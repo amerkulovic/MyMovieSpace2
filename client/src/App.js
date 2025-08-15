@@ -18,7 +18,6 @@ import PostPage from "./components/PostPage";
 import ScrollToTop from "./components/ScrollToTop";
 import SignUp from "./components/SignUp";
 import WatchedMoviesPage from "./components/WatchedMoviesPage";
-// import notFoundImg from "./images/notfoundimg.png";
 import ProfilePage from "./components/ProfilePage";
 
 function App() {
