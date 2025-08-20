@@ -189,7 +189,13 @@ const MoviePage = () => {
         <div className="flex flex-col overflow-hidden">
           <div className="flex flex-row flex-wrap justify-center">
             <div data-aos="fade-right" className="mr-5 my-10 max-xl:mr-0 max-sm:flex max-sm:justify-center max-sm:w-8/12">
-              <img src={movie.Poster !== "N/A" ? movie.Poster : notFoundImg} className="h-[500px] max-sm:h-[400px] w-96" />
+              <img
+                src={movie.Poster}
+                onError={(e) => {
+                  e.currentTarget.src = notFoundImg;
+                }}
+                className="h-[500px] max-sm:h-[400px] w-96"
+              />
             </div>
             <div data-aos="fade-left" className="text-white mt-10 max-xl:w-1/2 max-xl:ml-5 max-md:ml-0 max-md:bg-gradient-to-r from-red-900 via-red-600 to-red-900 w-3/5 max-md:p-5 max-md:rounded-lg max-md:mt-0 max-md:mb-3 max-md:w-11/12">
               <section className="border-b-[0.5px] border-white mb-5">
