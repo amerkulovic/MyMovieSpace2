@@ -304,7 +304,7 @@ const ProfilePage = () => {
         </div>
         {isBookmarksOpen && (
           <>
-            <section className="flex flex-wrap justify-center">{isBookmarksLoading ? <LoadingSpinner /> : bookmarks.slice(0, bookmarksCap).map((movie) => <ProfileCard moviePoster={movie.poster !== "N/A" ? movie.poster : notFoundImg} movieTitle={movie.title} imdbID={movie.id} />)}</section>
+            <section className="flex flex-wrap justify-center">{isBookmarksLoading ? <LoadingSpinner /> : bookmarks.slice(0, bookmarksCap).map((movie) => <ProfileCard moviePoster={movie.poster} movieTitle={movie.title} imdbID={movie.id} />)}</section>
             {bookmarks.length === 0 && <p className="movie-header text-xl py-10">No bookmark</p>}
             {bookmarksCap < bookmarks.length && (
               <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showMoreHandler("bookmarks", watchedMovies)}>
