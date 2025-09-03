@@ -105,65 +105,63 @@ const PostPage = () => {
   return (
     <div className="flex flex-col w-full items-center pt-10 pb-20">
       <div className="w-4/6 flex flex-col items-center max-sm:w-11/12">
-        <div className="flex flex-col bg-gradient-to-r from-red-900 via-red-600 to-red-900 rounded-lg w-full p-3 my-3 relative max-sm:w-full max-sm:flex-col max-sm:my-1">
-          <section className="flex flex-row">
-            <div className="flex flex-col items-start max-sm:w-full">
-              <h1 className="text-3xl movie-header max-sm:text-lg">{post.title}</h1>
-              <p className="text-white font-bold pt-5 text-start">{post.description}</p>
-            </div>
+        <div className="flex flex-col bg-gradient-to-r from-red-900/90 via-red-600/90 to-red-900/90 rounded-2xl w-full p-6 my-5 shadow-lg backdrop-blur-sm border border-red-800/40 transition">
+          <section className="flex flex-col">
+            <h1 className="text-4xl font-extrabold movie-header text-white tracking-tight max-sm:text-2xl">{post.title}</h1>
+            <p className="text-gray-200 font-medium pt-4 leading-relaxed">{post.description}</p>
           </section>
-          <section className="text-white font-bold flex justify-end pt-3">
+          <section className="flex justify-between items-center text-gray-300 font-semibold pt-6 text-sm">
             <p>{post?.date}</p>
-            <h1 className="text-md max-sm:text-sm">Post by {post.username}</h1>
+            <h1 className="italic">
+              Posted by <span className="text-white">{post.username}</span>
+            </h1>
           </section>
         </div>
         <div className="flex flex-col w-full transition ease-in-out">
           {post.comments?.slice(0, commentCap).map((comment, index) => (
-            <>
+            <div key={index}>
               <div className="flex justify-end">
-                <div key={index} className="flex flex-col bg-gradient-to-r from-slate-800 via-slate-600 to-slate-800 w-full p-3 my-2 relative rounded-lg border border-slate-400 max-sm:w-full max-sm:flex-col max-sm:rounded-tr-lg max-sm:rounded-br-lg max-sm:my-1">
-                  <section className="flex flex-row p-2">
-                    <div className="flex flex-col max-sm:w-full">
-                      <p className="text-white font-bold text-start">{comment.description}</p>
-                    </div>
+                <div className="flex flex-col bg-gradient-to-r from-slate-900/90 via-slate-700/80 to-slate-900/90 w-full p-5 my-3 rounded-xl border border-slate-700 shadow-md hover:shadow-xl transition">
+                  <section>
+                    <p className="text-gray-100 font-medium leading-relaxed">{comment.description}</p>
                   </section>
-                  <section className="flex justify-end items-center text-white font-bold max-sm:static max-sm:flex max-sm:justify-end">
-                    <h1 className="text-xl max-sm:text-sm">{comment.username}</h1>
-                    {isLoggedIn && <FontAwesomeIcon className={`ml-5 text-2xl cursor-pointer hover:text-red-500`} icon={faReply} onClick={() => setIsReplyFormOpenFor(isReplyFormOpenFor === comment._id ? null : comment._id)} />}
-                    {comment.replies?.length ? <FontAwesomeIcon className={`ml-5 text-2xl cursor-pointer hover:text-red-500`} icon={isRepliesOpenFor === comment._id ? faAngleDown : faAngleRight} onClick={() => setIsRepliesOpenFor(isRepliesOpenFor === comment._id ? null : comment._id)} /> : ""}
+
+                  <section className="flex justify-end items-center text-gray-300 font-semibold mt-4">
+                    <h1 className="text-sm">{comment.username}</h1>
+                    {isLoggedIn && <FontAwesomeIcon className="ml-4 text-lg cursor-pointer hover:text-red-500 transition" icon={faReply} onClick={() => setIsReplyFormOpenFor(isReplyFormOpenFor === comment._id ? null : comment._id)} />}
+                    {comment.replies?.length > 0 && <FontAwesomeIcon className="ml-4 text-lg cursor-pointer hover:text-red-500 transition" icon={isRepliesOpenFor === comment._id ? faAngleDown : faAngleRight} onClick={() => setIsRepliesOpenFor(isRepliesOpenFor === comment._id ? null : comment._id)} />}
                   </section>
                 </div>
               </div>
               {isReplyFormOpenFor === comment._id && (
-                <div className="flex flex-col items-end bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg p-5">
-                  <textarea className="w-full rounded-lg p-2 text-black" name="message" placeholder={`reply as ${user.username}...`} value={formData.message} onChange={handleChange} />
-                  <button className="border border-white bg-red-700 movie-header text-xl p-2 rounded-lg mt-3" onClick={(e) => submitHandler(e, comment._id)}>
+                <div className="flex flex-col items-end bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-xl p-5 shadow-md border border-red-700 mt-2">
+                  <textarea className="w-full rounded-lg p-3 text-black focus:ring-2 focus:ring-red-500 outline-none" name="message" placeholder={`Reply as ${user.username}...`} value={formData.message} onChange={handleChange} />
+                  <button className="border border-white bg-red-700 movie-header text-lg px-4 py-2 rounded-lg mt-3 hover:bg-red-800 transition" onClick={(e) => submitHandler(e, comment._id)}>
                     Reply
                   </button>
                 </div>
               )}
               {isRepliesOpenFor === comment._id && (
-                <div>
-                  {comment?.replies &&
-                    comment?.replies.map((reply) => (
-                      <div data-aos="flip-down" className="flex items-start flex-col bg-gray-100 w-full p-3 my-2 relative rounded-lg max-sm:w-full max-sm:flex-col max-sm:rounded-tr-lg max-sm:rounded-br-lg max-sm:my-1">
-                        <p>{reply.description}</p>
-                        <div className="flex w-full justify-end">
-                          <h1 className="text-end">{reply.username}</h1>
-                        </div>
+                <div className="pl-6 mt-2 space-y-2">
+                  {comment?.replies?.map((reply) => (
+                    <div key={reply._id} data-aos="fade-up" className="flex flex-col bg-gray-100 w-full p-3 rounded-lg border border-gray-300 shadow-sm">
+                      <p className="text-gray-800">{reply.description}</p>
+                      <div className="flex w-full justify-end text-gray-600 text-sm font-medium mt-2">
+                        <h1 className="italic">{reply.username}</h1>
                       </div>
-                    ))}
+                    </div>
+                  ))}
                 </div>
               )}
-            </>
+            </div>
           ))}
           {commentCap < (post.comments?.length || 0) && (
-            <button onClick={showMoreHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-full p-3 my-3 border-2 border-black text-center text-xl movie-header">
+            <button onClick={showMoreHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-full p-3 my-4 border border-black text-center text-lg font-semibold hover:shadow-lg transition">
               Show more
             </button>
           )}
           {commentCap === (post.comments?.length || 0) && post.comments?.length > 5 && (
-            <button onClick={showLessHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-full p-3 my-3 border-2 border-black text-center text-xl movie-header">
+            <button onClick={showLessHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-full p-3 my-4 border border-black text-center text-lg font-semibold hover:shadow-lg transition">
               Show less
             </button>
           )}
@@ -171,9 +169,9 @@ const PostPage = () => {
         {isLoggedIn ? (
           <CommentForm id={id} addNewComment={addNewComment} />
         ) : (
-          <div className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-3/4 p-3 my-3 border-2 border-black">
+          <div className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-xl w-3/4 p-5 my-5 border border-black shadow-md">
             <a href="/login">
-              <h1 className="text-center text-3xl movie-header">Login to add to the discussion!</h1>
+              <h1 className="text-center text-2xl font-semibold movie-header">Login to join the discussion</h1>
             </a>
           </div>
         )}
