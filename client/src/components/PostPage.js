@@ -144,7 +144,7 @@ const PostPage = () => {
               {isRepliesOpenFor === comment._id && (
                 <div className="pl-6 mt-2 space-y-2">
                   {comment?.replies?.map((reply) => (
-                    <div key={reply._id} data-aos="fade-up" className="flex flex-col bg-gray-100 w-full p-3 rounded-lg border border-gray-300 shadow-sm">
+                    <div key={reply._id} className="flex flex-col bg-gray-100 w-full p-3 rounded-lg border border-gray-300 shadow-sm">
                       <p className="text-gray-800">{reply.description}</p>
                       <div className="flex w-full justify-end text-gray-600 text-sm font-medium mt-2">
                         <h1 className="italic">{reply.username}</h1>

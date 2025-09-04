@@ -229,135 +229,114 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="p-2 py-10">
+    <div className="p-4 py-10 bg-gradient-to-b from-black via-gray-950 to-black min-h-screen">
       {isModalOpen && (
-        <div className="backdrop">
-          <section className="modal relative flex flex-col items-center bg-gradient-to-r from-red-900 via-red-600 to-red-900 rounded-lg p-5 w-[75%]">
-            <h1 className="movie-header text-2xl text-center">Select your profile photo</h1>
-            <div className="flex flex-row justify-around p-5">
+        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/70">
+          <section className="relative flex flex-col items-center bg-gray-900/90 rounded-2xl shadow-xl p-6 w-[90%] max-w-2xl border border-gray-700">
+            <h1 className="text-2xl font-bold text-white mb-4">Select your profile photo</h1>
+            <div className="flex flex-wrap justify-center gap-4">
               {photoOptions.map((photo) => (
-                <span key={photo} onClick={() => setSelectedPhoto(photo)} className={`photo-selector-container flex items-center max-md:flex-col max-md:justify-center cursor-pointer mx-4 max-sm:mx-2`}>
-                  <img className={`w-[100px] h-[100px] min-w-[100px] ${selectedPhoto === photo ? "border-2 border-green-400" : ""}`} src={photo} alt="profile option" />
+                <span key={photo} onClick={() => setSelectedPhoto(photo)} className={`cursor-pointer rounded-xl overflow-hidden border-2 ${selectedPhoto === photo ? "border-red-500" : "border-transparent"} hover:scale-105 transition`}>
+                  <img src={photo} alt="profile option" className="w-[100px] h-[100px] object-cover" />
                 </span>
               ))}
             </div>
-            <div className="w-full flex justify-end">
-              <button className="bg-gray-500 rounded-lg px-3 py-2 mt-2 border-2 border-black text-center text-xl movie-header mr-2" onClick={closeModalHandler}>
+            <div className="w-full flex justify-end mt-6 gap-3">
+              <button className="px-4 py-2 rounded-lg bg-gray-700 text-white hover:bg-gray-600 transition" onClick={closeModalHandler}>
                 Cancel
               </button>
-              <button disabled={!selectedPhoto} onClick={confirmPhotoHandler} className={`${selectedPhoto ? "bg-red-900" : "bg-gray-500"} rounded-lg px-3 py-2 mt-2 border-2 border-black text-center text-xl movie-header`}>
+              <button disabled={!selectedPhoto} onClick={confirmPhotoHandler} className={`px-4 py-2 rounded-lg transition ${selectedPhoto ? "bg-red-600 hover:bg-red-700 text-white" : "bg-gray-600 text-gray-400 cursor-not-allowed"}`}>
                 Confirm
               </button>
             </div>
           </section>
         </div>
       )}
-      <section className="flex flex-col items-center">
-        <section className="flex w-[90%] items-center justify-between py-10 max-md:flex-col bg-gradient-to-r from-red-900 via-red-600 to-red-900 rounded-lg px-5">
-          <section className="flex items-center">
-            <span className="photo-container flex items-center relative max-md:flex-col max-md:justify-center">
-              <img src={profilePhoto ? profilePhoto : defaultPhoto} className="w-[180px] h-[180px] min-w-[180px] max-md:border-2 max-md:border-black" />
-              <button className={`${!profilePhoto ? "bg-red-900 top-1 right-2" : "bg-gray-800 bottom-1 right-1 "} font-bold absolute  py-[5px] px-[13px] rounded-full text-white text-xl max-md:bottom-[4.5rem] max-md:right-2`} onClick={() => setIsModalOpen(true)}>
+      <section className="flex flex-col items-center w-[95%] max-w-5xl mx-auto">
+        <section className="flex flex-col md:flex-row items-center justify-between bg-gray-900/80 border border-gray-700 rounded-2xl p-6 w-full shadow-lg">
+          <div className="flex items-center gap-6">
+            <div className="relative">
+              <img src={profilePhoto ? profilePhoto : defaultPhoto} className="w-[160px] h-[160px] rounded-full border-4 border-red-600 object-cover shadow-md" />
+              <button onClick={() => setIsModalOpen(true)} className="absolute bottom-2 right-2 bg-red-600 hover:bg-red-700 transition rounded-full p-2 text-white shadow">
                 {!profilePhoto ? "+" : <FontAwesomeIcon icon={faPen} className="h-4" />}
               </button>
-              <h1 className="movie-header text-white text-4xl pl-5 max-md:my-4">{userData.username}</h1>
-            </span>
-          </section>
-          <div className="flex max-lg:flex-col max-md:items-center">
-            <section className="flex mx-5 max-md:my-1">
-              <h1 className="movie-header text-white mr-1">Reviews: </h1>
-              <h1 className="movie-header text-white">{reviews.length}</h1>
-            </section>
-            <section className="flex mx-5 max-md:my-1">
-              <h1 className="movie-header text-white mr-1">Bookmarks: </h1>
-              <h1 className="movie-header text-white">{bookmarks.length}</h1>
-            </section>
-            <section className="flex mx-5 max-md:my-1">
-              <h1 className="movie-header text-white mr-1">Watched Movies: </h1>
-              <h1 className="movie-header text-white">{watchedMovies.length}</h1>
-            </section>
+            </div>
+            <h1 className="text-4xl font-bold text-white">{userData.username}</h1>
+          </div>
+          <div className="flex flex-wrap justify-center md:justify-end gap-6 mt-6 md:mt-0">
+            <div className="text-center">
+              <p className="text-gray-400">Reviews</p>
+              <p className="text-2xl font-bold text-white">{reviews.length}</p>
+            </div>
+            <div className="text-center">
+              <p className="text-gray-400">Bookmarks</p>
+              <p className="text-2xl font-bold text-white">{bookmarks.length}</p>
+            </div>
+            <div className="text-center">
+              <p className="text-gray-400">Watched</p>
+              <p className="text-2xl font-bold text-white">{watchedMovies.length}</p>
+            </div>
           </div>
         </section>
-        <div className="flex items-center justify-center relative border-b-[0.5px] border-white bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 mt-4 mb-2 rounded-lg w-[90%]">
-          <FontAwesomeIcon className="absolute left-6 top-[33%] text-3xl cursor-pointer text-white hover:text-red-500" icon={isWatchedOpen ? faAngleDown : faAngleRight} onClick={() => setIsWatchedOpen(!isWatchedOpen)} />
-          <h1 className="flex justify-center movie-header text-4xl py-5"> Your Watched Movies</h1>
-        </div>
-        {isWatchedOpen && (
-          <>
-            <section className="flex flex-wrap justify-center">{isWatchedLoading ? <LoadingSpinner /> : watchedMovies.slice(0, watchedCap).map((movie) => <ProfileCard moviePoster={movie.poster !== "N/A" ? movie.poster : notFoundImg} movieTitle={movie.title} imdbID={movie.id} />)}</section>
-            {watchedCap < watchedMovies.length && (
-              <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showMoreHandler("watched", watchedMovies)}>
-                Show More
-              </button>
+        {[
+          {
+            title: "Your Watched Movies",
+            isOpen: isWatchedOpen,
+            toggle: () => setIsWatchedOpen(!isWatchedOpen),
+            data: watchedMovies,
+            cap: watchedCap,
+            loading: isWatchedLoading,
+            showMore: () => showMoreHandler("watched", watchedMovies),
+            showLess: () => showLessHandler("watched"),
+            Card: (movie: any) => <ProfileCard moviePoster={movie.poster !== "N/A" ? movie.poster : notFoundImg} movieTitle={movie.title} imdbID={movie.id} />,
+          },
+          {
+            title: "Your Bookmarks",
+            isOpen: isBookmarksOpen,
+            toggle: () => setIsBookmarksOpen(!isBookmarksOpen),
+            data: bookmarks,
+            cap: bookmarksCap,
+            loading: isBookmarksLoading,
+            showMore: () => showMoreHandler("bookmarks", bookmarks),
+            showLess: () => showLessHandler("bookmarks"),
+            Card: (movie: any) => <ProfileCard moviePoster={movie.poster} movieTitle={movie.title} imdbID={movie.id} />,
+          },
+          {
+            title: "Your Reviews",
+            isOpen: isReviewsOpen,
+            toggle: () => setIsReviewsOpen(!isReviewsOpen),
+            data: reviews,
+            cap: reviewsCap,
+            loading: isReviewsLoading,
+            showMore: () => showMoreHandler("reviews", reviews),
+            showLess: () => showLessHandler("reviews"),
+            Card: (review: any) => <HomeReviewCard key={review._id} title={review.title} link={review.movieId} poster={review.poster} rating={review.movieRating || 0} text={review.description} username={review.username} profilePhoto={review.profilePhoto} />,
+          },
+        ].map((section, idx) => (
+          <div key={idx} className="w-full mt-6">
+            <div className="flex items-center justify-between bg-gray-800/80 hover:bg-gray-700/80 transition rounded-xl p-4 cursor-pointer shadow" onClick={section.toggle}>
+              <h2 className="text-2xl font-semibold text-white">{section.title}</h2>
+              <FontAwesomeIcon icon={section.isOpen ? faAngleDown : faAngleRight} className="text-white text-xl" />
+            </div>
+            {section.isOpen && (
+              <div className="mt-4">
+                <section className="flex flex-wrap justify-center gap-4">{section.loading ? <LoadingSpinner /> : section.data.length > 0 ? section.data.slice(0, section.cap).map(section.Card) : <p className="text-gray-400 text-lg py-6">No data available</p>}</section>
+                <section className="flex justify-center">
+                  {section.cap < section.data.length && (
+                    <button className="mt-4 px-6 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white shadow transition" onClick={section.showMore}>
+                      Show More
+                    </button>
+                  )}
+                  {section.cap > 6 && (
+                    <button className="mt-2 px-6 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white shadow transition" onClick={section.showLess}>
+                      Show Less
+                    </button>
+                  )}
+                </section>
+              </div>
             )}
-            {watchedCap > 6 && (
-              <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showLessHandler("watched")}>
-                Show Less
-              </button>
-            )}
-            {watchedMovies.length === 0 && <p className="movie-header text-xl py-10">No watched movies</p>}
-          </>
-        )}
-        <div className="flex items-center justify-center relative border-b-[0.5px] border-white bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 rounded-lg my-2 w-[90%]">
-          <FontAwesomeIcon className="absolute left-6 top-[33%] text-3xl cursor-pointer text-white hover:text-red-500" icon={isBookmarksOpen ? faAngleDown : faAngleRight} onClick={() => setIsBookmarksOpen(!isBookmarksOpen)} />
-          <h1 className="flex justify-center movie-header text-4xl py-5"> Your Bookmarks</h1>
-        </div>
-        {isBookmarksOpen && (
-          <>
-            <section className="flex flex-wrap justify-center">{isBookmarksLoading ? <LoadingSpinner /> : bookmarks.slice(0, bookmarksCap).map((movie) => <ProfileCard moviePoster={movie.poster} movieTitle={movie.title} imdbID={movie.id} />)}</section>
-            {bookmarks.length === 0 && <p className="movie-header text-xl py-10">No bookmark</p>}
-            {bookmarksCap < bookmarks.length && (
-              <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showMoreHandler("bookmarks", watchedMovies)}>
-                Show More
-              </button>
-            )}
-            {bookmarksCap > 6 && (
-              <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showLessHandler("bookmarks")}>
-                Show Less
-              </button>
-            )}
-          </>
-        )}
-        <div className="flex items-center justify-center relative border-b-[0.5px] border-white bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 mt-2 mb-4 rounded-lg w-[90%]">
-          <FontAwesomeIcon className="absolute left-6 top-[33%] text-3xl cursor-pointer text-white hover:text-red-500" icon={isReviewsOpen ? faAngleDown : faAngleRight} onClick={() => setIsReviewsOpen(!isReviewsOpen)} />
-          <h1 className="flex justify-center movie-header text-4xl py-5"> Your Reviews</h1>
-        </div>
-        {isReviewsOpen && (
-          <>
-            {isReviewsLoading ? (
-              <LoadingSpinner />
-            ) : (
-              reviews.slice(0, reviewsCap).map((review) => (
-                <HomeReviewCard
-                  key={review._id}
-                  title={review.title}
-                  link={review.movieId}
-                  // date={new Date(review.lastAccessed).toLocaleDateString("en-US", {
-                  //   year: "numeric",
-                  //   month: "long",
-                  //   day: "numeric",
-                  // })}
-                  poster={review.poster}
-                  rating={review.movieRating || 0}
-                  text={review.description}
-                  username={review.username}
-                  profilePhoto={review.profilePhoto}
-                />
-              ))
-            )}
-            {reviews.length === 0 && <p className="movie-header text-xl py-10">No reviews</p>}
-            {reviewsCap < reviews.length && (
-              <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showMoreHandler("reviews", reviews)}>
-                Show More
-              </button>
-            )}
-            {reviewsCap > 3 && (
-              <button className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-1/2 p-3 my-3 border-2 border-black text-center text-xl movie-header" onClick={() => showLessHandler("reviews")}>
-                Show Less
-              </button>
-            )}
-          </>
-        )}
+          </div>
+        ))}
       </section>
     </div>
   );
