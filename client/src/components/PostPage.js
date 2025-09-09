@@ -121,7 +121,7 @@ const PostPage = () => {
           {post.comments?.slice(0, commentCap).map((comment, index) => (
             <div key={index}>
               <div className="flex justify-end">
-                <div className="flex flex-col bg-gradient-to-r from-slate-900/90 via-slate-700/80 to-slate-900/90 w-full p-5 my-3 rounded-xl border border-slate-700 shadow-md hover:shadow-xl transition">
+                <div className="flex flex-col bg-gradient-to-r from-slate-900/90 via-slate-700/80 to-slate-900/90 w-full p-5 my-2 rounded-xl border border-slate-700 shadow-md hover:shadow-xl transition">
                   <section>
                     <p className="text-gray-100 font-medium leading-relaxed">{comment.description}</p>
                   </section>

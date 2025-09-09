@@ -44,7 +44,7 @@ const MessagesPage = () => {
   }
 
   return (
-    <div className="flex w-full justify-center">
+    <div className="flex w-full justify-center min-h-[800px]">
       {messages.length === 0 ? (
         <div className="flex flex-col items-center">
           <h1 className="movie-header text-center text-6xl flex justify-center items-center h-[600px] w-5/6">No messages yet. Leave a message about any movie topic!</h1>
