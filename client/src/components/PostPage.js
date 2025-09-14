@@ -125,7 +125,6 @@ const PostPage = () => {
                   <section>
                     <p className="text-gray-100 font-medium leading-relaxed">{comment.description}</p>
                   </section>
-
                   <section className="flex justify-end items-center text-gray-300 font-semibold mt-4">
                     <h1 className="text-sm">{comment.username}</h1>
                     {isLoggedIn && <FontAwesomeIcon className="ml-4 text-lg cursor-pointer hover:text-red-500 transition" icon={faReply} onClick={() => setIsReplyFormOpenFor(isReplyFormOpenFor === comment._id ? null : comment._id)} />}
