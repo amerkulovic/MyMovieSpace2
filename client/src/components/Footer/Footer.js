@@ -1,4 +1,3 @@
-import React from "react";
 import ContactFooter from "./ContactFooter";
 import FooterSection from "./FooterSection";
 
