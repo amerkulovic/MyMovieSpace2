@@ -314,7 +314,7 @@ const ProfilePage = () => {
           },
         ].map((section, idx) => (
           <div key={idx} className="w-full mt-6">
-            <div className="flex items-center justify-between bg-gray-800/80 hover:bg-gray-700/80 transition rounded-xl p-4 cursor-pointer shadow" onClick={section.toggle}>
+            <div className="flex items-center justify-between bg-gray-800/80 border border-gray-700 hover:bg-gray-700/80 transition rounded-xl p-4 cursor-pointer shadow" onClick={section.toggle}>
               <h2 className="text-2xl font-semibold text-white">{section.title}</h2>
               <FontAwesomeIcon icon={section.isOpen ? faAngleDown : faAngleRight} className="text-white text-xl" />
             </div>
