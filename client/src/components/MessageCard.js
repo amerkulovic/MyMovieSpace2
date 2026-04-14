@@ -11,9 +11,9 @@ const MessageCard = (props) => {
           <p className="text-white font-bold pt-5 pb-3 text-start">{props.text}</p>
         </div>
       </section>
-      <section className="flex justify-end text-white font-bold max-sm:static">
-        <p>{props?.date}</p>
-        <h1 className="text-md max-sm:text-sm">Posted by {props.username}</h1>
+      <section className="flex justify-between items-center mt-4 pt-4 border-t border-white/10">
+        <p className="text-sm text-white/60">{props?.date}</p>
+        <h1 className="text-lg text-white/90 leading-relaxed max-sm:text-sm">Posted by {props.username}</h1>
       </section>
     </div>
   );

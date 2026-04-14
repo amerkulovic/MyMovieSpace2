@@ -107,12 +107,12 @@ const PostPage = () => {
       <div className="w-4/6 flex flex-col items-center max-sm:w-11/12">
         <div className="flex flex-col bg-gradient-to-r from-red-900/90 via-red-600/90 to-red-900/90 rounded-2xl w-full p-6 my-5 shadow-lg backdrop-blur-sm border border-red-800/40 transition">
           <section className="flex flex-col">
-            <h1 className="text-4xl font-extrabold movie-header text-white tracking-tight max-sm:text-2xl">{post.title}</h1>
+            <h1 className="text-4xl font-extrabold movie-header text-white max-sm:text-2xl">{post.title}</h1>
             <p className="text-gray-200 font-medium pt-4 leading-relaxed">{post.description}</p>
           </section>
-          <section className="flex justify-between items-center text-gray-300 font-semibold pt-6 text-sm">
+          <section className="flex justify-between items-center text-gray-300 mt-4 pt-4 border-t border-white/10">
             <p>{post?.date}</p>
-            <h1 className="italic">
+            <h1 className="leading-relaxed">
               Posted by <span className="text-white">{post.username}</span>
             </h1>
           </section>
