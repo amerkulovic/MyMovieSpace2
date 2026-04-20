@@ -11,6 +11,10 @@
   text-align: center;
 }
 
+.red {
+  background-color: red;
+}
+
 .backdrop {
   position: fixed;
   top: 0;
