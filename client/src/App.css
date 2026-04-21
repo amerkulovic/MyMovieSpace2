@@ -12,7 +12,11 @@
 }
 
 .red {
-  background-color: red;
+  background: linear-gradient(to right, #7f1d1d, #b91c1c, #7f1d1d);
+}
+
+.bright-red {
+  background: linear-gradient(to right, #7f1d1d, #dc2626, #7f1d1d);
 }
 
 .backdrop {

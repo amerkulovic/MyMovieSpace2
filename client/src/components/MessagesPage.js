@@ -63,18 +63,18 @@ const MessagesPage = () => {
             <>
               <NewMessageForm addNewMessage={addNewMessage} />
               {messageCap < (messages.length || 0) && (
-                <button onClick={showMoreHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
+                <button onClick={showMoreHandler} className="bright-red text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
                   Show more
                 </button>
               )}
               {messageCap === (messageCap.length || 0) && messages?.length > 5 && (
-                <button onClick={showLessHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
+                <button onClick={showLessHandler} className="bright-red text-white rounded-lg w-5/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
                   Show less
                 </button>
               )}
             </>
           ) : (
-            <div className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-8/12 p-3 my-3 border-2 border-black">
+            <div className="bright-red text-white rounded-lg w-8/12 p-3 my-3 border-2 border-black">
               <a href="/login">
                 <h1 className="text-center text-3xl movie-header">Login to add to the discussion!</h1>
               </a>

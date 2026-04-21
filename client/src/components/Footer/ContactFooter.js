@@ -33,7 +33,7 @@ const ContactFooter = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-red-900 via-red-700 to-red-900 border-b border-white py-10 pl-5 flex justify-between max-sm:flex-col items-center">
+    <div className="red border-b border-white py-10 pl-5 flex justify-between max-sm:flex-col items-center">
       <section className="flex flex-col justify-start text-white pl-4">
         <h1 className="text-5xl pb-2">Stay Updated</h1>
         <p className="font-extralight">

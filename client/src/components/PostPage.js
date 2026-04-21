@@ -133,7 +133,7 @@ const PostPage = () => {
                 </div>
               </div>
               {isReplyFormOpenFor === comment._id && (
-                <div className="flex flex-col items-end bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-xl p-5 shadow-md border border-red-700 mt-2">
+                <div className="flex flex-col items-end bright-red text-white rounded-xl p-5 shadow-md border border-red-700 mt-2">
                   <textarea className="w-full rounded-lg p-3 text-black focus:ring-2 focus:ring-red-500 outline-none" name="message" placeholder={`Reply as ${user.username}...`} value={formData.message} onChange={handleChange} />
                   <button className="border border-white bg-red-700 movie-header text-lg px-4 py-2 rounded-lg mt-3 hover:bg-red-800 transition" onClick={(e) => submitHandler(e, comment._id)}>
                     Reply
@@ -155,12 +155,12 @@ const PostPage = () => {
             </div>
           ))}
           {commentCap < (post.comments?.length || 0) && (
-            <button onClick={showMoreHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-full p-3 my-4 border border-black text-center text-lg font-semibold hover:shadow-lg transition">
+            <button onClick={showMoreHandler} className="bright-red text-white rounded-lg w-full p-3 my-4 border border-black text-center text-lg font-semibold hover:shadow-lg transition">
               Show more
             </button>
           )}
           {commentCap === (post.comments?.length || 0) && post.comments?.length > 5 && (
-            <button onClick={showLessHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-full p-3 my-4 border border-black text-center text-lg font-semibold hover:shadow-lg transition">
+            <button onClick={showLessHandler} className="bright-red text-white rounded-lg w-full p-3 my-4 border border-black text-center text-lg font-semibold hover:shadow-lg transition">
               Show less
             </button>
           )}
@@ -168,7 +168,7 @@ const PostPage = () => {
         {isLoggedIn ? (
           <CommentForm id={id} addNewComment={addNewComment} />
         ) : (
-          <div className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-xl w-3/4 p-5 my-5 border border-black shadow-md">
+          <div className="bright-red text-white rounded-xl w-3/4 p-5 my-5 border border-black shadow-md">
             <a href="/login">
               <h1 className="text-center text-2xl font-semibold movie-header">Login to join the discussion</h1>
             </a>

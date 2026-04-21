@@ -80,24 +80,15 @@ const HomePage = () => {
           .reverse()
           .slice(0, reviewCap)
           .map((review, index) => (
-            <HomeReviewCard
-              key={index}
-              title={review.title}
-              link={review.movieId}
-              poster={review.poster}
-              rating={review.movieRating || 0}
-              text={review.description}
-              username={review.username}
-              profilePhoto={review.profilePhoto}
-            />
+            <HomeReviewCard key={index} title={review.title} link={review.movieId} poster={review.poster} rating={review.movieRating || 0} text={review.description} username={review.username} profilePhoto={review.profilePhoto} />
           ))}
         {reviewCap < recentReviews.length && (
-          <button onClick={showMoreHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-4/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
+          <button onClick={showMoreHandler} className="bright-red text-white rounded-lg w-4/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
             Show more
           </button>
         )}
         {reviewCap === recentReviews.length && recentReviews.length > 3 && (
-          <button onClick={showLessHandler} className="bg-gradient-to-r from-red-900 via-red-600 to-red-900 text-white rounded-lg w-4/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
+          <button onClick={showLessHandler} className="bright-red text-white rounded-lg w-4/6 p-3 my-3 border-2 border-black text-center text-xl movie-header">
             Show less
           </button>
         )}
