@@ -17,7 +17,6 @@ require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 
 const SECRET = process.env.JWT_SECRET;
 
-// Middleware
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
