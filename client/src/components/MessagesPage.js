@@ -62,13 +62,13 @@ const MessagesPage = () => {
             <h1 className="text-white text-4xl movie-header text-center tracking-tight">
               Message Board
             </h1>
-            <p className="text-white/60 text-sm text-center -mt-2">
+            {/* <p className="text-white/60 text-sm text-center -mt-2">
               Join the discussion
-            </p>
+            </p> */}
 
             <div className="w-full h-px bg-white/10"></div>
 
-            <section className="w-full flex flex-col items-center gap-4 mt-2">
+            <section className="w-full flex flex-col items-center gap-4">
               {messages.slice(0, messageCap).map((message, index) => (
                 <MessageCard
                   key={index}
